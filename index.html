@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yusuf İbin — Turkish NLP & LLM Researcher</title>
+<meta name="description" content="Yusuf İbin — YTÜ Bilgisayar Mühendisliği öğrencisi, AIRLAB takım lideri, Cosmos NLP araştırmacısı. Türkçe NLP, derin öğrenme, agentic AI & RAG." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500;0,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --black:#0a0a0b;
+  --black-2:#101012;
+  --ink:#f4f4f2;
+  --ink-dim:#9a9a9c;
+  --ink-faint:#5f5f63;
+  --line:rgba(255,255,255,.12);
+  --line-soft:rgba(255,255,255,.07);
+  --gray:#b9b9bb;          /* light section bg */
+  --gray-ink:#141416;
+  --gray-dim:#46464a;
+  --gray-line:rgba(0,0,0,.16);
+  --accent:oklch(0.80 0.105 172);     /* refined phosphor teal */
+  --accent-dim:oklch(0.80 0.105 172 / .55);
+  --accent-glow:oklch(0.80 0.105 172 / .16);
+  --glass:rgba(255,255,255,.045);
+  --glass-strong:rgba(255,255,255,.07);
+  --glass-border:rgba(255,255,255,.13);
+  --sans:"Archivo",system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --pad:clamp(20px,5vw,90px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  background:var(--black);
+  color:var(--ink);
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent);color:#04130f}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+.mono{font-family:var(--mono);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.idx{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-faint)}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--pad);
+  transition:background .4s ease,border-color .4s ease,padding .4s ease;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(10,10,11,.55);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--line-soft);
+  padding-top:14px;padding-bottom:14px;
+}
+.brand{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:9px}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);transition:color .25s;position:relative}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--accent);transition:width .3s ease}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:9px 16px;border:1px solid var(--glass-border);border-radius:999px;background:var(--glass);backdrop-filter:blur(8px);color:var(--ink)!important}
+.nav-cta:hover{border-color:var(--accent);color:var(--accent)!important}
+.nav-cta::after{display:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px}
+.burger span{display:block;width:24px;height:1.5px;background:var(--ink);transition:.3s}
+.mobile-menu{position:fixed;inset:0;z-index:99;background:rgba(8,8,9,.92);backdrop-filter:blur(22px);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:var(--pad);opacity:0;pointer-events:none;transition:opacity .4s}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{font-family:var(--sans);font-weight:700;text-transform:uppercase;font-size:clamp(34px,9vw,56px);letter-spacing:-.01em;color:var(--ink);line-height:1.05}
+.mobile-menu a span{color:var(--ink-faint);font-family:var(--mono);font-size:13px;font-weight:400;margin-right:14px;vertical-align:super}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px var(--pad) 60px;overflow:hidden}
+#neurons{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55}
+.hero-grid-lines{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
+  background-size:clamp(60px,12vw,160px) clamp(60px,12vw,160px);
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 45%,#000 35%,transparent 80%);
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 45%,#000 35%,transparent 80%);
+}
+.hero-inner{position:relative;z-index:2;max-width:1500px;width:100%;margin:0 auto}
+.hero-kicker{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero-kicker .ln{height:1px;width:46px;background:var(--accent-dim)}
+.hero h1{
+  font-family:var(--sans);font-weight:900;text-transform:uppercase;
+  font-size:clamp(58px,15.5vw,260px);line-height:.84;letter-spacing:-.025em;
+  margin:0 0 4px -.02em;
+}
+.hero h1 .l2{display:block;color:transparent;-webkit-text-stroke:1.4px var(--ink-dim);}
+.hero h1 .l2 b{color:var(--ink);-webkit-text-stroke:0;font-weight:900}
+.type-wrap{display:flex;align-items:baseline;gap:12px;margin-top:30px;min-height:1.6em;flex-wrap:wrap}
+.type-wrap .arrow{font-family:var(--mono);color:var(--accent);font-size:clamp(14px,1.6vw,20px)}
+.typed{font-family:var(--mono);font-size:clamp(14px,2.1vw,26px);letter-spacing:.01em;color:var(--ink)}
+.cursor{display:inline-block;width:.5em;height:1.05em;background:var(--accent);margin-left:2px;transform:translateY(2px);animation:blink 1s steps(2) infinite;box-shadow:0 0 10px var(--accent-glow)}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:42px}
+.badge{display:flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px) saturate(140%);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-dim)}
+.badge b{color:var(--ink);font-weight:500}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--accent);font-style:normal}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-faint)}
+.scroll-hint .bar{width:1px;height:38px;background:linear-gradient(var(--accent),transparent);animation:slide 2.2s ease-in-out infinite}
+@keyframes slide{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============ SECTION SHELL ============ */
+section{position:relative}
+.sec{padding:clamp(80px,11vw,170px) var(--pad)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(44px,6vw,80px);border-bottom:1px solid var(--line);padding-bottom:22px}
+.sec-head h2{font-family:var(--sans);font-weight:800;text-transform:uppercase;font-size:clamp(26px,4.4vw,60px);letter-spacing:-.02em;line-height:.95}
+.sec-head .meta{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-faint);text-align:right;white-space:nowrap}
+.wrap{max-width:1500px;margin:0 auto}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(48px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+
+/* ============ ABOUT ============ */
+.about{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(36px,5vw,80px);align-items:start}
+.about-lead{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(28px,3.6vw,52px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
+.about-lead em{font-style:italic;color:var(--accent)}
+.about-body{font-family:var(--mono);font-weight:400;font-size:14.5px;line-height:1.95;color:var(--ink-dim);max-width:54ch}
+.about-body strong{color:var(--ink);font-weight:500}
+/* terminal */
+.terminal{border:1px solid var(--glass-border);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));backdrop-filter:blur(16px) saturate(140%);box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06)}
+.term-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line-soft);background:rgba(255,255,255,.02)}
+.term-bar .tdot{width:11px;height:11px;border-radius:50%;background:#3a3a3d}
+.term-bar .tdot:nth-child(2){background:#48484b}.term-bar .tdot:nth-child(3){background:#48484b}
+.term-bar .tlabel{margin-left:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-faint)}
+.term-body{padding:22px 20px 26px;font-family:var(--mono);font-size:13px;line-height:1.95}
+.term-body .ln{white-space:pre-wrap;word-break:break-word}
+.term-body .p{color:var(--accent)}
+.term-body .c{color:var(--ink)}
+.term-body .o{color:var(--ink-dim)}
+.term-body .k{color:#e7c884}
+.term-body .tcursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+
+/* ============ RESEARCH ============ */
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.rcard{background:var(--black);padding:clamp(28px,2.6vw,42px) clamp(24px,2.3vw,38px);position:relative;transition:background .4s ease;min-height:240px;display:flex;flex-direction:column}
+.rcard:hover{background:var(--black-2)}
+.rcard::before{content:"";position:absolute;left:0;top:0;width:0;height:2px;background:var(--accent);transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.rcard:hover::before{width:100%}
+.rcard .rn{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.18em;margin-bottom:auto}
+.rcard h3{font-family:var(--sans);font-weight:700;font-size:clamp(19px,1.7vw,24px);letter-spacing:-.01em;margin:46px 0 12px;transition:color .3s}
+.rcard:hover h3{color:var(--accent)}
+.rcard p{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-dim)}
+
+/* ============ DIVIDER REVEAL ============ */
+.divider{padding:clamp(70px,12vw,150px) var(--pad);overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.divider .sub{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;text-align:center}
+.huge{font-family:var(--sans);font-weight:900;text-transform:uppercase;text-align:center;line-height:.9;letter-spacing:-.03em;font-size:clamp(40px,13vw,200px)}
+.huge .w{display:inline-block;overflow:hidden;vertical-align:top}
+.huge .w span{display:inline-block;transform:translateY(108%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.huge.in .w span{transform:none}
+.huge .o{color:transparent;-webkit-text-stroke:1.4px var(--ink-faint)}
+.huge .a{color:var(--accent)}
+
+/* ============ PROJECTS ============ */
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px);align-items:center;padding:clamp(50px,6vw,90px) 0;border-bottom:1px solid var(--line)}
+.proj:first-of-type{border-top:1px solid var(--line)}
+.proj.flip .pviz{order:2}
+.pmeta .pnum{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);margin-bottom:18px}
+.pmeta h3{font-family:var(--sans);font-weight:800;font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:-.02em;margin-bottom:20px}
+.pmeta h3 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--accent)}
+.pmeta p{font-family:var(--mono);font-size:13.5px;line-height:1.9;color:var(--ink-dim);max-width:48ch;margin-bottom:26px}
+.tags{display:flex;flex-wrap:wrap;gap:9px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:7px 13px;border-radius:7px;border:1px solid var(--glass-border);background:var(--glass);color:var(--ink-dim);transition:.3s}
+.tag:hover{color:var(--accent);border-color:var(--accent-dim)}
+.pviz{aspect-ratio:4/3;border-radius:16px;border:1px solid var(--glass-border);position:relative;overflow:hidden;
+  background:linear-gradient(150deg,rgba(255,255,255,.05),rgba(255,255,255,.015));backdrop-filter:blur(10px);
+  box-shadow:0 40px 90px -50px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.05)}
+.pviz .vlabel{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);z-index:3}
+.pviz .vtl{position:absolute;left:16px;top:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--accent);z-index:3}
+.pviz canvas{position:absolute;inset:0;width:100%;height:100%}
+
+/* ============ STACK ============ */
+.stack{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.scol{background:var(--black);padding:clamp(24px,2vw,34px)}
+.scol h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.scol ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+.scol li{font-family:var(--sans);font-weight:500;font-size:15px;color:var(--ink-dim);transition:color .25s;cursor:default}
+.scol li:hover{color:var(--ink)}
+
+/* ============ CONTACT ============ */
+.contact{border-top:1px solid var(--line)}
+.clist{display:flex;flex-direction:column}
+.crow{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:clamp(22px,3vw,40px) 0;border-bottom:1px solid var(--line);position:relative;transition:padding-left .4s cubic-bezier(.2,.7,.2,1)}
+.crow:hover{padding-left:clamp(14px,2vw,40px)}
+.crow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transition:transform .4s ease;transform-origin:top}
+.crow:hover::before{transform:scaleY(1)}
+.crow .cname{font-family:var(--sans);font-weight:800;text-transform:uppercase;font-size:clamp(28px,5vw,72px);letter-spacing:-.02em;line-height:1;transition:color .3s}
+.crow:hover .cname{color:var(--accent)}
+.crow .chandle{font-family:var(--mono);font-size:13px;letter-spacing:.05em;color:var(--ink-faint);display:flex;align-items:center;gap:14px}
+.crow .arr{font-family:var(--mono);transition:transform .3s}
+.crow:hover .arr{transform:translate(4px,-4px);color:var(--accent)}
+
+/* ============ FOOTER ============ */
+footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+.foot-big{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(30px,5.4vw,86px);line-height:1.08;letter-spacing:-.01em;max-width:18ch;margin-bottom:clamp(50px,8vw,90px)}
+.foot-big em{color:var(--accent)}
+.foot-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:26px}
+.foot-bottom .mono{font-size:11px;color:var(--ink-faint);letter-spacing:.1em}
+.foot-bottom .brand2{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);display:flex;align-items:center;gap:9px}
+.foot-bottom .brand2 .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.totop{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:color .25s}
+.totop:hover{color:var(--accent)}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:980px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .about{grid-template-columns:1fr;gap:44px}
+  .rgrid{grid-template-columns:1fr 1fr}
+  .stack{grid-template-columns:1fr 1fr}
+  .proj{grid-template-columns:1fr;gap:30px}
+  .proj.flip .pviz{order:0}
+}
+@media(max-width:600px){
+  .rgrid{grid-template-columns:1fr}
+  .stack{grid-template-columns:1fr}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .sec-head .meta{text-align:left}
+  .badges{gap:9px}
+  .badge{padding:9px 14px;font-size:10.5px}
+  .crow .chandle .htext{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .huge .w span{transform:none}
+  *{animation-duration:.001s!important}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#top" class="brand"><span class="dot"></span>YUSUF İBİN</a>
+  <div class="nav-links">
+    <a href="#about">Hakkımda</a>
+    <a href="#research">Araştırma</a>
+    <a href="#projects">Projeler</a>
+    <a href="#stack">Yığın</a>
+    <a href="#contact" class="nav-cta">İletişim +</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"><span>01</span>Hakkımda</a>
+  <a href="#research"><span>02</span>Araştırma</a>
+  <a href="#projects"><span>03</span>Projeler</a>
+  <a href="#stack"><span>04</span>Yığın</a>
+  <a href="#contact"><span>05</span>İletişim</a>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <canvas id="neurons" data-par="170"></canvas>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner" data-par="-70">
+    <div class="hero-kicker">
+      <span class="ln"></span>
+      <span class="kicker">// AI &amp; NLP Researcher · YTÜ</span>
+    </div>
+    <h1>YUSUF<span class="l2"><b>İBİN</b></span></h1>
+    <div class="type-wrap">
+      <span class="arrow">&gt;_</span>
+      <span class="typed" id="typed"></span><span class="cursor"></span>
+    </div>
+    <div class="badges">
+      <span class="badge"><i></i>YTÜ · <b>Computer Engineering</b></span>
+      <span class="badge"><i></i>AIRLAB · <b>Team Lead</b></span>
+      <span class="badge"><i></i>Cosmos NLP · <b>Member</b></span>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>KAYDIR</span><span class="bar"></span></div>
+</header>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Hakkımda</h2>
+      <div class="meta">.01 / HAKKIMDA<br>YTÜ — İSTANBUL</div>
+    </div>
+    <div class="about">
+      <div>
+        <p class="about-lead reveal">Yapay zekânın neredeyse <em>her alanına</em> ilgi duyan bir Bilgisayar Mühendisliği öğrencisiyim.</p>
+        <p class="about-body reveal d2" style="margin-top:34px">Temel regresyon ve sınıflandırıcılardan <strong>derin öğrenme mimarilerine</strong> (RNN, LSTM, CNN, GCN), görüntü işlemeden NLP'ye kadar geniş bir yelpazede çalışıyorum; son dönemde özellikle <strong>NLP'ye</strong> yoğunlaştım. <strong>Agentic workflow'lar</strong> ve <strong>RAG</strong> gibi güncel yaklaşımlara da hâkimim. <strong>AIRLAB'i</strong> yönetiyor, <strong>Cosmos NLP</strong> grubunda Türkçe dil teknolojisi üzerine araştırma yapıyorum. Mühendislik altyapım (C/Java, donanım temelleri) tüm bunların zeminini oluşturuyor.</p>
+      </div>
+      <div class="terminal reveal d2">
+        <div class="term-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tlabel">yusuf@airlab: ~/research</span></div>
+        <div class="term-body" id="termBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="sec" id="research">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Araştırma Alanları</h2>
+      <div class="meta">.02 / RESEARCH<br>06 ALAN</div>
+    </div>
+    <div class="rgrid">
+      <article class="rcard reveal"><div class="rn">.01</div><h3>Turkish NLP &amp; LLM</h3><p>Dil modeli ince ayarı, LLM değerlendirme ve Türkçe benchmark tasarımı.</p></article>
+      <article class="rcard reveal d1"><div class="rn">.02</div><h3>Deep Learning</h3><p>RNN, LSTM, CNN, GCN ve attention mekanizmaları üzerine mimari çalışmaları.</p></article>
+      <article class="rcard reveal d2"><div class="rn">.03</div><h3>Computer Vision</h3><p>İskelet tabanlı hareket / işaret tanıma ve graph neural network'ler.</p></article>
+      <article class="rcard reveal"><div class="rn">.04</div><h3>Classical ML &amp; Data</h3><p>Regresyon, sınıflandırma, veri analizi ve veri mühendisliği.</p></article>
+      <article class="rcard reveal d1"><div class="rn">.05</div><h3>Agentic AI &amp; RAG</h3><p>Agentic workflow'lar, retrieval-augmented generation ve lokal LLM'ler.</p></article>
+      <article class="rcard reveal d2"><div class="rn">.06</div><h3>Speech &amp; Voice</h3><p>Piper &amp; XTTS-v2 ile TTS ince ayarı, Whisper tabanlı STT hatları ve uçtan uca ses sistemleri.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<section class="divider">
+  <div class="sub reveal">AI Generalist</div>
+  <div class="huge" id="huge" data-px="-280">
+    <span class="w"><span>FROM</span></span> <span class="w"><span class="o">REGRESSION</span></span><br>
+    <span class="w"><span>TO</span></span> <span class="w"><span class="a">RAG</span></span>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec" id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Projeler</h2>
+      <div class="meta">.03 / PROJECTS<br>WHAT I BUILD</div>
+    </div>
+
+    <article class="proj reveal">
+      <div class="pmeta" data-par="120">
+        <div class="pnum">ALAN 01</div>
+        <h3>Veri Analizi & <em>Mühendisliği</em></h3>
+        <p>Ham veriden değere giden uçtan uca hatlar: keşfi veri analizi, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara. BERTopic ile kümeleme, LLM-as-judge skorlama ve SFT veri üretimi gibi modern veri akışları.</p>
+        <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">BERTopic</span><span class="tag">LLM-as-judge</span><span class="tag">SFT</span></div>
+      </div>
+      <div class="pviz" data-viz="pipeline" data-par="-150"><span class="vtl">DATA PIPELINE</span><canvas></canvas><span class="vlabel">clean → cluster → judge → train</span></div>
+    </article>
+
+    <article class="proj flip reveal">
+      <div class="pmeta" data-par="120">
+        <div class="pnum">ALAN 02</div>
+        <h3>Görüntü İşleme & <em>Bilgisayarlı Görü</em></h3>
+        <p>Gerçek zamanlı nesne ve olay tespitinden iskelet tabanlı hareket ve işaret tanımaya. MediaPipe iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyon, temporal modelleme ve YOLO tabanlı tespit.</p>
+        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">OpenCV</span><span class="tag">MediaPipe</span><span class="tag">Adaptive GCN</span><span class="tag">Bi-LSTM</span></div>
+      </div>
+      <div class="pviz" data-viz="skeleton" data-par="-150"><span class="vtl">SKELETON · GCN</span><canvas></canvas><span class="vlabel">pose · gesture · detection</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <div class="pmeta" data-par="120">
+        <div class="pnum">ALAN 03</div>
+        <h3>NLP & <em>Dil Modelleri</em></h3>
+        <p>Türkçe dil teknolojisi merkezde: dil modeli ince ayarı, değerlendirme ve benchmark tasarımı; RAG sistemleri ve agentic workflow'lar; lokal LLM dağıtımı. Tokenization'dan embedding'lere kadar genel NLP konseptlerine hâkimiyet.</p>
+        <div class="tags"><span class="tag">Transformers</span><span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">Ollama</span><span class="tag">Fine-tuning</span></div>
+      </div>
+      <div class="pviz" data-viz="attention" data-par="-150"><span class="vtl">ATTENTION</span><canvas></canvas><span class="vlabel">tokens · self-attention</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="sec" id="stack">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Teknoloji Yığını</h2>
+      <div class="meta">.04 / STACK<br>TOOLBOX</div>
+    </div>
+    <div class="stack">
+      <div class="scol reveal"><h4>Languages</h4><ul><li>Python</li><li>C</li><li>Java</li></ul></div>
+      <div class="scol reveal d1"><h4>ML / DL</h4><ul><li>PyTorch</li><li>TensorFlow</li><li>HuggingFace</li><li>scikit-learn</li><li>NumPy</li><li>Pandas</li></ul></div>
+      <div class="scol reveal d2"><h4>NLP</h4><ul><li>Transformers</li><li>Tokenization</li><li>Embeddings</li><li>Fine-tuning</li><li>BERTopic</li><li>spaCy</li></ul></div>
+      <div class="scol reveal d3"><h4>Vision &amp; Speech</h4><ul><li>OpenCV</li><li>MediaPipe</li><li>Whisper</li><li>Piper</li><li>XTTS-v2</li></ul></div>
+      <div class="scol reveal d4"><h4>LLM · RAG · Agents</h4><ul><li>Ollama</li><li>ChromaDB</li><li>LangChain</li><li>RAG</li></ul></div>
+      <div class="scol reveal d5"><h4>Tools &amp; Cloud</h4><ul><li>Google Cloud</li><li>Git</li><li>GitHub</li><li>Linux</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>İletişim</h2>
+      <div class="meta">.05 / CONTACT<br>LET'S TALK</div>
+    </div>
+    <div class="clist">
+      <a class="crow reveal" href="https://github.com/yusuf740" target="_blank" rel="noopener"><span class="cname">GitHub</span><span class="chandle"><span class="htext">@yusuf740</span><span class="arr">↗</span></span></a>
+      <a class="crow reveal" href="https://www.linkedin.com/in/yusuf-ibin" target="_blank" rel="noopener"><span class="cname">LinkedIn</span><span class="chandle"><span class="htext">in/yusuf-ibin</span><span class="arr">↗</span></span></a>
+      <a class="crow reveal" href="https://www.kaggle.com/yusufibin" target="_blank" rel="noopener"><span class="cname">Kaggle</span><span class="chandle"><span class="htext">@yusufibin</span><span class="arr">↗</span></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p class="foot-big reveal">Yapay zekânın ve yazılımın her katmanında <em>çok yönlü</em>; öğrenmeye, denemeye ve <em>araştırmaya</em> her zaman aç.</p>
+    <div class="foot-bottom">
+      <span class="brand2"><span class="dot"></span>YUSUF İBİN</span>
+      <span class="mono">© 2026 · İSTANBUL / YTÜ</span>
+      <span class="totop" id="totop">↑ Başa dön</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ===== NAV scroll state ===== */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)},{passive:true});
+
+/* ===== Mobile menu ===== */
+const burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{const o=mm.classList.toggle('open');burger.classList.toggle('x',o);document.body.style.overflow=o?'hidden':''});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mm.classList.remove('open');document.body.style.overflow=''}));
+document.getElementById('totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+/* ===== Reveal on scroll ===== */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const hugeEl=document.getElementById('huge');
+new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.4}).observe(hugeEl);
+
+/* ===== Typing tagline ===== */
+const lines=["Turkish NLP & LLM Researcher","AI Generalist: from regression to RAG","Deep Learning · RNN | LSTM | CNN | GCN","Agentic Workflows & RAG Systems","AIRLAB Team Lead @ YTÜ"];
+const typed=document.getElementById('typed');
+let li=0,ci=0,del=false;
+function tick(){
+  const full=lines[li];
+  typed.textContent=full.slice(0,ci);
+  if(!del){ci++;if(ci>full.length){del=true;return setTimeout(tick,1500)}}
+  else{ci--;if(ci<0){del=false;li=(li+1)%lines.length;ci=0;return setTimeout(tick,300)}}
+  setTimeout(tick,del?28:62);
+}
+tick();
+
+/* ===== Terminal typing ===== */
+const termLines=[
+  {t:'$ ',cls:'p'},{t:'whoami',cls:'c',nl:1},
+  {t:'yusuf_ibin — computer engineering @ ytü',cls:'o',nl:1},
+  {t:'$ ',cls:'p'},{t:'cat focus.txt',cls:'c',nl:1},
+  {t:'turkish_nlp · llm · deep_learning',cls:'k',nl:1},
+  {t:'agentic_workflows · rag · vision · speech',cls:'k',nl:1},
+  {t:'$ ',cls:'p'},{t:'roles --list',cls:'c',nl:1},
+  {t:'> AIRLAB        team_lead',cls:'o',nl:1},
+  {t:'> Cosmos NLP    researcher',cls:'o',nl:1},
+  {t:'$ ',cls:'p'},{t:'status',cls:'c',nl:1},
+  {t:'öğreniyor · araştırıyor · geliştiriyor ▮',cls:'p',nl:0,cursor:1}
+];
+const termBody=document.getElementById('termBody');
+let started=false;
+new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting&&!started){started=true;runTerm()}})},{threshold:.3}).observe(termBody);
+function runTerm(){
+  let i=0,cur=document.createElement('span');cur.className='ln';termBody.appendChild(cur);
+  let segs=[];
+  function step(){
+    if(i>=termLines.length){
+      const cc=document.createElement('span');cc.className='tcursor';cur.appendChild(cc);return;
+    }
+    const seg=termLines[i];
+    const s=document.createElement('span');s.className=seg.cls;cur.appendChild(s);
+    let k=0;
+    const id=setInterval(()=>{
+      s.textContent=seg.t.slice(0,k);k++;
+      if(k>seg.t.length){
+        clearInterval(id);
+        if(seg.nl){cur=document.createElement('span');cur.className='ln';termBody.appendChild(document.createElement('br'));termBody.appendChild(cur);}
+        i++;setTimeout(step,seg.cls==='p'?120:30);
+      }
+    },seg.cls==='p'?40:14);
+  }
+  step();
+}
+
+/* ===== Neuron network canvas (hero) ===== */
+(function(){
+  const cv=document.getElementById('neurons'),ctx=cv.getContext('2d');
+  let w,h,nodes,dpr=Math.min(devicePixelRatio||1,2),raf;
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function resize(){w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);init()}
+  function init(){
+    const count=Math.max(28,Math.min(64,Math.round(w*h/26000)));
+    nodes=[];for(let i=0;i<count;i++)nodes.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.6+1});
+  }
+  const acc='128,222,196';
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>w)n.vx*=-1;if(n.y<0||n.y>h)n.vy*=-1;}
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+        if(d<140){ctx.strokeStyle='rgba('+acc+','+(0.10*(1-d/140))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+      }
+    }
+    for(const n of nodes){ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();}
+    raf=requestAnimationFrame(frame);
+  }
+  resize();addEventListener('resize',resize);
+  if(reduce){frame();cancelAnimationFrame(raf);ctx.clearRect(0,0,w,h);/*draw one static frame*/
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<140){ctx.strokeStyle='rgba('+acc+','+(0.10*(1-d/140))+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
+    for(const n of nodes){ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();}
+  }else frame();
+})();
+
+/* ===== Project viz canvases ===== */
+document.querySelectorAll('.pviz').forEach(box=>{
+  const cv=box.querySelector('canvas'),ctx=cv.getContext('2d'),type=box.dataset.viz;
+  let w,h,t=0,dpr=Math.min(devicePixelRatio||1,2),visible=false;
+  const acc='128,222,196';
+  function size(){w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+  new IntersectionObserver(es=>es.forEach(e=>visible=e.isIntersecting)).observe(box);
+  function draw(){
+    t+=0.016;ctx.clearRect(0,0,w,h);
+    if(type==='skeleton'){
+      // body skeleton node graph
+      const cx=w/2,cy=h/2,s=Math.min(w,h)*0.32;
+      const J=[[0,-1.3],[0,-0.7],[-0.55,-0.5],[0.55,-0.5],[-0.8,0.1],[0.8,0.1],[0,0],[-0.35,0.7],[0.35,0.7],[-0.4,1.3],[0.4,1.3]];
+      const E=[[0,1],[1,2],[1,3],[2,4],[3,5],[1,6],[6,7],[6,8],[7,9],[8,10]];
+      const pts=J.map((p,i)=>({x:cx+p[0]*s+Math.sin(t+i)*3,y:cy+p[1]*s+Math.cos(t*0.8+i)*3}));
+      ctx.lineWidth=1.4;ctx.strokeStyle='rgba('+acc+',.5)';
+      E.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(pts[a].x,pts[a].y);ctx.lineTo(pts[b].x,pts[b].y);ctx.stroke()});
+      pts.forEach((p,i)=>{const pulse=2.6+Math.sin(t*2+i)*1.2;ctx.beginPath();ctx.arc(p.x,p.y,pulse,0,7);ctx.fillStyle='rgba('+acc+',.9)';ctx.fill()});
+    }else if(type==='pipeline'){
+      const ys=h/2,n=4,gap=w/(n+1);
+      for(let i=0;i<n;i++){const x=gap*(i+1);
+        if(i<n-1){const prog=(Math.sin(t*1.4-i)*0.5+0.5);ctx.strokeStyle='rgba('+acc+',.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x+14,ys);ctx.lineTo(x+gap-14,ys);ctx.stroke();
+          const px=x+14+(gap-28)*prog;ctx.beginPath();ctx.arc(px,ys,2.4,0,7);ctx.fillStyle='rgba('+acc+',.95)';ctx.fill();}
+        ctx.strokeStyle='rgba('+acc+',.7)';ctx.lineWidth=1.4;ctx.beginPath();ctx.rect(x-13,ys-13,26,26);ctx.stroke();
+        ctx.fillStyle='rgba('+acc+','+(0.12+0.1*Math.sin(t*2+i))+')';ctx.fillRect(x-13,ys-13,26,26);
+      }
+    }else if(type==='detect'){
+      // scanning detection boxes
+      const boxes=[[0.2,0.25,0.26,0.3],[0.55,0.45,0.3,0.34],[0.36,0.62,0.2,0.22]];
+      boxes.forEach((b,i)=>{const pulse=0.5+0.5*Math.sin(t*2+i*1.5);ctx.strokeStyle='rgba('+acc+','+(0.4+0.5*pulse)+')';ctx.lineWidth=1.4;
+        const x=b[0]*w,y=b[1]*h,bw=b[2]*w,bh=b[3]*h;ctx.strokeRect(x,y,bw,bh);
+        ctx.fillStyle='rgba('+acc+',.9)';ctx.fillRect(x,y-3,18,2);
+      });
+      const sy=(t*40)%h;ctx.strokeStyle='rgba('+acc+',.35)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,sy);ctx.lineTo(w,sy);ctx.stroke();
+    }else if(type==='attention'){
+      // token row with self-attention links
+      const n=6,m=clamp(w*0.13,28,70),gap=(w-m*2)/(n-1),ty=h*0.34,by=h*0.66;
+      function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+      const xs=[];for(let i=0;i<n;i++)xs.push(m+gap*i);
+      // links
+      for(let i=0;i<n;i++)for(let j=0;j<n;j++){
+        const wgt=0.5+0.5*Math.sin(t*1.3+i*0.9-j*0.7);
+        if(wgt<0.45)continue;
+        ctx.strokeStyle='rgba('+acc+','+(0.06+0.16*wgt)+')';ctx.lineWidth=0.6+wgt*0.8;
+        ctx.beginPath();ctx.moveTo(xs[i],ty+6);
+        ctx.bezierCurveTo(xs[i],(ty+by)/2,xs[j],(ty+by)/2,xs[j],by-6);ctx.stroke();
+      }
+      for(let i=0;i<n;i++){const pl=2.8+Math.sin(t*2+i)*1.1;
+        ctx.beginPath();ctx.arc(xs[i],ty,pl,0,7);ctx.fillStyle='rgba('+acc+',.9)';ctx.fill();
+        ctx.beginPath();ctx.arc(xs[i],by,pl,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  size();addEventListener('resize',size);draw();
+});
+
+/* ===== Parallax (scroll movement) — bounded & normalized ===== */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const k=reduce?0.45:1;
+  const els=[...document.querySelectorAll('[data-par],[data-px]')].map(el=>({
+    el,
+    ry:parseFloat(el.dataset.par||0),   // vertical peak-to-peak range (px)
+    rx:parseFloat(el.dataset.px||0)     // horizontal peak-to-peak range (px)
+  }));
+  let ticking=false;
+  function update(){
+    const vh=innerHeight;
+    for(const o of els){
+      const r=o.el.getBoundingClientRect();
+      // progress 0 (entering from bottom) -> 1 (leaving at top)
+      let p=(vh-r.top)/(vh+r.height);
+      p=p<0?0:p>1?1:p;
+      const f=(p-0.5)*k;               // -0.5 .. 0.5
+      const ty=(f*o.ry).toFixed(1);
+      const tx=(f*o.rx).toFixed(1);
+      o.el.style.transform='translate3d('+tx+'px,'+ty+'px,0)';
+    }
+    ticking=false;
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+  addEventListener('resize',update);
+  update();requestAnimationFrame(update);
+})();
+</script>
+</body>
+</html>
