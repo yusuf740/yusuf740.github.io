@@ -167,18 +167,19 @@ section{position:relative}
 .rcard h3 {
   font-family: "Silkscreen", monospace;
   font-weight: 700;
-  font-size: clamp(32px, 2.5vw, 44px); 
+  --fscale: 1; 
+  font-size: calc(clamp(26px, 2.2vw, 36px) * var(--fscale));
   letter-spacing: .02em;
   margin: 46px 0 12px;
   transition: color .3s;
   color: var(--accent);
 }
-.rcard:nth-child(1) h3 { font-family: "VT323", monospace; font-size: 1.6em; letter-spacing: .01em; }
-.rcard:nth-child(2) h3 { font-family: "Silkscreen", monospace; font-weight: 700; font-size: 1.1em; letter-spacing: .02em; }
-.rcard:nth-child(3) h3 { font-family: "Doto", monospace; font-weight: 700; font-size: 1.3em; letter-spacing: .04em; }
-.rcard:nth-child(4) h3 { font-family: "Pixelify Sans", monospace; font-weight: 600; font-size: 1.3em; letter-spacing: 0; }
-.rcard:nth-child(5) h3 { font-family: "Jersey 10", monospace; font-size: 1.7em; letter-spacing: .02em; }
-.rcard:nth-child(6) h3 { font-family: "VT323", monospace; font-size: 1.6em; letter-spacing: .01em; }
+.rcard:nth-child(1) h3 { font-family: "VT323", monospace; --fscale: 1.7; letter-spacing: .01em; }
+.rcard:nth-child(2) h3 { font-family: "Silkscreen", monospace; font-weight: 700; --fscale: 1.2; letter-spacing: .02em; }
+.rcard:nth-child(3) h3 { font-family: "Doto", monospace; font-weight: 700; --fscale: 1.4; letter-spacing: .04em; }
+.rcard:nth-child(4) h3 { font-family: "Pixelify Sans", monospace; font-weight: 600; --fscale: 1.35; letter-spacing: 0; }
+.rcard:nth-child(5) h3 { font-family: "Jersey 10", monospace; --fscale: 1.8; letter-spacing: .02em; }
+.rcard:nth-child(6) h3 { font-family: "VT323", monospace; --fscale: 1.7; letter-spacing: .01em; }
 .rcard:hover h3 { color: var(--accent); opacity: .9; }
 
 .rcard p{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-dim)}
