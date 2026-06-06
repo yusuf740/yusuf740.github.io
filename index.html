@@ -163,14 +163,24 @@ section{position:relative}
 .rcard::before{content:"";position:absolute;left:0;top:0;width:0;height:2px;background:var(--accent);transition:width .45s cubic-bezier(.2,.7,.2,1)}
 .rcard:hover::before{width:100%}
 .rcard .rn{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.18em;margin-bottom:auto}
-.rcard h3{font-family:"Silkscreen",monospace;font-weight:700;font-size:clamp(23px,2vw,30px);letter-spacing:.02em;margin:46px 0 12px;transition:color .3s;color:var(--accent)}
-.rcard:nth-child(1) h3{font-family:"VT323",monospace;font-size:1.1em;letter-spacing:.01em}
-.rcard:nth-child(2) h3{font-family:"Silkscreen",monospace;font-weight:700;letter-spacing:.02em}
-.rcard:nth-child(3) h3{font-family:"Doto",monospace;font-weight:700;letter-spacing:.04em}
-.rcard:nth-child(4) h3{font-family:"Pixelify Sans",monospace;font-weight:600;letter-spacing:0}
-.rcard:nth-child(5) h3{font-family:"Jersey 10",monospace;font-size:1.05em;letter-spacing:.02em}
-.rcard:nth-child(6) h3{font-family:"VT323",monospace;font-size:1.1em;letter-spacing:.01em}
-.rcard:hover h3{color:var(--accent);opacity:.9}
+
+.rcard h3 {
+  font-family: "Silkscreen", monospace;
+  font-weight: 700;
+  font-size: clamp(32px, 2.5vw, 44px); 
+  letter-spacing: .02em;
+  margin: 46px 0 12px;
+  transition: color .3s;
+  color: var(--accent);
+}
+.rcard:nth-child(1) h3 { font-family: "VT323", monospace; font-size: 1.6em; letter-spacing: .01em; }
+.rcard:nth-child(2) h3 { font-family: "Silkscreen", monospace; font-weight: 700; font-size: 1.1em; letter-spacing: .02em; }
+.rcard:nth-child(3) h3 { font-family: "Doto", monospace; font-weight: 700; font-size: 1.3em; letter-spacing: .04em; }
+.rcard:nth-child(4) h3 { font-family: "Pixelify Sans", monospace; font-weight: 600; font-size: 1.3em; letter-spacing: 0; }
+.rcard:nth-child(5) h3 { font-family: "Jersey 10", monospace; font-size: 1.7em; letter-spacing: .02em; }
+.rcard:nth-child(6) h3 { font-family: "VT323", monospace; font-size: 1.6em; letter-spacing: .01em; }
+.rcard:hover h3 { color: var(--accent); opacity: .9; }
+
 .rcard p{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-dim)}
 
 /* ============ DIVIDER REVEAL ============ */
@@ -268,7 +278,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav" id="nav">
   <a href="#top" class="brand"><span class="dot"></span>YUSUF İBİN</a>
   <div class="nav-links">
@@ -288,7 +297,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   <a href="#contact"><span>05</span>İletişim</a>
 </div>
 
-<!-- HERO -->
 <header class="hero" id="top">
   <canvas id="neurons" data-par="170"></canvas>
   <div class="hero-grid-lines"></div>
@@ -311,7 +319,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   <div class="scroll-hint"><span>KAYDIR</span><span class="bar"></span></div>
 </header>
 
-<!-- ABOUT -->
 <section class="sec" id="about">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -331,7 +338,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   </div>
 </section>
 
-<!-- RESEARCH -->
 <section class="sec" id="research">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -349,7 +355,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   </div>
 </section>
 
-<!-- DIVIDER -->
 <section class="divider">
   <div class="sub reveal">AI Generalist</div>
   <div class="huge" id="huge" data-px="-280">
@@ -358,7 +363,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section class="sec" id="projects">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -398,7 +402,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   </div>
 </section>
 
-<!-- STACK -->
 <section class="sec" id="stack">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -416,7 +419,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   </div>
 </section>
 
-<!-- CONTACT -->
 <section class="sec contact" id="contact">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -434,7 +436,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="wrap">
     <p class="foot-big reveal">Hâlâ <em>öğreniyorum</em>.</p>
