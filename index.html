@@ -808,7 +808,6 @@ function runTerm(){
   let scrollVel = 0;
   let lastY = window.scrollY;
 
-  // Minimalist, humble & artistic mathematical/geometric symbols
   const symbols = ['✦', '◇', '⊙', '∿', '⊕', '∆', 'λ', 'α', 'β', '∫', '∞', '::', '⟨ ⟩', '01', '10', '0x1F'];
   let particleTokens = [];
 
@@ -839,15 +838,16 @@ function runTerm(){
 
   function initTokens(){
     particleTokens = [];
-    const count = 12;
+    const count = 14;
     for(let i = 0; i < count; i++){
       const isLeft = i % 2 === 0;
       particleTokens.push({
         text: symbols[i % symbols.length],
-        x: isLeft ? (Math.random() * 60 + 15) : (w - Math.random() * 70 - 20),
+        x: isLeft ? (Math.random() * 55 + 20) : (w - Math.random() * 65 - 25),
         y: Math.random() * h,
-        baseVy: (Math.random() * 0.3 + 0.1),
-        opacity: Math.random() * 0.25 + 0.12
+        baseVy: (Math.random() * 0.35 + 0.15),
+        phase: Math.random() * Math.PI * 2,
+        opacity: Math.random() * 0.25 + 0.35
       });
     }
   }
@@ -856,7 +856,6 @@ function runTerm(){
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     scrollPct = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
     
-    // Signed scroll velocity: positive = down, negative = up
     const currentY = window.scrollY;
     const deltaY = currentY - lastY;
     scrollVel += (deltaY - scrollVel) * 0.15;
@@ -864,8 +863,10 @@ function runTerm(){
   }
 
   const acc = '128, 222, 196';
+  let time = 0;
 
   function frame(){
+    time += 0.02;
     updateScroll();
     ctx.clearRect(0, 0, w, h);
 
@@ -905,8 +906,8 @@ function runTerm(){
       ctx.fill();
     }
 
-    // Side margin symbols move dynamically WITH your scroll direction!
-    ctx.font = '11px "JetBrains Mono", monospace';
+    // Side margin symbols: 13px font, clearly visible & subtle glow (opacity ~ 0.35 - 0.65)
+    ctx.font = '13px "JetBrains Mono", monospace';
     for(let t of particleTokens){
       const dy = scrollVel * 0.35 + (scrollVel >= 0 ? t.baseVy : -t.baseVy);
       t.y += dy;
@@ -914,14 +915,15 @@ function runTerm(){
       if(t.y > h + 30) {
         t.y = -30;
         const isLeft = Math.random() > 0.5;
-        t.x = isLeft ? (Math.random() * 60 + 15) : (w - Math.random() * 70 - 20);
+        t.x = isLeft ? (Math.random() * 55 + 20) : (w - Math.random() * 65 - 25);
       } else if(t.y < -30) {
         t.y = h + 30;
         const isLeft = Math.random() > 0.5;
-        t.x = isLeft ? (Math.random() * 60 + 15) : (w - Math.random() * 70 - 20);
+        t.x = isLeft ? (Math.random() * 55 + 20) : (w - Math.random() * 65 - 25);
       }
 
-      ctx.fillStyle = `rgba(${acc}, ${(t.opacity * (0.4 + scrollPct * 0.6)).toFixed(3)})`;
+      const currentOpacity = (t.opacity * (0.75 + 0.25 * Math.sin(time + t.phase))).toFixed(3);
+      ctx.fillStyle = `rgba(${acc}, ${currentOpacity})`;
       ctx.fillText(t.text, t.x, t.y);
     }
 
