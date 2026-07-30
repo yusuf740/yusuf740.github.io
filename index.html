@@ -226,7 +226,7 @@ section{position:relative;z-index:2}
 /* ============ PROJECTS ============ */
 .proj{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px);align-items:center;padding:clamp(50px,6vw,90px) 0;border-bottom:1px solid var(--line);transition:transform .4s cubic-bezier(.16,1,.3,1)}
 .proj:first-of-type{border-top:1px solid var(--line)}
-.proj.flip .pviz-wrap{order:2}
+.proj.flip .pviz{order:2}
 .pmeta .pnum{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);margin-bottom:18px}
 .pmeta h3{font-family:var(--sans);font-weight:800;font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:-.02em;margin-bottom:20px}
 .pmeta h3 em{font-style:normal;color:var(--accent)}
@@ -238,79 +238,52 @@ section{position:relative;z-index:2}
 .tag{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:7px 13px;border-radius:7px;border:1px solid var(--glass-border);background:var(--glass);color:var(--ink-dim);transition:.3s}
 .tag:hover{color:var(--accent);border-color:var(--accent-dim)}
 
-/* ============ LIQUID CLEAR GLASSMORPHISM (.pviz) ============ */
-.pviz-wrap {
-  position: relative;
-  width: 100%;
-}
-.pviz-glow {
-  position: absolute;
-  inset: -12%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, oklch(0.80 0.105 172 / 0.45), rgba(0, 180, 255, 0.3) 45%, transparent 70%);
-  filter: blur(45px);
-  z-index: 0;
-  pointer-events: none;
-  animation: liquidPulse 7s ease-in-out infinite alternate;
-}
-.proj:nth-child(2) .pviz-glow {
-  background: radial-gradient(circle at 60% 40%, rgba(0, 210, 255, 0.4), oklch(0.80 0.105 172 / 0.35) 50%, transparent 70%);
-}
-.proj:nth-child(3) .pviz-glow {
-  background: radial-gradient(circle at 30% 60%, oklch(0.80 0.105 172 / 0.5), rgba(80, 130, 255, 0.3) 50%, transparent 70%);
-}
-
-@keyframes liquidPulse {
-  0% { transform: scale(0.92) translate(0, 0); opacity: 0.75; }
-  100% { transform: scale(1.08) translate(12px, -12px); opacity: 1; }
-}
-
+/* ============ CLEAR GLASS LENS (.pviz) ============ */
 .pviz{
   aspect-ratio:4/3;
-  border-radius:24px;
+  border-radius:20px;
   position:relative;
-  z-index:1;
   overflow:hidden;
-  background:rgba(255, 255, 255, 0.025); /* Ultra-transparent liquid glass */
-  backdrop-filter:blur(14px) saturate(170%);
-  -webkit-backdrop-filter:blur(14px) saturate(170%);
-  border:1px solid rgba(255, 255, 255, 0.28);
+  background:rgba(255, 255, 255, 0.018); /* Pure clear transparent pane */
+  backdrop-filter:blur(8px) brightness(1.2) contrast(1.08);
+  -webkit-backdrop-filter:blur(8px) brightness(1.2) contrast(1.08);
+  border:1px solid rgba(255, 255, 255, 0.18);
   box-shadow:
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -1px 2px 0 rgba(255, 255, 255, 0.12),
-    0 25px 60px -15px rgba(0, 0, 0, 0.75);
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.05),
+    0 25px 60px -15px rgba(0, 0, 0, 0.8);
   transition:all .4s cubic-bezier(.16,1,.3,1);
 }
 .pviz:hover{
-  border-color:rgba(255, 255, 255, 0.48);
-  background:rgba(255, 255, 255, 0.05);
+  border-color:rgba(255, 255, 255, 0.32);
+  background:rgba(255, 255, 255, 0.035);
+  backdrop-filter:blur(10px) brightness(1.25) contrast(1.1);
+  -webkit-backdrop-filter:blur(10px) brightness(1.25) contrast(1.1);
   box-shadow:
-    inset 0 2px 3px 0 rgba(255, 255, 255, 0.75),
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.55),
     0 30px 70px -15px rgba(0, 0, 0, 0.85);
 }
 .pviz .vlabel{
   position:absolute;left:16px;bottom:14px;
   font-family:var(--mono);font-size:10.5px;
   letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink);z-index:3;
-  padding:5px 12px;border-radius:999px;
-  background:rgba(255, 255, 255, 0.06);
-  border:1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.4);
+  color:var(--ink-dim);z-index:3;
+  padding:4px 10px;border-radius:999px;
+  background:rgba(255, 255, 255, 0.04);
+  border:1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 .pviz .vtl{
   position:absolute;left:16px;top:14px;
   font-family:var(--mono);font-size:10.5px;
   letter-spacing:.16em;color:var(--accent);
   z-index:3;
-  padding:5px 12px;border-radius:999px;
-  background:rgba(255, 255, 255, 0.06);
-  border:1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,0.4);
+  padding:4px 10px;border-radius:999px;
+  background:rgba(255, 255, 255, 0.04);
+  border:1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 .pviz canvas{position:absolute;inset:0;width:100%;height:100%}
 
@@ -387,7 +360,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   .rgrid{grid-template-columns:1fr 1fr}
   .stack{grid-template-columns:1fr 1fr}
   .proj{grid-template-columns:1fr;gap:30px}
-  .proj.flip .pviz-wrap{order:0}
+  .proj.flip .pviz{order:0}
 }
 @media(max-width:600px){
   .rgrid{grid-template-columns:1fr}
@@ -515,10 +488,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
         <p data-i18n="proj_1_desc">Ham veriyi alıp işe yarar bir şeye dönüştürmeyi seviyorum: keşifsel analiz, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara kadar. BERTopic ile kümeleme, LLM-as-judge ile skorlama, SFT için veri üretimi... bu akışları kurmak bana biraz bulmaca çözmek gibi geliyor.</p>
         <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">BERTopic</span><span class="tag">LLM-as-judge</span><span class="tag">SFT</span></div>
       </div>
-      <div class="pviz-wrap" data-par="-150">
-        <div class="pviz-glow"></div>
-        <div class="pviz" data-viz="pipeline"><span class="vtl">DATA PIPELINE</span><canvas></canvas><span class="vlabel">clean → cluster → judge → train</span></div>
-      </div>
+      <div class="pviz" data-viz="pipeline" data-par="-150"><span class="vtl">DATA PIPELINE</span><canvas></canvas><span class="vlabel">clean → cluster → judge → train</span></div>
     </article>
 
     <article class="proj flip reveal">
@@ -528,10 +498,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
         <p data-i18n="proj_2_desc">Bilgisayara "görmeyi" öğretmek ilgimi çekiyor: gerçek zamanlı nesne tespitinden iskelet tabanlı hareket ve işaret tanımaya kadar. MediaPipe ile iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyonu, temporal modelleme ve YOLO ile tespit üzerine çalışıyorum.</p>
         <div class="tags"><span class="tag">YOLOv8</span><span class="tag">OpenCV</span><span class="tag">MediaPipe</span><span class="tag">Adaptive GCN</span><span class="tag">Bi-LSTM</span></div>
       </div>
-      <div class="pviz-wrap" data-par="-150">
-        <div class="pviz-glow"></div>
-        <div class="pviz" data-viz="skeleton"><span class="vtl">SKELETON · GCN</span><canvas></canvas><span class="vlabel">pose · gesture · detection</span></div>
-      </div>
+      <div class="pviz" data-viz="skeleton" data-par="-150"><span class="vtl">SKELETON · GCN</span><canvas></canvas><span class="vlabel">pose · gesture · detection</span></div>
     </article>
 
     <article class="proj reveal">
@@ -541,10 +508,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
         <p data-i18n="proj_3_desc">İşin en sevdiğim kısmını burası — Türkçe dil teknolojisi tam merkezde: dil modellerini ince ayarlıyor, değerlendiriyor ve benchmark tasarlıyorum; RAG sistemleri ile agentic workflow'lar kuruyor, lokal LLM'ler çalıştırıyorum. Tokenization'dan embedding'lere kadar NLP'nin temelleri bana epey tanıdık geliyor.</p>
         <div class="tags"><span class="tag">Transformers</span><span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">Ollama</span><span class="tag">Fine-tuning</span></div>
       </div>
-      <div class="pviz-wrap" data-par="-150">
-        <div class="pviz-glow"></div>
-        <div class="pviz" data-viz="attention"><span class="vtl">ATTENTION</span><canvas></canvas><span class="vlabel">tokens · self-attention</span></div>
-      </div>
+      <div class="pviz" data-viz="attention" data-par="-150"><span class="vtl">ATTENTION</span><canvas></canvas><span class="vlabel">tokens · self-attention</span></div>
     </article>
   </div>
 </section>
