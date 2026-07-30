@@ -808,7 +808,8 @@ function runTerm(){
   let scrollVel = 0;
   let lastY = window.scrollY;
 
-  const tokens = ['[0.842]', 'attn_weight', 'tensor(64,128)', 'RAG_flow', 'embeddings', 'loss:0.014', 'head_04', 'SFT_data', 'context_len:8192'];
+  // Minimalist, humble & artistic mathematical/geometric symbols
+  const symbols = ['✦', '◇', '⊙', '∿', '⊕', '∆', 'λ', 'α', 'β', '∫', '∞', '::', '⟨ ⟩', '01', '10', '0x1F'];
   let particleTokens = [];
 
   function resize(){
@@ -838,15 +839,15 @@ function runTerm(){
 
   function initTokens(){
     particleTokens = [];
-    const count = 10;
+    const count = 12;
     for(let i = 0; i < count; i++){
       const isLeft = i % 2 === 0;
       particleTokens.push({
-        text: tokens[i % tokens.length],
-        x: isLeft ? (Math.random() * 70 + 15) : (w - Math.random() * 90 - 30),
+        text: symbols[i % symbols.length],
+        x: isLeft ? (Math.random() * 60 + 15) : (w - Math.random() * 70 - 20),
         y: Math.random() * h,
-        vy: (Math.random() * 0.4 + 0.2),
-        opacity: Math.random() * 0.3 + 0.15
+        baseVy: (Math.random() * 0.3 + 0.1),
+        opacity: Math.random() * 0.25 + 0.12
       });
     }
   }
@@ -855,9 +856,11 @@ function runTerm(){
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     scrollPct = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
     
-    const deltaY = Math.abs(window.scrollY - lastY);
-    scrollVel += (deltaY - scrollVel) * 0.1;
-    lastY = window.scrollY;
+    // Signed scroll velocity: positive = down, negative = up
+    const currentY = window.scrollY;
+    const deltaY = currentY - lastY;
+    scrollVel += (deltaY - scrollVel) * 0.15;
+    lastY = currentY;
   }
 
   const acc = '128, 222, 196';
@@ -866,7 +869,7 @@ function runTerm(){
     updateScroll();
     ctx.clearRect(0, 0, w, h);
 
-    const speedMult = 1 + scrollVel * 0.05;
+    const speedMult = 1 + Math.abs(scrollVel) * 0.04;
     const maxDist = 120 + scrollPct * 60;
 
     for(let i = 0; i < nodes.length; i++){
@@ -902,14 +905,22 @@ function runTerm(){
       ctx.fill();
     }
 
-    ctx.font = '10px "JetBrains Mono", monospace';
+    // Side margin symbols move dynamically WITH your scroll direction!
+    ctx.font = '11px "JetBrains Mono", monospace';
     for(let t of particleTokens){
-      t.y -= (t.vy + scrollVel * 0.08);
-      if(t.y < -20){
-        t.y = h + 20;
+      const dy = scrollVel * 0.35 + (scrollVel >= 0 ? t.baseVy : -t.baseVy);
+      t.y += dy;
+
+      if(t.y > h + 30) {
+        t.y = -30;
         const isLeft = Math.random() > 0.5;
-        t.x = isLeft ? (Math.random() * 70 + 15) : (w - Math.random() * 90 - 20);
+        t.x = isLeft ? (Math.random() * 60 + 15) : (w - Math.random() * 70 - 20);
+      } else if(t.y < -30) {
+        t.y = h + 30;
+        const isLeft = Math.random() > 0.5;
+        t.x = isLeft ? (Math.random() * 60 + 15) : (w - Math.random() * 70 - 20);
       }
+
       ctx.fillStyle = `rgba(${acc}, ${(t.opacity * (0.4 + scrollPct * 0.6)).toFixed(3)})`;
       ctx.fillText(t.text, t.x, t.y);
     }
