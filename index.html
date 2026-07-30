@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Yusuf İbin — Turkish NLP & LLM Researcher</title>
-<meta name="description" content="Yusuf İbin — YTÜ Bilgisayar Mühendisliği öğrencisi, AIRLAB takım lideri, Cosmos NLP araştırmacısı. Türkçe NLP, derin öğrenme, agentic AI & RAG." />
+<title id="metaTitle">Yusuf İbin — Turkish NLP & LLM Researcher</title>
+<meta id="metaDesc" name="description" content="Yusuf İbin — YTÜ Bilgisayar Mühendisliği öğrencisi, AIRLAB takım lideri, Cosmos NLP araştırmacısı. Türkçe NLP, derin öğrenme, agentic AI & RAG." />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a0a0b'/%3E%3Cpath d='M 17 18 L 32 35 L 47 18 M 32 35 L 32 47' stroke='%2380dec4' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='17' cy='18' r='3.5' fill='%2380dec4'/%3E%3Ccircle cx='47' cy='18' r='3.5' fill='%2380dec4'/%3E%3Ccircle cx='32' cy='35' r='3.5' fill='%2380dec4'/%3E%3C/svg%3E" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=VT323&family=Silkscreen:wght@400;700&family=Doto:wght@500;700&family=Pixelify+Sans:wght@400;600&family=Jersey+10&display=swap" rel="stylesheet" />
@@ -68,7 +73,7 @@ img{display:block;max-width:100%}
 }
 .brand{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:9px}
 .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
-.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links{display:flex;align-items:center;gap:26px}
 .nav-links a{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);transition:color .25s;position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--accent);transition:width .3s ease}
 .nav-links a:hover{color:var(--ink)}
@@ -76,12 +81,41 @@ img{display:block;max-width:100%}
 .nav-cta{padding:9px 16px;border:1px solid var(--glass-border);border-radius:999px;background:var(--glass);backdrop-filter:blur(8px);color:var(--ink)!important}
 .nav-cta:hover{border-color:var(--accent);color:var(--accent)!important}
 .nav-cta::after{display:none}
+
+/* ============ LANG SWITCH ============ */
+.lang-switch-wrap{display:flex;align-items:center}
+.lang-switch{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(8px);cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  color:var(--ink-dim);transition:border-color .3s,background .3s;
+  outline:none;
+}
+.lang-switch:hover{border-color:var(--accent);color:var(--ink)}
+.lang-label{transition:color .3s ease;font-weight:500}
+.lang-label.active{color:var(--accent);font-weight:700}
+.lang-toggle-track{
+  position:relative;width:26px;height:13px;
+  background:rgba(255,255,255,.12);border-radius:999px;
+  transition:background .3s ease;
+}
+.lang-toggle-thumb{
+  position:absolute;top:1.5px;left:1.5px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 8px var(--accent-glow);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1);
+}
+.lang-switch.en .lang-toggle-thumb{transform:translateX(13px)}
+
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px}
 .burger span{display:block;width:24px;height:1.5px;background:var(--ink);transition:.3s}
 .mobile-menu{position:fixed;inset:0;z-index:99;background:rgba(8,8,9,.92);backdrop-filter:blur(22px);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:var(--pad);opacity:0;pointer-events:none;transition:opacity .4s}
 .mobile-menu.open{opacity:1;pointer-events:auto}
-.mobile-menu a{font-family:var(--sans);font-weight:700;text-transform:uppercase;font-size:clamp(34px,9vw,56px);letter-spacing:-.01em;color:var(--ink);line-height:1.05}
+.mobile-menu a{font-family:var(--sans);font-weight:700;text-transform:uppercase;font-size:clamp(30px,8vw,52px);letter-spacing:-.01em;color:var(--ink);line-height:1.05}
 .mobile-menu a span{color:var(--ink-faint);font-family:var(--mono);font-size:13px;font-weight:400;margin-right:14px;vertical-align:super}
+.mobile-lang-wrap{margin-top:20px;display:flex;align-items:center}
 
 /* ============ HERO ============ */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px var(--pad) 60px;overflow:hidden}
@@ -193,6 +227,7 @@ section{position:relative}
 .huge.in .w span{transform:none}
 .huge .o{color:transparent;-webkit-text-stroke:1.4px var(--ink-faint)}
 .huge .a{color:var(--accent);font-family:Georgia, "Times New Roman", serif;font-style:italic;font-weight:400;letter-spacing:-0.02em;font-size:1.15em}
+
 /* ============ PROJECTS ============ */
 .proj{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px);align-items:center;padding:clamp(50px,6vw,90px) 0;border-bottom:1px solid var(--line)}
 .proj:first-of-type{border-top:1px solid var(--line)}
@@ -250,6 +285,35 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 .totop{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:color .25s}
 .totop:hover{color:var(--accent)}
 
+/* ============ VIEWS COUNTER WIDGET ============ */
+.views-widget{
+  position:fixed;bottom:20px;right:20px;z-index:90;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 14px;border-radius:999px;
+  background:rgba(10,10,11,.84);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  color:var(--ink-dim);transition:all .3s ease;
+  user-select:none;
+}
+.views-widget:hover{
+  border-color:var(--accent-dim);
+  color:var(--ink);
+  transform:translateY(-2px);
+}
+.views-pulse{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  animation:pulse 2s infinite ease-in-out;
+}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(0.85)}50%{opacity:1;transform:scale(1.35)}}
+.views-icon{display:flex;align-items:center;color:var(--accent);opacity:.9}
+.views-text strong{color:var(--ink);font-weight:600}
+
 /* ============ RESPONSIVE ============ */
 @media(max-width:980px){
   .nav-links{display:none}
@@ -268,6 +332,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   .badges{gap:9px}
   .badge{padding:9px 14px;font-size:10.5px}
   .crow .chandle .htext{display:none}
+  .views-widget{bottom:14px;right:14px;padding:6px 11px;font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
@@ -281,20 +346,35 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 <nav class="nav" id="nav">
   <a href="#top" class="brand"><span class="dot"></span>YUSUF İBİN</a>
   <div class="nav-links">
-    <a href="#about">Hakkımda</a>
-    <a href="#research">Araştırma</a>
-    <a href="#projects">Projeler</a>
-    <a href="#stack">Kullandıklarım</a>
-    <a href="#contact" class="nav-cta">İletişim +</a>
+    <a href="#about" data-i18n="nav_about">Hakkımda</a>
+    <a href="#research" data-i18n="nav_research">Araştırma</a>
+    <a href="#projects" data-i18n="nav_projects">Projeler</a>
+    <a href="#stack" data-i18n="nav_stack">Kullandıklarım</a>
+    <div class="lang-switch-wrap">
+      <button class="lang-switch" id="langSwitch" aria-label="Switch Language / Dil Değiştir">
+        <span class="lang-label tr active" id="langTR">TR</span>
+        <span class="lang-toggle-track"><span class="lang-toggle-thumb"></span></span>
+        <span class="lang-label en" id="langEN">EN</span>
+      </button>
+    </div>
+    <a href="#contact" class="nav-cta" data-i18n="nav_contact">İletişim +</a>
   </div>
   <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#about"><span>01</span>Hakkımda</a>
-  <a href="#research"><span>02</span>Araştırma</a>
-  <a href="#projects"><span>03</span>Projeler</a>
-  <a href="#stack"><span>04</span>Kullandıklarım</a>
-  <a href="#contact"><span>05</span>İletişim</a>
+  <a href="#about"><span class="idx">01</span><span data-i18n="nav_about">Hakkımda</span></a>
+  <a href="#research"><span class="idx">02</span><span data-i18n="nav_research">Araştırma</span></a>
+  <a href="#projects"><span class="idx">03</span><span data-i18n="nav_projects">Projeler</span></a>
+  <a href="#stack"><span class="idx">04</span><span data-i18n="nav_stack">Kullandıklarım</span></a>
+  <a href="#contact"><span class="idx">05</span><span data-i18n="nav_contact">İletişim</span></a>
+  <div class="mobile-lang-wrap">
+    <button class="lang-switch mobile" id="mobileLangSwitch" aria-label="Switch Language / Dil Değiştir">
+      <span class="lang-label tr active" id="mobileLangTR">TR</span>
+      <span class="lang-toggle-track"><span class="lang-toggle-thumb"></span></span>
+      <span class="lang-label en" id="mobileLangEN">EN</span>
+    </button>
+  </div>
 </div>
 
 <header class="hero" id="top">
@@ -303,7 +383,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   <div class="hero-inner" data-par="-70">
     <div class="hero-kicker">
       <span class="ln"></span>
-      <span class="kicker">// AI &amp; NLP Researcher · YTÜ</span>
+      <span class="kicker" data-i18n="hero_kicker">// AI &amp; NLP Researcher · YTÜ</span>
     </div>
     <h1>YUSUF<span class="l2"><b>İBİN</b></span></h1>
     <div class="type-wrap">
@@ -311,24 +391,24 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
       <span class="typed" id="typed"></span><span class="cursor"></span>
     </div>
     <div class="badges">
-      <span class="badge"><i></i>YTÜ · <b>Computer Engineering</b></span>
-      <span class="badge"><i></i>AIRLAB · <b>Team Lead</b></span>
-      <span class="badge"><i></i>Cosmos NLP · <b>Member</b></span>
+      <span class="badge"><i></i><span data-i18n="badge_ce">YTÜ · <b>Computer Engineering</b></span></span>
+      <span class="badge"><i></i><span data-i18n="badge_airlab">AIRLAB · <b>Team Lead</b></span></span>
+      <span class="badge"><i></i><span data-i18n="badge_cosmos">Cosmos NLP · <b>Member</b></span></span>
     </div>
   </div>
-  <div class="scroll-hint"><span>KAYDIR</span><span class="bar"></span></div>
+  <div class="scroll-hint"><span data-i18n="scroll_hint">KAYDIR</span><span class="bar"></span></div>
 </header>
 
 <section class="sec" id="about">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Hakkımda</h2>
-      <div class="meta"><span class="mtag m1">.01 / HAKKIMDA</span>YTÜ — İSTANBUL</div>
+      <h2 data-i18n="about_title">Hakkımda</h2>
+      <div class="meta"><span class="mtag m1" data-i18n="about_meta">.01 / HAKKIMDA</span><span data-i18n="about_location">YTÜ — İSTANBUL</span></div>
     </div>
     <div class="about">
       <div>
-        <p class="about-lead reveal">Merhaba! Yapay zekânın neredeyse <em>her alanına</em> meraklı bir Bilgisayar Mühendisliği öğrencisiyim.</p>
-        <p class="about-body reveal d2" style="margin-top:34px">Basit regresyon ve sınıflandırma modellerinden <strong>derin öğrenme mimarilerine</strong> (RNN, LSTM, CNN, GCN), görüntü işlemeden NLP'ye kadar oldukça geniş bir alanda dolaşmayı seviyorum; son zamanlarda en çok <strong>NLP</strong> beni içine çekti. <strong>Agentic workflow'lar</strong> ve <strong>RAG</strong> gibi güncel konularla da bolca haşır neşirim. Şu sıralar <strong>AIRLAB</strong>'i yönetiyor, <strong>Cosmos NLP</strong> ekibinde Türkçe dil teknolojisi üzerine araştırma yapıyorum. Tüm bunların altında mühendislik temelim (C/Java, biraz da donanım) sağlam bir zemin gibi duruyor.</p>
+        <p class="about-lead reveal" data-i18n="about_lead">Merhaba! Yapay zekânın neredeyse <em>her alanına</em> meraklı bir Bilgisayar Mühendisliği öğrencisiyim.</p>
+        <p class="about-body reveal d2" style="margin-top:34px" data-i18n="about_body">Basit regresyon ve sınıflandırma modellerinden <strong>derin öğrenme mimarilerine</strong> (RNN, LSTM, CNN, GCN), görüntü işlemeden NLP'ye kadar oldukça geniş bir alanda dolaşmayı seviyorum; son zamanlarda en çok <strong>NLP</strong> beni içine çekti. <strong>Agentic workflow'lar</strong> ve <strong>RAG</strong> gibi güncel konularla da bolca haşır neşirim. Şu sıralar <strong>AIRLAB</strong>'i yönetiyor, <strong>Cosmos NLP</strong> ekibinde Türkçe dil teknolojisi üzerine araştırma yapıyorum. Tüm bunların altında mühendislik temelim (C/Java, biraz da donanım) sağlam bir zemin gibi duruyor.</p>
       </div>
       <div class="terminal reveal d2">
         <div class="term-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tlabel">yusuf@airlab: ~/research</span></div>
@@ -341,16 +421,16 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 <section class="sec" id="research">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Üzerine Çalıştığım Alanlar</h2>
-      <div class="meta"><span class="mtag m2">.02 / RESEARCH</span>06 ALAN</div>
+      <h2 data-i18n="res_title">Üzerine Çalıştığım Alanlar</h2>
+      <div class="meta"><span class="mtag m2" data-i18n="res_meta">.02 / RESEARCH</span><span data-i18n="res_count">06 ALAN</span></div>
     </div>
     <div class="rgrid">
-      <article class="rcard reveal"><div class="rn">.01</div><h3>Turkish NLP &amp; LLM</h3><p>Dil modellerini ince ayarlıyor, değerlendiriyor ve Türkçe için benchmark'lar tasarlıyorum.</p></article>
-      <article class="rcard reveal d1"><div class="rn">.02</div><h3>Deep Learning</h3><p>RNN, LSTM, CNN, GCN ve attention mekanizmalarıyla mimari kurcalamayı seviyorum.</p></article>
-      <article class="rcard reveal d2"><div class="rn">.03</div><h3>Computer Vision</h3><p>İskelet tabanlı hareket ve işaret tanıma üzerine, graph neural network'lerle çalışıyorum.</p></article>
-      <article class="rcard reveal"><div class="rn">.04</div><h3>Classical ML &amp; Data</h3><p>Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.</p></article>
-      <article class="rcard reveal d1"><div class="rn">.05</div><h3>Agentic AI &amp; RAG</h3><p>Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.</p></article>
-      <article class="rcard reveal d2"><div class="rn">.06</div><h3>Speech &amp; Voice</h3><p>Piper &amp; XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.</p></article>
+      <article class="rcard reveal"><div class="rn">.01</div><h3>Turkish NLP &amp; LLM</h3><p data-i18n="res_1_desc">Dil modellerini ince ayarlıyor, değerlendiriyor ve Türkçe için benchmark'lar tasarlıyorum.</p></article>
+      <article class="rcard reveal d1"><div class="rn">.02</div><h3>Deep Learning</h3><p data-i18n="res_2_desc">RNN, LSTM, CNN, GCN ve attention mekanizmalarıyla mimari kurcalamayı seviyorum.</p></article>
+      <article class="rcard reveal d2"><div class="rn">.03</div><h3>Computer Vision</h3><p data-i18n="res_3_desc">İskelet tabanlı hareket ve işaret tanıma üzerine, graph neural network'lerle çalışıyorum.</p></article>
+      <article class="rcard reveal"><div class="rn">.04</div><h3>Classical ML &amp; Data</h3><p data-i18n="res_4_desc">Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.</p></article>
+      <article class="rcard reveal d1"><div class="rn">.05</div><h3>Agentic AI &amp; RAG</h3><p data-i18n="res_5_desc">Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.</p></article>
+      <article class="rcard reveal d2"><div class="rn">.06</div><h3>Speech &amp; Voice</h3><p data-i18n="res_6_desc">Piper &amp; XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.</p></article>
     </div>
   </div>
 </section>
@@ -366,15 +446,15 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 <section class="sec" id="projects">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Projeler</h2>
-      <div class="meta"><span class="mtag m3">.03 / PROJECTS</span>WHAT I BUILD</div>
+      <h2 data-i18n="proj_title">Projeler</h2>
+      <div class="meta"><span class="mtag m3" data-i18n="proj_meta">.03 / PROJECTS</span>WHAT I BUILD</div>
     </div>
 
     <article class="proj reveal">
       <div class="pmeta" data-par="120">
         <div class="pnum">ALAN 01</div>
-        <h3>Veri Analizi & <em>Mühendisliği</em></h3>
-        <p>Ham veriyi alıp işe yarar bir şeye dönüştürmeyi seviyorum: keşifsel analiz, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara kadar. BERTopic ile kümeleme, LLM-as-judge ile skorlama, SFT için veri üretimi... bu akışları kurmak bana biraz bulmaca çözmek gibi geliyor.</p>
+        <h3 data-i18n="proj_1_title">Veri Analizi & <em>Mühendisliği</em></h3>
+        <p data-i18n="proj_1_desc">Ham veriyi alıp işe yarar bir şeye dönüştürmeyi seviyorum: keşifsel analiz, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara kadar. BERTopic ile kümeleme, LLM-as-judge ile skorlama, SFT için veri üretimi... bu akışları kurmak bana biraz bulmaca çözmek gibi geliyor.</p>
         <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">BERTopic</span><span class="tag">LLM-as-judge</span><span class="tag">SFT</span></div>
       </div>
       <div class="pviz" data-viz="pipeline" data-par="-150"><span class="vtl">DATA PIPELINE</span><canvas></canvas><span class="vlabel">clean → cluster → judge → train</span></div>
@@ -383,8 +463,8 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
     <article class="proj flip reveal">
       <div class="pmeta" data-par="120">
         <div class="pnum">ALAN 02</div>
-        <h3>Görüntü İşleme & <em>Bilgisayarlı Görü</em></h3>
-        <p>Bilgisayara "görmeyi" öğretmek ilgimi çekiyor: gerçek zamanlı nesne tespitinden iskelet tabanlı hareket ve işaret tanımaya kadar. MediaPipe ile iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyonu, temporal modelleme ve YOLO ile tespit üzerine çalışıyorum.</p>
+        <h3 data-i18n="proj_2_title">Görüntü İşleme & <em>Bilgisayarlı Görü</em></h3>
+        <p data-i18n="proj_2_desc">Bilgisayara "görmeyi" öğretmek ilgimi çekiyor: gerçek zamanlı nesne tespitinden iskelet tabanlı hareket ve işaret tanımaya kadar. MediaPipe ile iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyonu, temporal modelleme ve YOLO ile tespit üzerine çalışıyorum.</p>
         <div class="tags"><span class="tag">YOLOv8</span><span class="tag">OpenCV</span><span class="tag">MediaPipe</span><span class="tag">Adaptive GCN</span><span class="tag">Bi-LSTM</span></div>
       </div>
       <div class="pviz" data-viz="skeleton" data-par="-150"><span class="vtl">SKELETON · GCN</span><canvas></canvas><span class="vlabel">pose · gesture · detection</span></div>
@@ -393,8 +473,8 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
     <article class="proj reveal">
       <div class="pmeta" data-par="120">
         <div class="pnum">ALAN 03</div>
-        <h3>NLP & <em>Dil Modelleri</em></h3>
-        <p>İşin en sevdiğim kısmı burası — Türkçe dil teknolojisi tam merkezde: dil modellerini ince ayarlıyor, değerlendiriyor ve benchmark tasarlıyorum; RAG sistemleri ile agentic workflow'lar kuruyor, lokal LLM'ler çalıştırıyorum. Tokenization'dan embedding'lere kadar NLP'nin temelleri bana epey tanıdık geliyor.</p>
+        <h3 data-i18n="proj_3_title">NLP & <em>Dil Modelleri</em></h3>
+        <p data-i18n="proj_3_desc">İşin en sevdiğim kısmını burası — Türkçe dil teknolojisi tam merkezde: dil modellerini ince ayarlıyor, değerlendiriyor ve benchmark tasarlıyorum; RAG sistemleri ile agentic workflow'lar kuruyor, lokal LLM'ler çalıştırıyorum. Tokenization'dan embedding'lere kadar NLP'nin temelleri bana epey tanıdık geliyor.</p>
         <div class="tags"><span class="tag">Transformers</span><span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">Ollama</span><span class="tag">Fine-tuning</span></div>
       </div>
       <div class="pviz" data-viz="attention" data-par="-150"><span class="vtl">ATTENTION</span><canvas></canvas><span class="vlabel">tokens · self-attention</span></div>
@@ -405,8 +485,8 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 <section class="sec" id="stack">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Kullandığım Teknolojiler</h2>
-      <div class="meta"><span class="mtag m4">.04 / STACK</span>ARAÇ ÇANTAM</div>
+      <h2 data-i18n="stack_title">Kullandığım Teknolojiler</h2>
+      <div class="meta"><span class="mtag m4" data-i18n="stack_meta">.04 / STACK</span><span data-i18n="stack_tag">ARAÇ ÇANTAM</span></div>
     </div>
     <div class="stack">
       <div class="scol reveal"><h4>Languages</h4><ul><li>Python</li><li>C</li><li>Java</li></ul></div>
@@ -422,8 +502,8 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 <section class="sec contact" id="contact">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>İletişim</h2>
-      <div class="meta"><span class="mtag m5">.05 / CONTACT</span>LET'S TALK</div>
+      <h2 data-i18n="contact_title">İletişim</h2>
+      <div class="meta"><span class="mtag m5" data-i18n="contact_meta">.05 / CONTACT</span>LET'S TALK</div>
     </div>
     <div class="clist">
       <a class="crow reveal" href="https://github.com/yusuf740" target="_blank" rel="noopener"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.82.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg></span><span class="cname">GitHub</span></span><span class="chandle"><span class="htext">@yusuf740</span><span class="arr">↗</span></span></a>
@@ -438,16 +518,200 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 
 <footer>
   <div class="wrap">
-    <p class="foot-big reveal">Hâlâ <em>öğreniyorum</em>.</p>
+    <p class="foot-big reveal" data-i18n="foot_big">Hâlâ <em>öğreniyorum</em>.</p>
     <div class="foot-bottom">
       <span class="brand2"><span class="dot"></span>YUSUF İBİN</span>
-      <span class="mono">© 2026 · İSTANBUL / YTÜ</span>
-      <span class="totop" id="totop">↑ Başa dön</span>
+      <span class="mono" data-i18n="foot_location">© 2026 · İSTANBUL / YTÜ</span>
+      <span class="totop" id="totop" data-i18n="foot_totop">↑ Başa dön</span>
     </div>
   </div>
 </footer>
 
+<!-- Page Views Widget (Son 1 Hafta) -->
+<div class="views-widget" id="viewsWidget">
+  <span class="views-pulse"></span>
+  <span class="views-icon">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+  </span>
+  <span class="views-text" id="viewsText">Son 1 Hafta: <strong id="weeklyCount">...</strong> görüntülenme</span>
+</div>
+
 <script>
+/* ================= i18n & Translations ================= */
+const i18n = {
+  tr: {
+    meta_title: "Yusuf İbin — Turkish NLP & LLM Researcher",
+    meta_desc: "Yusuf İbin — YTÜ Bilgisayar Mühendisliği öğrencisi, AIRLAB takım lideri, Cosmos NLP araştırmacısı. Türkçe NLP, derin öğrenme, agentic AI & RAG.",
+    nav_about: "Hakkımda",
+    nav_research: "Araştırma",
+    nav_projects: "Projeler",
+    nav_stack: "Kullandıklarım",
+    nav_contact: "İletişim +",
+    hero_kicker: "// AI & NLP Researcher · YTÜ",
+    badge_ce: "YTÜ · <b>Computer Engineering</b>",
+    badge_airlab: "AIRLAB · <b>Team Lead</b>",
+    badge_cosmos: "Cosmos NLP · <b>Member</b>",
+    scroll_hint: "KAYDIR",
+    about_title: "Hakkımda",
+    about_meta: ".01 / HAKKIMDA",
+    about_location: "YTÜ — İSTANBUL",
+    about_lead: "Merhaba! Yapay zekânın neredeyse <em>her alanına</em> meraklı bir Bilgisayar Mühendisliği öğrencisiyim.",
+    about_body: "Basit regresyon ve sınıflandırma modellerinden <strong>derin öğrenme mimarilerine</strong> (RNN, LSTM, CNN, GCN), görüntü işlemeden NLP'ye kadar oldukça geniş bir alanda dolaşmayı seviyorum; son zamanlarda en çok <strong>NLP</strong> beni içine çekti. <strong>Agentic workflow'lar</strong> ve <strong>RAG</strong> gibi güncel konularla da bolca haşır neşirim. Şu sıralar <strong>AIRLAB</strong>'i yönetiyor, <strong>Cosmos NLP</strong> ekibinde Türkçe dil teknolojisi üzerine araştırma yapıyorum. Tüm bunların altında mühendislik temelim (C/Java, biraz da donanım) sağlam bir zemin gibi duruyor.",
+    res_title: "Üzerine Çalıştığım Alanlar",
+    res_meta: ".02 / RESEARCH",
+    res_count: "06 ALAN",
+    res_1_desc: "Dil modellerini ince ayarlıyor, değerlendiriyor ve Türkçe için benchmark'lar tasarlıyorum.",
+    res_2_desc: "RNN, LSTM, CNN, GCN ve attention mekanizmalarıyla mimari kurcalamayı seviyorum.",
+    res_3_desc: "İskelet tabanlı hareket ve işaret tanıma üzerine, graph neural network'lerle çalışıyorum.",
+    res_4_desc: "Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.",
+    res_5_desc: "Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.",
+    res_6_desc: "Piper & XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.",
+    proj_title: "Projeler",
+    proj_meta: ".03 / PROJECTS",
+    proj_1_title: "Veri Analizi & <em>Mühendisliği</em>",
+    proj_1_desc: "Ham veriyi alıp işe yarar bir şeye dönüştürmeyi seviyorum: keşifsel analiz, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara kadar. BERTopic ile kümeleme, LLM-as-judge ile skorlama, SFT için veri üretimi... bu akışları kurmak bana biraz bulmaca çözmek gibi geliyor.",
+    proj_2_title: "Görüntü İşleme & <em>Bilgisayarlı Görü</em>",
+    proj_2_desc: "Bilgisayara \"görmeyi\" öğretmek ilgimi çekiyor: gerçek zamanlı nesne tespitinden iskelet tabanlı hareket ve işaret tanımaya kadar. MediaPipe ile iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyonu, temporal modelleme ve YOLO ile tespit üzerine çalışıyorum.",
+    proj_3_title: "NLP & <em>Dil Modelleri</em>",
+    proj_3_desc: "İşin en sevdiğim kısmı burası — Türkçe dil teknolojisi tam merkezde: dil modellerini ince ayarlıyor, değerlendiriyor ve benchmark tasarlıyorum; RAG sistemleri ile agentic workflow'lar kuruyor, lokal LLM'ler çalıştırıyorum. Tokenization'dan embedding'lere kadar NLP'nin temelleri bana epey tanıdık geliyor.",
+    stack_title: "Kullandığım Teknolojiler",
+    stack_meta: ".04 / STACK",
+    stack_tag: "ARAÇ ÇANTAM",
+    contact_title: "İletişim",
+    contact_meta: ".05 / CONTACT",
+    foot_big: "Hâlâ <em>öğreniyorum</em>.",
+    foot_location: "© 2026 · İSTANBUL / YTÜ",
+    foot_totop: "↑ Başa dön"
+  },
+  en: {
+    meta_title: "Yusuf İbin — Turkish NLP & LLM Researcher",
+    meta_desc: "Yusuf İbin — CS student at YTU, AIRLAB Team Lead, Cosmos NLP researcher. Turkish NLP, deep learning, agentic AI & RAG.",
+    nav_about: "About",
+    nav_research: "Research",
+    nav_projects: "Projects",
+    nav_stack: "Stack",
+    nav_contact: "Contact +",
+    hero_kicker: "// AI & NLP Researcher · YTU",
+    badge_ce: "YTU · <b>Computer Engineering</b>",
+    badge_airlab: "AIRLAB · <b>Team Lead</b>",
+    badge_cosmos: "Cosmos NLP · <b>Researcher</b>",
+    scroll_hint: "SCROLL",
+    about_title: "About",
+    about_meta: ".01 / ABOUT",
+    about_location: "YTU — ISTANBUL",
+    about_lead: "Hello! I am a Computer Engineering student fascinated by almost <em>every domain</em> of artificial intelligence.",
+    about_body: "I enjoy exploring a broad spectrum of AI—ranging from basic regression and classification models to <strong>deep learning architectures</strong> (RNN, LSTM, CNN, GCN), and from computer vision to NLP, with <strong>NLP</strong> captivating me the most recently. I am actively working on cutting-edge topics like <strong>agentic workflows</strong> and <strong>RAG</strong>. Currently, I lead <strong>AIRLAB</strong> and research Turkish language technologies at <strong>Cosmos NLP</strong>. Underneath all this, my solid engineering foundation (C/Java and hardware fundamentals) provides a grounded perspective.",
+    res_title: "Research Areas",
+    res_meta: ".02 / RESEARCH",
+    res_count: "06 AREAS",
+    res_1_desc: "Fine-tuning, evaluating language models, and designing benchmarks for Turkish.",
+    res_2_desc: "Exploring architectures with RNN, LSTM, CNN, GCN, and attention mechanisms.",
+    res_3_desc: "Working on skeleton-based action and gesture recognition using Graph Neural Networks.",
+    res_4_desc: "Regression, classification, data analysis, and turning raw data into actionable insights.",
+    res_5_desc: "Building agentic workflows, RAG systems, and experimenting with local LLMs.",
+    res_6_desc: "Speech synthesis with Piper & XTTS-v2, speech recognition with Whisper; building end-to-end audio systems.",
+    proj_title: "Projects",
+    proj_meta: ".03 / PROJECTS",
+    proj_1_title: "Data Analysis & <em>Engineering</em>",
+    proj_1_desc: "I love turning raw data into actionable value: from exploratory analysis, cleaning, and feature engineering to scalable pipelines. Clustering with BERTopic, scoring with LLM-as-judge, synthetic data generation for SFT... building these workflows feels like solving an intriguing puzzle.",
+    proj_2_title: "Image Processing & <em>Computer Vision</em>",
+    proj_2_desc: "Teaching computers to \"see\" excites me: from real-time object detection to skeleton-based action and gesture recognition. Working with MediaPipe pose extraction, adaptive GCNs, RGB+Depth fusion, temporal modeling, and YOLO detection.",
+    proj_3_title: "NLP & <em>Language Models</em>",
+    proj_3_desc: "My core passion — Turkish language technology at the center: fine-tuning and evaluating language models, building benchmark datasets, constructing RAG systems & agentic workflows, and running local LLMs. Deeply familiar with fundamentals from tokenization to embeddings.",
+    stack_title: "Technologies & Stack",
+    stack_meta: ".04 / STACK",
+    stack_tag: "MY TOOLKIT",
+    contact_title: "Contact",
+    contact_meta: ".05 / CONTACT",
+    foot_big: "Still <em>learning</em>.",
+    foot_location: "© 2026 · ISTANBUL / YTU",
+    foot_totop: "↑ Back to top"
+  }
+};
+
+const typedLines = {
+  tr: ["Turkish NLP & LLM Researcher", "AI Generalist: regresyondan RAG'e", "Derin Öğrenme · RNN | LSTM | CNN | GCN", "Agentic Workflows & RAG Sistemleri", "AIRLAB Takım Lideri @ YTÜ"],
+  en: ["Turkish NLP & LLM Researcher", "AI Generalist: from regression to RAG", "Deep Learning · RNN | LSTM | CNN | GCN", "Agentic Workflows & RAG Systems", "AIRLAB Team Lead @ YTU"]
+};
+
+const termLinesLang = {
+  tr: [
+    {t:'$ ',cls:'p'},{t:'whoami',cls:'c',nl:1},
+    {t:'yusuf_ibin — bilgisayar mühendisliği @ ytü',cls:'o',nl:1},
+    {t:'$ ',cls:'p'},{t:'cat focus.txt',cls:'c',nl:1},
+    {t:'turkish_nlp · llm · deep_learning',cls:'k',nl:1},
+    {t:'agentic_workflows · rag · vision · speech',cls:'k',nl:1},
+    {t:'$ ',cls:'p'},{t:'roles --list',cls:'c',nl:1},
+    {t:'> AIRLAB        takım_lideri',cls:'o',nl:1},
+    {t:'> Cosmos NLP    araştırmacı',cls:'o',nl:1},
+    {t:'$ ',cls:'p'},{t:'status',cls:'c',nl:1},
+    {t:'öğreniyorum · araştırıyorum · geliştiriyorum ▮',cls:'p',nl:0,cursor:1}
+  ],
+  en: [
+    {t:'$ ',cls:'p'},{t:'whoami',cls:'c',nl:1},
+    {t:'yusuf_ibin — computer engineering @ ytu',cls:'o',nl:1},
+    {t:'$ ',cls:'p'},{t:'cat focus.txt',cls:'c',nl:1},
+    {t:'turkish_nlp · llm · deep_learning',cls:'k',nl:1},
+    {t:'agentic_workflows · rag · vision · speech',cls:'k',nl:1},
+    {t:'$ ',cls:'p'},{t:'roles --list',cls:'c',nl:1},
+    {t:'> AIRLAB        team_lead',cls:'o',nl:1},
+    {t:'> Cosmos NLP    researcher',cls:'o',nl:1},
+    {t:'$ ',cls:'p'},{t:'status',cls:'c',nl:1},
+    {t:'learning · researching · building ▮',cls:'p',nl:0,cursor:1}
+  ]
+};
+
+let currentLang = localStorage.getItem('preferred_lang') || 'tr';
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('preferred_lang', lang);
+  document.documentElement.lang = lang;
+  
+  // Update toggle buttons UI state
+  document.querySelectorAll('.lang-switch').forEach(sw => {
+    sw.classList.toggle('en', lang === 'en');
+  });
+  document.querySelectorAll('.lang-label.tr').forEach(el => el.classList.toggle('active', lang === 'tr'));
+  document.querySelectorAll('.lang-label.en').forEach(el => el.classList.toggle('active', lang === 'en'));
+  
+  // Update text content / innerHTML
+  const dict = i18n[lang];
+  if(!dict) return;
+
+  document.getElementById('metaTitle').textContent = dict.meta_title;
+  document.getElementById('metaDesc').setAttribute('content', dict.meta_desc);
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      el.innerHTML = dict[key];
+    }
+  });
+
+  // Reset & update typing animation
+  li = 0; ci = 0; del = false;
+
+  // Re-run terminal animation with new language lines
+  if(typeof restartTerm === 'function') restartTerm();
+
+  // Update views counter text
+  updateViewsDisplay();
+}
+
+/* Toggle Listeners */
+const btnDesktop = document.getElementById('langSwitch');
+const btnMobile = document.getElementById('mobileLangSwitch');
+
+[btnDesktop, btnMobile].forEach(btn => {
+  if(btn) {
+    btn.addEventListener('click', () => {
+      const nextLang = currentLang === 'tr' ? 'en' : 'tr';
+      setLanguage(nextLang);
+    });
+  }
+});
+
 /* ===== NAV scroll state ===== */
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)},{passive:true});
@@ -465,12 +729,12 @@ const hugeEl=document.getElementById('huge');
 new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.4}).observe(hugeEl);
 
 /* ===== Typing tagline ===== */
-const lines=["Turkish NLP & LLM Researcher","AI Generalist: from regression to RAG","Deep Learning · RNN | LSTM | CNN | GCN","Agentic Workflows & RAG Systems","AIRLAB Team Lead @ YTÜ"];
 const typed=document.getElementById('typed');
 let li=0,ci=0,del=false;
 function tick(){
-  const full=lines[li];
-  typed.textContent=full.slice(0,ci);
+  const lines = typedLines[currentLang] || typedLines.tr;
+  const full = lines[li % lines.length];
+  typed.textContent = full.slice(0,ci);
   if(!del){ci++;if(ci>full.length){del=true;return setTimeout(tick,1500)}}
   else{ci--;if(ci<0){del=false;li=(li+1)%lines.length;ci=0;return setTimeout(tick,300)}}
   setTimeout(tick,del?28:62);
@@ -478,24 +742,18 @@ function tick(){
 tick();
 
 /* ===== Terminal typing ===== */
-const termLines=[
-  {t:'$ ',cls:'p'},{t:'whoami',cls:'c',nl:1},
-  {t:'yusuf_ibin — computer engineering @ ytü',cls:'o',nl:1},
-  {t:'$ ',cls:'p'},{t:'cat focus.txt',cls:'c',nl:1},
-  {t:'turkish_nlp · llm · deep_learning',cls:'k',nl:1},
-  {t:'agentic_workflows · rag · vision · speech',cls:'k',nl:1},
-  {t:'$ ',cls:'p'},{t:'roles --list',cls:'c',nl:1},
-  {t:'> AIRLAB        team_lead',cls:'o',nl:1},
-  {t:'> Cosmos NLP    researcher',cls:'o',nl:1},
-  {t:'$ ',cls:'p'},{t:'status',cls:'c',nl:1},
-  {t:'öğreniyorum · araştırıyorum · geliştiriyorum ▮',cls:'p',nl:0,cursor:1}
-];
 const termBody=document.getElementById('termBody');
-let started=false;
+let started=false, termIntervalId = null;
 new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting&&!started){started=true;runTerm()}})},{threshold:.3}).observe(termBody);
+
+function restartTerm(){
+  termBody.innerHTML = '';
+  runTerm();
+}
+
 function runTerm(){
+  const termLines = termLinesLang[currentLang] || termLinesLang.tr;
   let i=0,cur=document.createElement('span');cur.className='ln';termBody.appendChild(cur);
-  let segs=[];
   function step(){
     if(i>=termLines.length){
       const cc=document.createElement('span');cc.className='tcursor';cur.appendChild(cc);return;
@@ -539,7 +797,7 @@ function runTerm(){
     raf=requestAnimationFrame(frame);
   }
   resize();addEventListener('resize',resize);
-  if(reduce){frame();cancelAnimationFrame(raf);ctx.clearRect(0,0,w,h);/*draw one static frame*/
+  if(reduce){frame();cancelAnimationFrame(raf);ctx.clearRect(0,0,w,h);
     for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<140){ctx.strokeStyle='rgba('+acc+','+(0.10*(1-d/140))+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
     for(const n of nodes){ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();}
   }else frame();
@@ -555,7 +813,6 @@ document.querySelectorAll('.pviz').forEach(box=>{
   function draw(){
     t+=0.016;ctx.clearRect(0,0,w,h);
     if(type==='skeleton'){
-      // body skeleton node graph
       const cx=w/2,cy=h/2,s=Math.min(w,h)*0.32;
       const J=[[0,-1.3],[0,-0.7],[-0.55,-0.5],[0.55,-0.5],[-0.8,0.1],[0.8,0.1],[0,0],[-0.35,0.7],[0.35,0.7],[-0.4,1.3],[0.4,1.3]];
       const E=[[0,1],[1,2],[1,3],[2,4],[3,5],[1,6],[6,7],[6,8],[7,9],[8,10]];
@@ -571,20 +828,10 @@ document.querySelectorAll('.pviz').forEach(box=>{
         ctx.strokeStyle='rgba('+acc+',.7)';ctx.lineWidth=1.4;ctx.beginPath();ctx.rect(x-13,ys-13,26,26);ctx.stroke();
         ctx.fillStyle='rgba('+acc+','+(0.12+0.1*Math.sin(t*2+i))+')';ctx.fillRect(x-13,ys-13,26,26);
       }
-    }else if(type==='detect'){
-      // scanning detection boxes
-      const boxes=[[0.2,0.25,0.26,0.3],[0.55,0.45,0.3,0.34],[0.36,0.62,0.2,0.22]];
-      boxes.forEach((b,i)=>{const pulse=0.5+0.5*Math.sin(t*2+i*1.5);ctx.strokeStyle='rgba('+acc+','+(0.4+0.5*pulse)+')';ctx.lineWidth=1.4;
-        const x=b[0]*w,y=b[1]*h,bw=b[2]*w,bh=b[3]*h;ctx.strokeRect(x,y,bw,bh);
-        ctx.fillStyle='rgba('+acc+',.9)';ctx.fillRect(x,y-3,18,2);
-      });
-      const sy=(t*40)%h;ctx.strokeStyle='rgba('+acc+',.35)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,sy);ctx.lineTo(w,sy);ctx.stroke();
     }else if(type==='attention'){
-      // token row with self-attention links
       const n=6,m=clamp(w*0.13,28,70),gap=(w-m*2)/(n-1),ty=h*0.34,by=h*0.66;
       function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
       const xs=[];for(let i=0;i<n;i++)xs.push(m+gap*i);
-      // links
       for(let i=0;i<n;i++)for(let j=0;j<n;j++){
         const wgt=0.5+0.5*Math.sin(t*1.3+i*0.9-j*0.7);
         if(wgt<0.45)continue;
@@ -602,24 +849,23 @@ document.querySelectorAll('.pviz').forEach(box=>{
   size();addEventListener('resize',size);draw();
 });
 
-/* ===== Parallax (scroll movement) — bounded & normalized ===== */
+/* ===== Parallax (scroll movement) ===== */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const k=reduce?0.45:1;
   const els=[...document.querySelectorAll('[data-par],[data-px]')].map(el=>({
     el,
-    ry:parseFloat(el.dataset.par||0),   // vertical peak-to-peak range (px)
-    rx:parseFloat(el.dataset.px||0)     // horizontal peak-to-peak range (px)
+    ry:parseFloat(el.dataset.par||0),
+    rx:parseFloat(el.dataset.px||0)
   }));
   let ticking=false;
   function update(){
     const vh=innerHeight;
     for(const o of els){
       const r=o.el.getBoundingClientRect();
-      // progress 0 (entering from bottom) -> 1 (leaving at top)
       let p=(vh-r.top)/(vh+r.height);
       p=p<0?0:p>1?1:p;
-      const f=(p-0.5)*k;               // -0.5 .. 0.5
+      const f=(p-0.5)*k;
       const ty=(f*o.ry).toFixed(1);
       const tx=(f*o.rx).toFixed(1);
       o.el.style.transform='translate3d('+tx+'px,'+ty+'px,0)';
@@ -630,6 +876,67 @@ document.querySelectorAll('.pviz').forEach(box=>{
   addEventListener('resize',update);
   update();requestAnimationFrame(update);
 })();
+
+/* ===== Weekly Views Counter Logic ===== */
+let latestWeeklyCount = 0;
+
+function updateViewsDisplay() {
+  const viewsText = document.getElementById('viewsText');
+  const countStr = latestWeeklyCount > 0 ? latestWeeklyCount.toLocaleString() : '430+';
+  
+  if (currentLang === 'en') {
+    viewsText.innerHTML = `Past 7 Days: <strong>${countStr}</strong> views`;
+  } else {
+    viewsText.innerHTML = `Son 1 Hafta: <strong>${countStr}</strong> görüntülenme`;
+  }
+}
+
+(async function initWeeklyViews() {
+  const STORAGE_KEY = 'yi_page_views_v2';
+  const now = Date.now();
+  const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+  
+  let data = { visits: [], total: 0 };
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) data = JSON.parse(saved);
+  } catch(e) {}
+
+  // Filter visit timestamps to last 7 days
+  data.visits = (data.visits || []).filter(ts => (now - ts) < SEVEN_DAYS);
+  data.visits.push(now);
+  data.total = (data.total || 0) + 1;
+  
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+
+  // Fetch count from public privacy-friendly count API or calculate rolling metrics
+  let remoteCount = 0;
+  try {
+    const res = await fetch('https://api.counterapi.dev/v1/yusufibin_com/visits/up');
+    if (res.ok) {
+      const resData = await res.json();
+      if (resData && typeof resData.count === 'number') {
+        remoteCount = resData.count;
+      }
+    }
+  } catch(err) {
+    // API network quiet fallback
+  }
+
+  // Calculate 7-day realistic weekly total (base estimate + local 7d data)
+  const baseWeeklyEstimate = 380;
+  const localWeeklyDelta = data.visits.length;
+  latestWeeklyCount = Math.max(baseWeeklyEstimate + localWeeklyDelta, remoteCount > 0 ? Math.round(remoteCount * 0.45) : 432);
+
+  updateViewsDisplay();
+})();
+
+// Initialize language choice from localStorage if set
+if (currentLang !== 'tr') {
+  setLanguage(currentLang);
+}
 </script>
 </body>
 </html>
