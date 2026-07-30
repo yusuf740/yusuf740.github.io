@@ -56,6 +56,12 @@ img{display:block;max-width:100%}
 .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
 .idx{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-faint)}
 
+/* Persistent Global Neural Background Canvas */
+#neurons{
+  position:fixed;top:0;left:0;width:100vw;height:100vh;
+  z-index:0;pointer-events:none;opacity:.65;
+}
+
 /* ============ NAV ============ */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
@@ -119,7 +125,6 @@ img{display:block;max-width:100%}
 
 /* ============ HERO ============ */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px var(--pad) 60px;overflow:hidden}
-#neurons{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55}
 .hero-grid-lines{position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
   background-size:clamp(60px,12vw,160px) clamp(60px,12vw,160px);
@@ -152,7 +157,7 @@ img{display:block;max-width:100%}
 @keyframes slide{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
 /* ============ SECTION SHELL ============ */
-section{position:relative}
+section{position:relative;z-index:2}
 .sec{padding:clamp(80px,11vw,170px) var(--pad)}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(44px,6vw,80px);border-bottom:1px solid var(--line);padding-bottom:22px}
 .sec-head h2{font-family:var(--sans);font-weight:800;text-transform:uppercase;font-size:clamp(26px,4.4vw,60px);letter-spacing:-.02em;line-height:.95}
@@ -177,7 +182,7 @@ section{position:relative}
 .about-body{font-family:var(--mono);font-weight:400;font-size:14.5px;line-height:1.95;color:var(--ink-dim);max-width:54ch}
 .about-body strong{color:var(--ink);font-weight:500}
 /* terminal */
-.terminal{border:1px solid var(--glass-border);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));backdrop-filter:blur(16px) saturate(140%);box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06)}
+.terminal{border:1px solid var(--glass-border);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));backdrop-filter:blur(16px) saturate(140%);box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease}
 .term-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line-soft);background:rgba(255,255,255,.02)}
 .term-bar .tdot{width:11px;height:11px;border-radius:50%;background:#3a3a3d}
 .term-bar .tdot:nth-child(2){background:#48484b}.term-bar .tdot:nth-child(3){background:#48484b}
@@ -192,8 +197,8 @@ section{position:relative}
 
 /* ============ RESEARCH ============ */
 .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.rcard{background:var(--black);padding:clamp(28px,2.6vw,42px) clamp(24px,2.3vw,38px);position:relative;transition:background .4s ease;min-height:240px;display:flex;flex-direction:column}
-.rcard:hover{background:var(--black-2)}
+.rcard{background:var(--black);padding:clamp(28px,2.6vw,42px) clamp(24px,2.3vw,38px);position:relative;transition:background .4s ease,transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease;min-height:240px;display:flex;flex-direction:column;border:1px solid transparent}
+.rcard:hover{background:var(--black-2);border-color:var(--accent-glow)}
 .rcard::before{content:"";position:absolute;left:0;top:0;width:0;height:2px;background:var(--accent);transition:width .45s cubic-bezier(.2,.7,.2,1)}
 .rcard:hover::before{width:100%}
 .rcard .rn{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.18em;margin-bottom:auto}
@@ -218,69 +223,8 @@ section{position:relative}
 
 .rcard p{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-dim)}
 
-/* ============ DIVIDER ANIMATION ============ */
-.divider{
-  padding:clamp(50px,7vw,90px) var(--pad);
-  overflow:hidden;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  position:relative;
-  background:var(--black);
-}
-.divider .sub{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:20px;
-  text-align:center;
-}
-.divider-canvas-wrap{
-  position:relative;
-  width:100%;
-  height:clamp(220px, 32vw, 360px);
-  border-radius:18px;
-  border:1px solid var(--glass-border);
-  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  overflow:hidden;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.06);
-}
-.divider-canvas-wrap canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-}
-.divider-overlay-tag{
-  position:absolute;
-  bottom:16px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:6px 14px;
-  border-radius:999px;
-  background:rgba(10,10,11,0.75);
-  border:1px solid var(--glass-border);
-  backdrop-filter:blur(10px);
-  font-family:var(--mono);
-  font-size:10.5px;
-  letter-spacing:.14em;
-  color:var(--ink-dim);
-  pointer-events:none;
-}
-.divider-overlay-tag .d-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 8px var(--accent-glow);
-}
-
 /* ============ PROJECTS ============ */
-.proj{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px);align-items:center;padding:clamp(50px,6vw,90px) 0;border-bottom:1px solid var(--line)}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px);align-items:center;padding:clamp(50px,6vw,90px) 0;border-bottom:1px solid var(--line);transition:transform .4s cubic-bezier(.16,1,.3,1)}
 .proj:first-of-type{border-top:1px solid var(--line)}
 .proj.flip .pviz{order:2}
 .pmeta .pnum{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);margin-bottom:18px}
@@ -326,7 +270,7 @@ section{position:relative}
 .crow:hover .cicon{color:var(--accent);transform:translateY(-1px)}
 
 /* ============ FOOTER ============ */
-footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--line);position:relative;overflow:hidden;z-index:2}
 .foot-big{font-family:var(--display);font-style:normal;font-weight:700;font-size:clamp(34px,6vw,82px);line-height:1.02;letter-spacing:-.03em;text-transform:uppercase;max-width:14ch;margin-bottom:clamp(44px,7vw,80px)}
 .foot-big em{font-style:normal;color:var(--accent);font-family:"Jersey 10",monospace;font-size:1.08em;letter-spacing:.02em}
 .foot-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:26px}
@@ -393,6 +337,9 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 </head>
 <body>
 
+<!-- Persistent Global Canvas Animation -->
+<canvas id="neurons"></canvas>
+
 <nav class="nav" id="nav">
   <a href="#top" class="brand"><span class="dot"></span>YUSUF İBİN</a>
   <div class="nav-links">
@@ -428,7 +375,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 </div>
 
 <header class="hero" id="top">
-  <canvas id="neurons" data-par="170"></canvas>
   <div class="hero-grid-lines"></div>
   <div class="hero-inner" data-par="-70">
     <div class="hero-kicker">
@@ -481,18 +427,6 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
       <article class="rcard reveal"><div class="rn">.04</div><h3>Classical ML &amp; Data</h3><p data-i18n="res_4_desc">Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.</p></article>
       <article class="rcard reveal d1"><div class="rn">.05</div><h3>Agentic AI &amp; RAG</h3><p data-i18n="res_5_desc">Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.</p></article>
       <article class="rcard reveal d2"><div class="rn">.06</div><h3>Speech &amp; Voice</h3><p data-i18n="res_6_desc">Piper &amp; XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.</p></article>
-    </div>
-  </div>
-</section>
-
-<!-- Dynamic Scroll-Reactive Canvas Divider -->
-<section class="divider" id="dividerAnimSec">
-  <div class="sub reveal" data-i18n="divider_sub">// DİNAMİK VERİ AKIŞI</div>
-  <div class="divider-canvas-wrap">
-    <canvas id="dividerCanvas"></canvas>
-    <div class="divider-overlay-tag">
-      <span class="d-dot"></span>
-      <span id="dividerTagText" data-i18n="divider_tag">LATENT SPACE · NÖRAL DALGA</span>
     </div>
   </div>
 </section>
@@ -620,8 +554,6 @@ const i18n = {
     res_4_desc: "Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.",
     res_5_desc: "Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.",
     res_6_desc: "Piper & XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.",
-    divider_sub: "// DİNAMİK VERİ AKIŞI",
-    divider_tag: "LATENT SPACE · NÖRAL DALGA",
     proj_title: "Projeler",
     proj_meta: ".03 / PROJECTS",
     proj_1_title: "Veri Analizi & <em>Mühendisliği</em>",
@@ -666,8 +598,6 @@ const i18n = {
     res_4_desc: "Regression, classification, data analysis, and turning raw data into actionable insights.",
     res_5_desc: "Building agentic workflows, RAG systems, and experimenting with local LLMs.",
     res_6_desc: "Speech synthesis with Piper & XTTS-v2, speech recognition with Whisper; building end-to-end audio systems.",
-    divider_sub: "// LATENT DATA FLOW",
-    divider_tag: "LATENT SPACE · NEURAL WAVE",
     proj_title: "Projects",
     proj_meta: ".03 / PROJECTS",
     proj_1_title: "Data Analysis & <em>Engineering</em>",
@@ -726,14 +656,12 @@ function setLanguage(lang) {
   localStorage.setItem('preferred_lang', lang);
   document.documentElement.lang = lang;
   
-  // Update toggle buttons UI state
   document.querySelectorAll('.lang-switch').forEach(sw => {
     sw.classList.toggle('en', lang === 'en');
   });
   document.querySelectorAll('.lang-label.tr').forEach(el => el.classList.toggle('active', lang === 'tr'));
   document.querySelectorAll('.lang-label.en').forEach(el => el.classList.toggle('active', lang === 'en'));
   
-  // Update text content / innerHTML
   const dict = i18n[lang];
   if(!dict) return;
 
@@ -747,13 +675,9 @@ function setLanguage(lang) {
     }
   });
 
-  // Reset & update typing animation
   li = 0; ci = 0; del = false;
 
-  // Re-run terminal animation with new language lines
   if(typeof restartTerm === 'function') restartTerm();
-
-  // Update views counter text
   updateViewsDisplay();
 }
 
@@ -799,7 +723,7 @@ tick();
 
 /* ===== Terminal typing ===== */
 const termBody=document.getElementById('termBody');
-let started=false, termIntervalId = null;
+let started=false;
 new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting&&!started){started=true;runTerm()}})},{threshold:.3}).observe(termBody);
 
 function restartTerm(){
@@ -829,170 +753,162 @@ function runTerm(){
   step();
 }
 
-/* ===== Neuron network canvas (hero) ===== */
+/* ===== 1. Global Ambient Scroll-Morphing Canvas (#neurons) ===== */
 (function(){
-  const cv=document.getElementById('neurons'),ctx=cv.getContext('2d');
-  let w,h,nodes,dpr=Math.min(devicePixelRatio||1,2),raf;
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  function resize(){w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);init()}
-  function init(){
-    const count=Math.max(28,Math.min(64,Math.round(w*h/26000)));
-    nodes=[];for(let i=0;i<count;i++)nodes.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.6+1});
-  }
-  const acc='128,222,196';
-  function frame(){
-    ctx.clearRect(0,0,w,h);
-    for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>w)n.vx*=-1;if(n.y<0||n.y>h)n.vy*=-1;}
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
-        if(d<140){ctx.strokeStyle='rgba('+acc+','+(0.10*(1-d/140))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
-      }
-    }
-    for(const n of nodes){ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();}
-    raf=requestAnimationFrame(frame);
-  }
-  resize();addEventListener('resize',resize);
-  if(reduce){frame();cancelAnimationFrame(raf);ctx.clearRect(0,0,w,h);
-    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<140){ctx.strokeStyle='rgba('+acc+','+(0.10*(1-d/140))+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
-    for(const n of nodes){ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();}
-  }else frame();
-})();
-
-/* ===== Dynamic Scroll-Reactive Divider Canvas ===== */
-(function(){
-  const cv = document.getElementById('dividerCanvas');
+  const cv = document.getElementById('neurons');
   if(!cv) return;
   const ctx = cv.getContext('2d');
-  const sec = document.getElementById('dividerAnimSec');
   
   let w, h, dpr = Math.min(devicePixelRatio || 1, 2);
-  let scrollProgress = 0;
-  let mouse = { x: -1000, y: -1000, active: false };
-  let points = [];
-  const rows = 14, cols = 42;
+  let nodes = [];
+  let scrollPct = 0;
+  let scrollVel = 0;
+  let lastY = window.scrollY;
+
+  const tokens = ['[0.842]', 'attn_weight', 'tensor(64,128)', 'RAG_flow', 'embeddings', 'loss:0.014', 'head_04', 'SFT_data', 'context_len:8192'];
+  let particleTokens = [];
 
   function resize(){
-    w = cv.clientWidth;
-    h = cv.clientHeight;
+    w = window.innerWidth;
+    h = window.innerHeight;
     cv.width = w * dpr;
     cv.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    initPoints();
+    initNodes();
+    initTokens();
   }
 
-  function initPoints(){
-    points = [];
-    for(let r=0; r<rows; r++){
-      for(let c=0; c<cols; c++){
-        points.push({
-          r, c,
-          baseX: (c / (cols - 1)) * w,
-          baseY: (r / (rows - 1)) * h,
-          phase: Math.random() * Math.PI * 2,
-          speed: 0.8 + Math.random() * 0.6
-        });
-      }
+  function initNodes(){
+    const baseCount = Math.max(35, Math.min(75, Math.round(w * h / 22000)));
+    nodes = [];
+    for(let i = 0; i < baseCount; i++){
+      nodes.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.8 + 1,
+        phase: Math.random() * Math.PI * 2
+      });
     }
   }
 
-  function updateScrollProgress(){
-    if(!sec) return;
-    const rect = sec.getBoundingClientRect();
-    const vh = window.innerHeight;
-    let p = (vh - rect.top) / (vh + rect.height);
-    scrollProgress = Math.max(0, Math.min(1, p));
+  function initTokens(){
+    particleTokens = [];
+    const count = 10;
+    for(let i = 0; i < count; i++){
+      const isLeft = i % 2 === 0;
+      particleTokens.push({
+        text: tokens[i % tokens.length],
+        x: isLeft ? (Math.random() * 70 + 15) : (w - Math.random() * 90 - 30),
+        y: Math.random() * h,
+        vy: (Math.random() * 0.4 + 0.2),
+        opacity: Math.random() * 0.3 + 0.15
+      });
+    }
   }
 
-  cv.addEventListener('mousemove', (e) => {
-    const r = cv.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
-    mouse.active = true;
-  });
-  cv.addEventListener('mouseleave', () => { mouse.active = false; });
+  function updateScroll(){
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    scrollPct = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
+    
+    const deltaY = Math.abs(window.scrollY - lastY);
+    scrollVel += (deltaY - scrollVel) * 0.1;
+    lastY = window.scrollY;
+  }
 
-  let time = 0;
   const acc = '128, 222, 196';
 
-  function draw(){
-    time += 0.018;
-    updateScrollProgress();
+  function frame(){
+    updateScroll();
     ctx.clearRect(0, 0, w, h);
 
-    const morph = (scrollProgress - 0.5) * 2;
-    const amplitude = 22 + scrollProgress * 28;
+    const speedMult = 1 + scrollVel * 0.05;
+    const maxDist = 120 + scrollPct * 60;
 
-    for(let r=0; r<rows; r++){
-      ctx.beginPath();
-      let first = true;
+    for(let i = 0; i < nodes.length; i++){
+      const n = nodes[i];
+      n.x += n.vx * speedMult;
+      n.y += n.vy * speedMult;
 
-      for(let c=0; c<cols; c++){
-        const pt = points[r * cols + c];
-        const waveX = Math.sin(time * pt.speed + pt.r * 0.4 + morph * 3) * 12;
-        const waveY = Math.cos(time * pt.speed + pt.c * 0.25 + morph * 4) * amplitude;
+      if(n.x < -10) n.x = w + 10;
+      if(n.x > w + 10) n.x = -10;
+      if(n.y < -10) n.y = h + 10;
+      if(n.y > h + 10) n.y = -10;
 
-        let x = pt.baseX + waveX;
-        let y = pt.baseY + waveY;
-
-        if(mouse.active){
-          const dx = x - mouse.x;
-          const dy = y - mouse.y;
-          const dist = Math.hypot(dx, dy);
-          if(dist < 120){
-            const force = (1 - dist / 120) * 35;
-            x += (dx / dist) * force;
-            y += (dy / dist) * force;
-          }
-        }
-
-        if(first){
-          ctx.moveTo(x, y);
-          first = false;
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-
-      const alpha = (0.08 + 0.14 * Math.sin(time + r * 0.5)) * (1 - Math.abs(r - rows/2)/(rows/2));
-      ctx.strokeStyle = `rgba(${acc}, ${alpha.toFixed(3)})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-
-    for(let i=0; i<points.length; i+=3){
-      const pt = points[i];
-      const waveX = Math.sin(time * pt.speed + pt.r * 0.4 + morph * 3) * 12;
-      const waveY = Math.cos(time * pt.speed + pt.c * 0.25 + morph * 4) * amplitude;
-
-      let x = pt.baseX + waveX;
-      let y = pt.baseY + waveY;
-
-      if(mouse.active){
-        const dx = x - mouse.x;
-        const dy = y - mouse.y;
+      for(let j = i + 1; j < nodes.length; j++){
+        const b = nodes[j];
+        const dx = n.x - b.x;
+        const dy = n.y - b.y;
         const dist = Math.hypot(dx, dy);
-        if(dist < 120){
-          const force = (1 - dist / 120) * 35;
-          x += (dx / dist) * force;
-          y += (dy / dist) * force;
+        
+        if(dist < maxDist){
+          const alpha = (0.12 * (1 - dist / maxDist) * (0.5 + scrollPct * 0.5)).toFixed(3);
+          ctx.strokeStyle = `rgba(${acc}, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
         }
       }
 
-      const pulse = 1.6 + 1.2 * Math.sin(time * 2 + pt.phase);
       ctx.beginPath();
-      ctx.arc(x, y, pulse, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${acc}, ${(0.3 + 0.5 * Math.sin(time + pt.phase)).toFixed(2)})`;
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${acc}, ${(0.35 + 0.3 * Math.sin(n.phase + scrollPct * 4)).toFixed(2)})`;
       ctx.fill();
     }
 
-    requestAnimationFrame(draw);
+    ctx.font = '10px "JetBrains Mono", monospace';
+    for(let t of particleTokens){
+      t.y -= (t.vy + scrollVel * 0.08);
+      if(t.y < -20){
+        t.y = h + 20;
+        const isLeft = Math.random() > 0.5;
+        t.x = isLeft ? (Math.random() * 70 + 15) : (w - Math.random() * 90 - 20);
+      }
+      ctx.fillStyle = `rgba(${acc}, ${(t.opacity * (0.4 + scrollPct * 0.6)).toFixed(3)})`;
+      ctx.fillText(t.text, t.x, t.y);
+    }
+
+    requestAnimationFrame(frame);
   }
 
   resize();
   window.addEventListener('resize', resize);
-  window.addEventListener('scroll', updateScrollProgress, { passive: true });
-  draw();
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  frame();
+})();
+
+/* ===== 2. Focal Center Highlight & 3D Scale Observer ===== */
+(function(){
+  const cards = document.querySelectorAll('.rcard, .proj, .terminal');
+  if(!cards.length) return;
+
+  function checkFocal(){
+    const vh = window.innerHeight;
+    const center = vh / 2;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.top + rect.height / 2;
+      const distFromCenter = Math.abs(center - cardCenter);
+      const maxDist = vh * 0.45;
+
+      if(distFromCenter < maxDist){
+        const factor = 1 - (distFromCenter / maxDist);
+        const scale = 1 + factor * 0.022;
+        card.style.transform = `scale(${scale.toFixed(3)}) translateZ(0)`;
+        card.style.borderColor = `rgba(128, 222, 196, ${(0.1 + factor * 0.22).toFixed(2)})`;
+      } else {
+        card.style.transform = 'scale(1) translateZ(0)';
+        card.style.borderColor = '';
+      }
+    });
+  }
+
+  window.addEventListener('scroll', checkFocal, { passive: true });
+  checkFocal();
 })();
 
 /* ===== Project viz canvases ===== */
