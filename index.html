@@ -323,34 +323,17 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
 .totop{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:color .25s}
 .totop:hover{color:var(--accent)}
 
-/* ============ VIEWS COUNTER WIDGET ============ */
+/* ============ VIEWS COUNTER (footer, deliberately understated) ============ */
 .views-widget{
-  position:fixed;bottom:20px;right:20px;z-index:90;
-  display:inline-flex;align-items:center;gap:8px;
-  padding:7px 14px;border-radius:999px;
-  background:rgba(10,10,11,.84);
-  border:1px solid var(--glass-border);
-  backdrop-filter:blur(14px) saturate(140%);
-  -webkit-backdrop-filter:blur(14px) saturate(140%);
-  box-shadow:0 10px 30px rgba(0,0,0,.45);
-  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
-  color:var(--ink-dim);transition:all .3s ease;
-  user-select:none;
+  display:flex;align-items:center;justify-content:flex-end;gap:6px;
+  margin-top:16px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.09em;
+  color:var(--ink-faint);opacity:.5;
+  user-select:none;transition:opacity .3s ease;
 }
-.views-widget:hover{
-  border-color:var(--accent-dim);
-  color:var(--ink);
-  transform:translateY(-2px);
-}
-.views-pulse{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 8px var(--accent);
-  animation:pulse 2s infinite ease-in-out;
-}
-@keyframes pulse{0%,100%{opacity:.4;transform:scale(0.85)}50%{opacity:1;transform:scale(1.35)}}
-.views-icon{display:flex;align-items:center;color:var(--accent);opacity:.9}
-.views-text strong{color:var(--ink);font-weight:600}
+.views-widget:hover{opacity:.85}
+.views-icon{display:flex;align-items:center;opacity:.75}
+.views-text strong{color:var(--ink-dim);font-weight:500}
 
 /* ============ RESPONSIVE ============ */
 @media(max-width:980px){
@@ -370,7 +353,7 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
   .badges{gap:9px}
   .badge{padding:9px 14px;font-size:10.5px}
   .crow .chandle .htext{display:none}
-  .views-widget{bottom:14px;right:14px;padding:6px 11px;font-size:10px}
+  .views-widget{font-size:9.5px;letter-spacing:.06em}
 }
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
@@ -555,17 +538,16 @@ footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--
       <span class="mono" data-i18n="foot_location">© 2026 · İSTANBUL / YTÜ</span>
       <span class="totop" id="totop" data-i18n="foot_totop">↑ Başa dön</span>
     </div>
+
+    <!-- Page Views (Son 1 Hafta) -->
+    <div class="views-widget" id="viewsWidget">
+      <span class="views-icon">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </span>
+      <span class="views-text" id="viewsText">Son 1 Hafta: <strong id="weeklyCount">...</strong> görüntülenme</span>
+    </div>
   </div>
 </footer>
-
-<!-- Page Views Widget (Son 1 Hafta) -->
-<div class="views-widget" id="viewsWidget">
-  <span class="views-pulse"></span>
-  <span class="views-icon">
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-  </span>
-  <span class="views-text" id="viewsText">Son 1 Hafta: <strong id="weeklyCount">...</strong> görüntülenme</span>
-</div>
 
 <script>
 /* ================= i18n & Translations ================= */
@@ -1040,12 +1022,13 @@ document.querySelectorAll('.pviz').forEach(box=>{
 })();
 
 /* ===== Weekly Views Counter Logic ===== */
-let latestWeeklyCount = 0;
+let latestWeeklyCount = null;
 
 function updateViewsDisplay() {
   const viewsText = document.getElementById('viewsText');
-  const countStr = latestWeeklyCount > 0 ? latestWeeklyCount.toLocaleString() : '430+';
-  
+  if (latestWeeklyCount === null) return;
+  const countStr = latestWeeklyCount.toLocaleString(currentLang === 'en' ? 'en-US' : 'tr-TR');
+
   if (currentLang === 'en') {
     viewsText.innerHTML = `Past 7 Days: <strong>${countStr}</strong> views`;
   } else {
@@ -1054,40 +1037,53 @@ function updateViewsDisplay() {
 }
 
 (async function initWeeklyViews() {
-  const STORAGE_KEY = 'yi_page_views_v2';
-  const now = Date.now();
-  const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
-  
-  let data = { visits: [], total: 0 };
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) data = JSON.parse(saved);
-  } catch(e) {}
+  const API = 'https://abacus.jasoncameron.dev';
+  const NS = 'yusufibin-com';
+  const MARK_KEY = 'yi_last_counted_day';
+  const DAY_MS = 24 * 60 * 60 * 1000;
 
-  data.visits = (data.visits || []).filter(ts => (now - ts) < SEVEN_DAYS);
-  data.visits.push(now);
-  data.total = (data.total || 0) + 1;
-  
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch(e) {}
+  // One bucket per UTC day; the rolling window is the sum of the last 7 buckets.
+  const dayKey = ts => 'v-' + new Date(ts).toISOString().slice(0, 10);
 
-  let remoteCount = 0;
-  try {
-    const res = await fetch('https://api.counterapi.dev/v1/yusufibin_com/visits/up');
-    if (res.ok) {
-      const resData = await res.json();
-      if (resData && typeof resData.count === 'number') {
-        remoteCount = resData.count;
-      }
+  async function readCount(url) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return 0;
+      const json = await res.json();
+      return typeof json.value === 'number' ? json.value : 0;
+    } catch (e) {
+      return 0;
     }
-  } catch(err) {}
+  }
 
-  const baseWeeklyEstimate = 380;
-  const localWeeklyDelta = data.visits.length;
-  latestWeeklyCount = Math.max(baseWeeklyEstimate + localWeeklyDelta, remoteCount > 0 ? Math.round(remoteCount * 0.45) : 432);
+  const now = Date.now();
+  const today = dayKey(now);
 
-  updateViewsDisplay();
+  let alreadyCounted = false;
+  try {
+    alreadyCounted = localStorage.getItem(MARK_KEY) === today;
+  } catch (e) {}
+
+  const keys = [];
+  for (let i = 0; i < 7; i++) keys.push(dayKey(now - i * DAY_MS));
+
+  const counts = await Promise.all(keys.map((key, i) => {
+    const hitToday = i === 0 && !alreadyCounted;
+    return readCount(`${API}/${hitToday ? 'hit' : 'get'}/${NS}/${key}`);
+  }));
+
+  if (!alreadyCounted) {
+    try { localStorage.setItem(MARK_KEY, today); } catch (e) {}
+  }
+
+  const total = counts.reduce((a, b) => a + b, 0);
+
+  if (total > 0) {
+    latestWeeklyCount = total;
+    updateViewsDisplay();
+  } else {
+    document.getElementById('viewsWidget').style.display = 'none';
+  }
 })();
 
 // Initialize language choice from localStorage if set
