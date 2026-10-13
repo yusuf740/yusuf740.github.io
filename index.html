@@ -1,1175 +1,490 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title id="metaTitle">Yusuf İbin — Turkish NLP & LLM Researcher</title>
-<meta id="metaDesc" name="description" content="Yusuf İbin — YTÜ Bilgisayar Mühendisliği öğrencisi, AIRLAB takım lideri, Cosmos NLP araştırmacısı. Türkçe NLP, derin öğrenme, agentic AI & RAG." />
-
-<!-- Favicon -->
+<title>Yusuf İbin</title>
+<meta name="description" content="Yusuf İbin — Computer Engineering student at Yildiz Technical University. Computer vision, Turkish NLP and AI agents." />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a0a0b'/%3E%3Cpath d='M 17 18 L 32 35 L 47 18 M 32 35 L 32 47' stroke='%2380dec4' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='17' cy='18' r='3.5' fill='%2380dec4'/%3E%3Ccircle cx='47' cy='18' r='3.5' fill='%2380dec4'/%3E%3Ccircle cx='32' cy='35' r='3.5' fill='%2380dec4'/%3E%3C/svg%3E" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=VT323&family=Silkscreen:wght@400;700&family=Doto:wght@500;700&family=Pixelify+Sans:wght@400;600&family=Jersey+10&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
 <style>
 :root{
-  --black:#0a0a0b;
-  --black-2:#101012;
-  --ink:#f4f4f2;
-  --ink-dim:#9a9a9c;
-  --ink-faint:#5f5f63;
-  --line:rgba(255,255,255,.12);
-  --line-soft:rgba(255,255,255,.07);
-  --gray:#b9b9bb;          /* light section bg */
-  --gray-ink:#141416;
-  --gray-dim:#46464a;
-  --gray-line:rgba(0,0,0,.16);
-  --accent:oklch(0.80 0.105 172);     /* refined phosphor teal */
-  --accent-dim:oklch(0.80 0.105 172 / .55);
-  --accent-glow:oklch(0.80 0.105 172 / .16);
-  --glass:rgba(255,255,255,.045);
-  --glass-strong:rgba(255,255,255,.07);
-  --glass-border:rgba(255,255,255,.13);
-  --sans:"Archivo",system-ui,sans-serif;
-  --display:"Syne","Archivo",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,monospace;
-  --pad:clamp(20px,5vw,90px);
+  --bg:#fbfaf7;
+  --card:#ffffff;
+  --ink:#141414;
+  --dim:#66655f;
+  --faint:#a3a19a;
+  --line:#e8e6df;
+  --grid:rgba(20,20,20,.035);
+  --sun:#ffc21a;
+  --sun-soft:#fff3c4;
+  --serif:"Instrument Serif",Georgia,serif;
+  --sans:"Inter",system-ui,sans-serif;
+  --caps:"Bebas Neue",Impact,sans-serif;
+  --col:1080px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  font-family:var(--sans);
-  background:var(--black);
-  color:var(--ink);
-  line-height:1.5;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
+  font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
 }
-::selection{background:var(--accent);color:#04130f}
+::selection{background:var(--sun);color:var(--ink)}
 a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
 
-.mono{font-family:var(--mono);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
-.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
-.idx{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-faint)}
+/* the framed centre column */
+.frame{max-width:var(--col);margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);background:rgba(251,250,247,.6)}
+.row{border-top:1px solid var(--line);position:relative}
+.row::before,.row::after{content:"";position:absolute;top:-4px;width:7px;height:7px;border:1px solid var(--faint);background:var(--bg)}
+.row::before{left:-4px}.row::after{right:-4px}
+.pad{padding:clamp(40px,7vw,88px) clamp(20px,5vw,56px)}
 
-/* Persistent Global Neural Background Canvas */
-#neurons{
-  position:fixed;top:0;left:0;width:100vw;height:100vh;
-  z-index:0;pointer-events:none;opacity:.65;
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:rgba(251,250,247,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .in{position:relative;max-width:var(--col);margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:10px clamp(16px,3vw,24px)}
+/* 82-unit box drawn 66px tall; its resting line (y=62) lands on the nav border */
+.cat-spot{position:absolute;left:clamp(16px,3vw,24px);bottom:-16.6px;line-height:0}
+.logo{width:97px;height:66px;display:block;overflow:visible}
+.cat .breathe{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.2s ease-in-out infinite}
+.cat .zz path{animation:zz 3.2s ease-in-out infinite;opacity:0}
+.cat .zz path+path{animation-delay:1.1s}
+.cat .awake,.cat .alert,.cat .scared{display:none}
+.cat .jump{transform-box:fill-box;transform-origin:50% 100%}
+.cat.spooked .jump{animation:spook 1.8s ease-out}
+.cat.spooked .scared,.cat.spooked .alert{display:inline}
+.cat.spooked .sleepy,.cat.spooked .zz{display:none}
+/* hop up into the arch, freeze there trembling, then it is back to the nap */
+@keyframes spook{
+  0%{transform:translateY(0) scale(1,.8)}
+  12%{transform:translateY(-9px) scale(.96,1.06)}
+  24%{transform:translateY(0) scale(1.03,.97)}
+  30%,42%,54%,66%,78%{transform:translateX(-.8px)}
+  36%,48%,60%,72%,84%{transform:translateX(.8px)}
+  100%{transform:none}
 }
+.cat.up .awake{display:inline}
+.cat.up .sleep,.cat.up .zz{display:none}
+.cat.up .breathe{animation-play-state:paused}
+@keyframes breathe{50%{transform:scale(1.02,1.05)}}
+@keyframes zz{0%{opacity:0;transform:translate(0,4px)}30%{opacity:1}100%{opacity:0;transform:translate(6px,-8px)}}
+.nav-name{grid-column:2;font-size:17px;font-weight:500;letter-spacing:-.01em}
+.pill{justify-self:end;display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:500;color:#fff;
+  background:linear-gradient(#3a3a3a,#111);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1px 2px rgba(0,0,0,.3),0 4px 12px -4px rgba(0,0,0,.4);transition:transform .2s}
+.pill:hover{transform:translateY(-1px)}
 
-/* ============ NAV ============ */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px var(--pad);
-  transition:background .4s ease,border-color .4s ease,padding .4s ease;
-  border-bottom:1px solid transparent;
+/* hero */
+.hero{position:relative;overflow:hidden;padding-top:clamp(110px,16vw,190px)}
+.hero::before{content:"";position:absolute;left:50%;top:-55%;width:120%;height:110%;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,214,60,.75),rgba(255,226,120,.35) 45%,transparent 75%);filter:blur(10px)}
+.hero>*{position:relative}
+.hai{font-family:var(--caps);font-size:clamp(56px,10vw,120px);line-height:.9;letter-spacing:.01em;display:inline-block;margin-bottom:14px;
+  color:transparent;-webkit-text-stroke:2px var(--ink);
+  background:repeating-linear-gradient(-45deg,var(--ink) 0 2px,transparent 2px 7px);-webkit-background-clip:text;background-clip:text}
+h1{text-transform:none;font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.6vw,64px);line-height:1.06;letter-spacing:-.015em;max-width:17ch}
+h1 i{font-style:italic}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+/* pencil portrait taped onto the page */
+.me{width:220px;margin:44px 0 0 6px;padding:12px 12px 8px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px -18px rgba(0,0,0,.35);transform:rotate(2.5deg)}
+.me::before{content:"";position:absolute;left:50%;top:-12px;width:84px;height:24px;transform:translateX(-50%) rotate(-4deg);background:rgba(255,214,90,.55);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.me img{display:block;width:100%;height:auto}
+.me figcaption{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--dim);text-align:center;margin-top:4px}
+@media(min-width:820px){
+  .hero{display:grid;grid-template-columns:1fr 280px;column-gap:48px}
+  .hero .hai{justify-self:start}
+  .me{grid-column:2;grid-row:1/4;align-self:center;width:100%;margin:0}
 }
-.nav.scrolled{
-  background:rgba(10,10,11,.55);
-  backdrop-filter:blur(18px) saturate(140%);
-  -webkit-backdrop-filter:blur(18px) saturate(140%);
-  border-bottom:1px solid var(--line-soft);
-  padding-top:14px;padding-bottom:14px;
-}
-.brand{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:9px}
-.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
-.nav-links{display:flex;align-items:center;gap:26px}
-.nav-links a{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);transition:color .25s;position:relative}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--accent);transition:width .3s ease}
-.nav-links a:hover{color:var(--ink)}
-.nav-links a:hover::after{width:100%}
-.nav-cta{padding:9px 16px;border:1px solid var(--glass-border);border-radius:999px;background:var(--glass);backdrop-filter:blur(8px);color:var(--ink)!important}
-.nav-cta:hover{border-color:var(--accent);color:var(--accent)!important}
-.nav-cta::after{display:none}
+.ghost{display:inline-flex;align-items:center;padding:8px 16px;border-radius:999px;font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--card);transition:border-color .2s}
+.ghost:hover{border-color:var(--ink)}
+.blurb{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.2vw,23px);line-height:1.4;color:var(--dim);padding:28px clamp(20px,5vw,56px)}
 
-/* ============ LANG SWITCH ============ */
-.lang-switch-wrap{display:flex;align-items:center}
-.lang-switch{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:5px 10px;border-radius:999px;
-  background:var(--glass);border:1px solid var(--glass-border);
-  backdrop-filter:blur(8px);cursor:pointer;
-  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
-  color:var(--ink-dim);transition:border-color .3s,background .3s;
-  outline:none;
-}
-.lang-switch:hover{border-color:var(--accent);color:var(--ink)}
-.lang-label{transition:color .3s ease;font-weight:500}
-.lang-label.active{color:var(--accent);font-weight:700}
-.lang-toggle-track{
-  position:relative;width:26px;height:13px;
-  background:rgba(255,255,255,.12);border-radius:999px;
-  transition:background .3s ease;
-}
-.lang-toggle-thumb{
-  position:absolute;top:1.5px;left:1.5px;
-  width:10px;height:10px;border-radius:50%;
-  background:var(--accent);box-shadow:0 0 8px var(--accent-glow);
-  transition:transform .3s cubic-bezier(.2,.7,.2,1);
-}
-.lang-switch.en .lang-toggle-thumb{transform:translateX(13px)}
+/* section heads */
+.kicker{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+/* trial: all-lowercase look; delete this rule to go back */
+body,.kicker{text-transform:lowercase}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.6vw,52px);line-height:1.05;letter-spacing:-.01em;margin-bottom:clamp(28px,4vw,44px)}
 
-.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px}
-.burger span{display:block;width:24px;height:1.5px;background:var(--ink);transition:.3s}
-.mobile-menu{position:fixed;inset:0;z-index:99;background:rgba(8,8,9,.92);backdrop-filter:blur(22px);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:var(--pad);opacity:0;pointer-events:none;transition:opacity .4s}
-.mobile-menu.open{opacity:1;pointer-events:auto}
-.mobile-menu a{font-family:var(--sans);font-weight:700;text-transform:uppercase;font-size:clamp(30px,8vw,52px);letter-spacing:-.01em;color:var(--ink);line-height:1.05}
-.mobile-menu a span{color:var(--ink-faint);font-family:var(--mono);font-size:13px;font-weight:400;margin-right:14px;vertical-align:super}
-.mobile-lang-wrap{margin-top:20px;display:flex;align-items:center}
+/* work cards */
+.work{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px -24px rgba(0,0,0,.25)}
+.card .art{aspect-ratio:16/10;border-radius:12px;display:grid;place-items:center;background:var(--tint,#f3f1ea)}
+.card .art svg{width:42%;height:auto;overflow:visible}
+.card .body{padding:18px 10px 10px;display:flex;flex-direction:column;flex:1}
+.card h3{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.1}
+.card .meta{font-size:12.5px;color:var(--faint);margin:4px 0 12px}
+.card p{color:var(--dim);font-size:14.5px}
+.card .link{margin-top:auto;padding-top:14px;font-size:13px;font-weight:500}
+.card .link span{border-bottom:1px solid var(--line);transition:border-color .2s}
+.card:hover .link span{border-color:var(--ink)}
+/* smaller projects get a slim row, not a showcase */
+.card.mini{grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;padding:10px 20px 10px 10px}
+.card.mini .art{aspect-ratio:1;width:64px;flex:none;border-radius:10px}
+.card.mini .art svg{width:60%}
+.card.mini .body{padding:0;flex:1}
+.card.mini h3{font-size:21px}
+.card.mini p{font-size:13.5px}
+.card.mini .arrow{font-size:14px;color:var(--faint)}
 
-/* ============ HERO ============ */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px var(--pad) 60px;overflow:hidden}
-.hero-grid-lines{position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);
-  background-size:clamp(60px,12vw,160px) clamp(60px,12vw,160px);
-  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 45%,#000 35%,transparent 80%);
-  mask-image:radial-gradient(ellipse 90% 80% at 50% 45%,#000 35%,transparent 80%);
-}
-.hero-inner{position:relative;z-index:2;max-width:1500px;width:100%;margin:0 auto}
-.hero-kicker{display:flex;align-items:center;gap:14px;margin-bottom:26px}
-.hero-kicker .ln{height:1px;width:46px;background:var(--accent-dim)}
-.hero h1{
-  font-family:var(--sans);font-weight:900;text-transform:uppercase;
-  font-size:clamp(58px,15.5vw,260px);line-height:.84;letter-spacing:-.025em;
-  margin:0 0 4px -.02em;
-}
-.hero h1 .l2{display:block;line-height:.92;margin-top:.03em}
-.hero h1 .l2 b{font-family:"Syne",sans-serif;font-weight:800;color:var(--accent);-webkit-text-stroke:0;letter-spacing:-.02em;text-shadow:0 0 55px var(--accent-glow)}
-.type-wrap{display:flex;align-items:baseline;gap:12px;margin-top:30px;min-height:1.6em;flex-wrap:wrap}
-.type-wrap .arrow{font-family:var(--mono);color:var(--accent);font-size:clamp(14px,1.6vw,20px)}
-.typed{font-family:var(--mono);font-size:clamp(14px,2.1vw,26px);letter-spacing:.01em;color:var(--ink)}
-.cursor{display:inline-block;width:.5em;height:1.05em;background:var(--accent);margin-left:2px;transform:translateY(2px);animation:blink 1s steps(2) infinite;box-shadow:0 0 10px var(--accent-glow)}
-@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
-.badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:42px}
-.badge{display:flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;
-  background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px) saturate(140%);
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-dim)}
-.badge b{color:var(--ink);font-weight:500}
-.badge i{width:6px;height:6px;border-radius:50%;background:var(--accent);font-style:normal}
-.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-faint)}
-.scroll-hint .bar{width:1px;height:38px;background:linear-gradient(var(--accent),transparent);animation:slide 2.2s ease-in-out infinite}
-@keyframes slide{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* what I do — bordered 2x2 grid */
+.grid4{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.grid4>div{padding:clamp(28px,4vw,44px) clamp(20px,5vw,56px);border-bottom:1px solid var(--line)}
+.grid4>div:nth-child(odd){border-right:1px solid var(--line)}
+.grid4 svg{width:52px;height:52px;overflow:visible;margin-bottom:40px}
+.grid4 h3{font-family:var(--serif);font-weight:400;font-size:28px;margin-bottom:8px}
+.grid4 p{color:var(--dim);max-width:40ch}
 
-/* ============ SECTION SHELL ============ */
-section{position:relative;z-index:2}
-.sec{padding:clamp(80px,11vw,170px) var(--pad)}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(44px,6vw,80px);border-bottom:1px solid var(--line);padding-bottom:22px}
-.sec-head h2{font-family:var(--sans);font-weight:800;text-transform:uppercase;font-size:clamp(26px,4.4vw,60px);letter-spacing:-.02em;line-height:.95}
-.sec-head .meta{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-faint);text-align:right;white-space:nowrap}
-.sec-head .meta .mtag{display:block;color:var(--accent);margin-bottom:6px;line-height:1;transition:opacity .3s}
-.mtag.m1{font-family:"VT323",monospace;font-size:19px;letter-spacing:.01em}
-.mtag.m2{font-family:"Silkscreen",monospace;font-size:11px;letter-spacing:.02em}
-.mtag.m3{font-family:"Doto",monospace;font-weight:700;font-size:15px;letter-spacing:.04em}
-.mtag.m4{font-family:"Pixelify Sans",monospace;font-weight:600;font-size:16px;letter-spacing:0}
-.mtag.m5{font-family:"Jersey 10",monospace;font-size:21px;letter-spacing:.02em}
-.wrap{max-width:1500px;margin:0 auto}
+/* experience */
+.xp{list-style:none}
+.xp li{display:grid;grid-template-columns:150px 1fr;gap:6px 28px;padding:22px 0;border-top:1px solid var(--line)}
+.xp li:last-child{border-bottom:1px solid var(--line)}
+.xp time{font-size:13px;color:var(--faint);padding-top:5px}
+.xp h3{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.2}
+.xp h3 span{color:var(--faint)}
+.xp p{color:var(--dim);margin-top:4px}
 
-/* reveal */
-.reveal{opacity:0;transform:translateY(48px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
-.reveal.in{opacity:1;transform:none}
-.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.plain{list-style:none;color:var(--dim)}
+.plain li{padding:8px 0;border-top:1px solid var(--line)}
+.plain b{color:var(--ink);font-weight:500}
 
-/* ============ ABOUT ============ */
-.about{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(36px,5vw,80px);align-items:start}
-.about-lead{font-family:var(--display);font-style:normal;font-weight:600;font-size:clamp(26px,3.4vw,48px);line-height:1.18;letter-spacing:-.025em;color:var(--ink)}
-.about-lead em{font-style:normal;font-weight:800;color:var(--accent);font-family:"VT323",monospace;font-size:1.05em;letter-spacing:.01em}
-.about-body{font-family:var(--mono);font-weight:400;font-size:14.5px;line-height:1.95;color:var(--ink-dim);max-width:54ch}
-.about-body strong{color:var(--ink);font-weight:500}
-/* terminal */
-.terminal{border:1px solid var(--glass-border);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));backdrop-filter:blur(16px) saturate(140%);box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease}
-.term-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line-soft);background:rgba(255,255,255,.02)}
-.term-bar .tdot{width:11px;height:11px;border-radius:50%;background:#3a3a3d}
-.term-bar .tdot:nth-child(2){background:#48484b}.term-bar .tdot:nth-child(3){background:#48484b}
-.term-bar .tlabel{margin-left:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-faint)}
-.term-body{padding:22px 20px 26px;font-family:var(--mono);font-size:13px;line-height:1.95}
-.term-body .ln{white-space:pre-wrap;word-break:break-word}
-.term-body .p{color:var(--accent)}
-.term-body .c{color:var(--ink)}
-.term-body .o{color:var(--ink-dim)}
-.term-body .k{color:#e7c884}
-.term-body .tcursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+/* contact — the loud yellow bit */
+.contact{background:var(--sun);text-align:center;border-top:1px solid var(--line)}
+.contact .hai{font-size:clamp(64px,14vw,170px);-webkit-text-stroke-color:var(--ink)}
+.contact p{font-family:var(--serif);font-size:clamp(22px,3vw,30px);margin:6px 0 26px}
+.contact .mail{font-family:var(--serif);font-size:clamp(28px,5vw,50px);text-transform:lowercase;border-bottom:2px solid var(--ink)}
+.socials{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:36px}
+.socials a{padding:7px 15px;border:1.5px solid var(--ink);border-radius:999px;font-size:13px;font-weight:500;transition:background .2s,color .2s}
+.socials a:hover{background:var(--ink);color:var(--sun)}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px clamp(20px,5vw,56px);font-size:12.5px;color:var(--faint);border-top:1px solid var(--line)}
 
-/* ============ RESEARCH ============ */
-.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.rcard{background:var(--black);padding:clamp(28px,2.6vw,42px) clamp(24px,2.3vw,38px);position:relative;transition:background .4s ease,transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease;min-height:240px;display:flex;flex-direction:column;border:1px solid transparent}
-.rcard:hover{background:var(--black-2);border-color:var(--accent-glow)}
-.rcard::before{content:"";position:absolute;left:0;top:0;width:0;height:2px;background:var(--accent);transition:width .45s cubic-bezier(.2,.7,.2,1)}
-.rcard:hover::before{width:100%}
-.rcard .rn{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.18em;margin-bottom:auto}
+/* crayon doodles share one look */
+.doodle{fill:none;stroke:var(--ink);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
 
-.rcard h3 {
-  font-family: "Silkscreen", monospace;
-  font-weight: 700;
-  --fscale: 1; 
-  font-size: calc(clamp(26px, 2.2vw, 36px) * var(--fscale));
-  letter-spacing: .02em;
-  margin: 46px 0 12px;
-  transition: color .3s;
-  color: var(--accent);
+@media(max-width:760px){
+  .work{grid-template-columns:1fr}
+          .grid4{grid-template-columns:1fr}
+  .grid4>div:nth-child(odd){border-right:0}
+  .xp li{grid-template-columns:1fr;gap:2px}
+  .cols{grid-template-columns:1fr;gap:28px}
+  .nav-name{font-size:15px}
 }
-.rcard:nth-child(1) h3 { font-family: "VT323", monospace; --fscale: 1.7; letter-spacing: .01em; }
-.rcard:nth-child(2) h3 { font-family: "Silkscreen", monospace; font-weight: 700; --fscale: 1.2; letter-spacing: .02em; }
-.rcard:nth-child(3) h3 { font-family: "Doto", monospace; font-weight: 700; --fscale: 1.4; letter-spacing: .04em; }
-.rcard:nth-child(4) h3 { font-family: "Pixelify Sans", monospace; font-weight: 600; --fscale: 1.35; letter-spacing: 0; }
-.rcard:nth-child(5) h3 { font-family: "Jersey 10", monospace; --fscale: 1.8; letter-spacing: .02em; }
-.rcard:nth-child(6) h3 { font-family: "VT323", monospace; --fscale: 1.7; letter-spacing: .01em; }
-.rcard:hover h3 { color: var(--accent); opacity: .9; }
-
-.rcard p{font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--ink-dim)}
-
-/* ============ PROJECTS ============ */
-.proj{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,70px);align-items:center;padding:clamp(50px,6vw,90px) 0;border-bottom:1px solid var(--line);position:relative}
-.proj:first-of-type{border-top:1px solid var(--line)}
-.proj.flip .pviz{order:-1}
-/* ambient bloom — clear glass has nothing to refract over a near-black page,
-   so this gives the .pviz backdrop-filter some light to bend and saturate */
-.proj::after{
-  content:"";position:absolute;inset:-6% -4%;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(36% 52% at 72% 40%,oklch(0.80 0.105 172 / .13),transparent 70%),
-    radial-gradient(28% 42% at 34% 68%,rgba(255,255,255,.05),transparent 72%);
-  filter:blur(34px);
-}
-.proj.flip::after{
-  background:
-    radial-gradient(36% 52% at 28% 40%,oklch(0.80 0.105 172 / .13),transparent 70%),
-    radial-gradient(28% 42% at 66% 68%,rgba(255,255,255,.05),transparent 72%);
-}
-.pmeta,.pviz{position:relative;z-index:1}
-.pmeta .pnum{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);margin-bottom:18px}
-.pmeta h3{font-family:var(--sans);font-weight:800;font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:-.02em;margin-bottom:20px}
-.pmeta h3 em{font-style:normal;color:var(--accent)}
-.proj:nth-child(1) .pmeta h3 em{font-family:"VT323",monospace;font-weight:800;font-size:1.05em;letter-spacing:.01em}
-.proj:nth-child(2) .pmeta h3 em{font-family:"Silkscreen",monospace;font-weight:700;font-size:1.1em;letter-spacing:.02em}
-.proj:nth-child(3) .pmeta h3 em{font-family:"Doto",monospace;font-weight:700;font-size:.95em;letter-spacing:.04em}
-.pmeta p{font-family:var(--mono);font-size:13.5px;line-height:1.9;color:var(--ink-dim);max-width:48ch;margin-bottom:26px}
-.tags{display:flex;flex-wrap:wrap;gap:9px}
-.tag{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:7px 13px;border-radius:7px;border:1px solid var(--glass-border);background:var(--glass);color:var(--ink-dim);transition:.3s}
-.tag:hover{color:var(--accent);border-color:var(--accent-dim)}
-
-/* ============ CLEAR GLASS LENS (.pviz) ============ */
-/* Apple-style clear glass: low blur (clear, not frosted), heavy saturation of
-   the backdrop, a specular rim that varies around the perimeter, and an edge
-   refraction ring that fakes light bending through the thickness of the pane. */
-.pviz{
-  aspect-ratio:4/3;
-  border-radius:28px;
-  position:relative;
-  overflow:hidden;
-  isolation:isolate;
-  background:
-    linear-gradient(140deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.022) 30%,rgba(255,255,255,0) 55%),
-    radial-gradient(130% 90% at 50% -10%,rgba(255,255,255,.06),transparent 60%),
-    rgba(255,255,255,.02);
-  backdrop-filter:blur(10px) saturate(190%) brightness(1.12) contrast(1.04);
-  -webkit-backdrop-filter:blur(10px) saturate(190%) brightness(1.12) contrast(1.04);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.34),
-    inset 0 -1px 0 rgba(255,255,255,.07),
-    0 24px 60px -18px rgba(0,0,0,.85),
-    0 2px 10px -4px rgba(0,0,0,.5);
-  /* transform is driven per-frame by the parallax script — transitioning it makes it lag behind the scroll */
-  transition:background .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1),backdrop-filter .4s cubic-bezier(.16,1,.3,1);
-}
-/* edge refraction — extra blur/brightness that fades out toward the centre */
-.pviz::after{
-  content:"";position:absolute;inset:0;border-radius:inherit;
-  z-index:1;pointer-events:none;
-  backdrop-filter:blur(5px) brightness(1.28) saturate(170%);
-  -webkit-backdrop-filter:blur(5px) brightness(1.28) saturate(170%);
-  -webkit-mask:
-    linear-gradient(to right,#000 0%,transparent 16%,transparent 84%,#000 100%),
-    linear-gradient(to bottom,#000 0%,transparent 16%,transparent 84%,#000 100%);
-  mask:
-    linear-gradient(to right,#000 0%,transparent 16%,transparent 84%,#000 100%),
-    linear-gradient(to bottom,#000 0%,transparent 16%,transparent 84%,#000 100%);
-  -webkit-mask-composite:source-over;
-  mask-composite:add;
-}
-/* specular rim — bright at top-left and bottom-right, dim along the sides */
-.pviz::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;
-  z-index:5;pointer-events:none;padding:1.2px;
-  background:linear-gradient(145deg,
-    rgba(255,255,255,.85) 0%,
-    rgba(255,255,255,.22) 22%,
-    rgba(255,255,255,.06) 46%,
-    rgba(255,255,255,.16) 66%,
-    rgba(255,255,255,.6) 100%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  transition:background .4s cubic-bezier(.16,1,.3,1);
-}
-.pviz:hover{
-  background:
-    linear-gradient(140deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,.03) 30%,rgba(255,255,255,0) 55%),
-    radial-gradient(130% 90% at 50% -10%,rgba(255,255,255,.08),transparent 60%),
-    rgba(255,255,255,.032);
-  backdrop-filter:blur(12px) saturate(210%) brightness(1.18) contrast(1.06);
-  -webkit-backdrop-filter:blur(12px) saturate(210%) brightness(1.18) contrast(1.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.5),
-    inset 0 -1px 0 rgba(255,255,255,.1),
-    0 30px 70px -18px rgba(0,0,0,.88),
-    0 2px 10px -4px rgba(0,0,0,.5);
-}
-.pviz:hover::before{
-  background:linear-gradient(145deg,
-    rgba(255,255,255,1) 0%,
-    rgba(255,255,255,.34) 22%,
-    rgba(255,255,255,.1) 46%,
-    rgba(255,255,255,.24) 66%,
-    rgba(255,255,255,.75) 100%);
-}
-/* label chips — same material, scaled down */
-.pviz .vlabel,.pviz .vtl{
-  position:absolute;left:16px;
-  font-family:var(--mono);font-size:10.5px;
-  letter-spacing:.16em;z-index:3;
-  padding:4px 10px;border-radius:999px;
-  background:linear-gradient(150deg,rgba(255,255,255,.1),rgba(255,255,255,.035));
-  border:1px solid rgba(255,255,255,.2);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 8px -2px rgba(0,0,0,.5);
-  backdrop-filter:blur(8px) saturate(180%);
-  -webkit-backdrop-filter:blur(8px) saturate(180%);
-}
-.pviz .vlabel{bottom:14px;text-transform:uppercase;color:var(--ink-dim)}
-.pviz .vtl{top:14px;color:var(--accent)}
-.pviz canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}
-
-/* ============ STACK ============ */
-.stack{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.scol{background:var(--black);padding:clamp(24px,2vw,34px)}
-.scol h4{font-family:"Pixelify Sans",monospace;font-size:11px;letter-spacing:0;text-transform:uppercase;color:var(--accent);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line-soft);font-weight:600}
-.scol ul{list-style:none;display:flex;flex-direction:column;gap:13px}
-.scol li{font-family:var(--sans);font-weight:500;font-size:15px;color:var(--ink-dim);transition:color .25s;cursor:default}
-.scol li:hover{color:var(--ink)}
-
-/* ============ CONTACT ============ */
-.contact{border-top:1px solid var(--line)}
-.clist{display:flex;flex-direction:column}
-.crow{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:clamp(14px,1.8vw,24px) 0;border-bottom:1px solid var(--line);position:relative;transition:padding-left .4s cubic-bezier(.2,.7,.2,1)}
-.crow:hover{padding-left:clamp(14px,2vw,40px)}
-.crow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transition:transform .4s ease;transform-origin:top}
-.crow:hover::before{transform:scaleY(1)}
-.crow .cname{font-family:var(--sans);font-weight:800;text-transform:uppercase;font-size:clamp(20px,3vw,42px);letter-spacing:-.02em;line-height:1;transition:color .3s}
-.crow:hover .cname{color:var(--accent)}
-.crow .chandle{font-family:var(--mono);font-size:13px;letter-spacing:.05em;color:var(--ink-faint);display:flex;align-items:center;gap:14px}
-.crow .arr{font-family:var(--mono);transition:transform .3s}
-.crow:hover .arr{transform:translate(4px,-4px);color:var(--accent)}
-.crow .cleft{display:flex;align-items:center;gap:clamp(12px,1.4vw,20px);min-width:0}
-.crow .cicon{flex-shrink:0;width:clamp(18px,2vw,26px);height:clamp(18px,2vw,26px);color:var(--ink-faint);transition:color .3s ease,transform .35s cubic-bezier(.2,.7,.2,1)}
-.crow .cicon svg{width:100%;height:100%;display:block;fill:currentColor}
-.crow:hover .cicon{color:var(--accent);transform:translateY(-1px)}
-
-/* ============ FOOTER ============ */
-footer{padding:clamp(70px,9vw,130px) var(--pad) 50px;border-top:1px solid var(--line);position:relative;overflow:hidden;z-index:2}
-.foot-big{font-family:var(--display);font-style:normal;font-weight:700;font-size:clamp(34px,6vw,82px);line-height:1.02;letter-spacing:-.03em;text-transform:uppercase;max-width:14ch;margin-bottom:clamp(44px,7vw,80px)}
-.foot-big em{font-style:normal;color:var(--accent);font-family:"Jersey 10",monospace;font-size:1.08em;letter-spacing:.02em}
-.foot-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:26px}
-.foot-bottom .mono{font-size:11px;color:var(--ink-faint);letter-spacing:.1em}
-.foot-bottom .brand2{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);display:flex;align-items:center;gap:9px}
-.foot-bottom .brand2 .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.totop{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:color .25s}
-.totop:hover{color:var(--accent)}
-
-/* ============ VIEWS COUNTER (footer, deliberately understated) ============ */
-.views-widget{
-  display:flex;align-items:center;justify-content:flex-end;gap:6px;
-  margin-top:16px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.09em;
-  color:var(--ink-faint);opacity:.5;
-  user-select:none;transition:opacity .3s ease;
-}
-.views-widget:hover{opacity:.85}
-.views-icon{display:flex;align-items:center;opacity:.75}
-.views-text strong{color:var(--ink-dim);font-weight:500}
-
-/* ============ RESPONSIVE ============ */
-@media(max-width:980px){
-  .nav-links{display:none}
-  .burger{display:flex}
-  .about{grid-template-columns:1fr;gap:44px}
-  .rgrid{grid-template-columns:1fr 1fr}
-  .stack{grid-template-columns:1fr 1fr}
-  .proj{grid-template-columns:1fr;gap:30px}
-  .proj.flip .pviz{order:0}
-}
-@media(max-width:600px){
-  .rgrid{grid-template-columns:1fr}
-  .stack{grid-template-columns:1fr}
-  .sec-head{flex-direction:column;align-items:flex-start;gap:12px}
-  .sec-head .meta{text-align:left}
-  .badges{gap:9px}
-  .badge{padding:9px 14px;font-size:10.5px}
-  .crow .chandle .htext{display:none}
-  .views-widget{font-size:9.5px;letter-spacing:.06em}
-}
-@media(prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
-  *{animation-duration:.001s!important}
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card,.pill{transition:none}.cat .breathe,.cat .zz path,.cat.spooked .jump{animation:none}.cat .zz path{opacity:1}}
 </style>
 </head>
 <body>
 
-<!-- Persistent Global Canvas Animation -->
-<canvas id="neurons"></canvas>
+<!-- Shared crayon filters: grain eats into the strokes, displacement wobbles them.
+     The script re-seeds the wobble a few times a second for the hand-drawn "boil". -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="crayon" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence class="boil" type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1" result="wobble" />
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="5" result="moved" />
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="7" result="grain" />
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.3 1.45" result="mask" />
+      <feComposite in="moved" in2="mask" operator="in" />
+    </filter>
+    <!-- pencil: slight hand wobble plus paper tooth breaking up the graphite -->
+    <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence class="boil" type="turbulence" baseFrequency="0.08" numOctaves="2" seed="1" result="wobble" />
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="moved" />
+      <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="9" result="grain" />
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.8 1.75" result="tooth" />
+      <feComposite in="moved" in2="tooth" operator="in" />
+    </filter>
+  </defs>
+</svg>
 
-<nav class="nav" id="nav">
-  <a href="#top" class="brand"><span class="dot"></span>YUSUF İBİN</a>
-  <div class="nav-links">
-    <a href="#about" data-i18n="nav_about">Hakkımda</a>
-    <a href="#research" data-i18n="nav_research">Araştırma</a>
-    <a href="#projects" data-i18n="nav_projects">Projeler</a>
-    <a href="#stack" data-i18n="nav_stack">Kullandıklarım</a>
-    <div class="lang-switch-wrap">
-      <button class="lang-switch" id="langSwitch" aria-label="Switch Language / Dil Değiştir">
-        <span class="lang-label tr active" id="langTR">TR</span>
-        <span class="lang-toggle-track"><span class="lang-toggle-thumb"></span></span>
-        <span class="lang-label en" id="langEN">EN</span>
-      </button>
-    </div>
-    <a href="#contact" class="nav-cta" data-i18n="nav_contact">İletişim +</a>
+<nav>
+  <div class="in">
+    <a class="cat-spot" href="#top" aria-label="Home">
+      <svg class="logo cat" viewBox="0 0 120 82" aria-hidden="true">
+        <!-- pencil cat napping on the nav's bottom line (y=62 in this box), one paw hanging over -->
+        <g class="jump" filter="url(#pencil)" fill="none" stroke="#2f2f2f" stroke-linecap="round" stroke-linejoin="round">
+          <g class="sleepy">
+          <g class="breathe">
+              <path d="M44 46 Q56 31 80 32 Q104 33 110 50 Q113 60 104 62" stroke-width="1.45" /><path d="M44 46 Q56 31 80 32 Q104 33 110 50 Q113 60 104 62" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+              <path d="M104 61 Q118 61 118 53 Q118 47 113 47" stroke-width="1.45" /><path d="M104 61 Q118 61 118 53 Q118 47 113 47" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+              <path d="M18 56 Q14 40 28 37 Q43 35 45 49 Q46 61 33 62 Q21 63 18 56" stroke-width="1.45" /><path d="M18 56 Q14 40 28 37 Q43 35 45 49 Q46 61 33 62 Q21 63 18 56" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+              <path d="M19.5 44 L18 30.5 L27.5 38 M34 37 L41.5 28 L43 42.5" stroke-width="1.45" /><path d="M19.5 44 L18 30.5 L27.5 38 M34 37 L41.5 28 L43 42.5" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+              <path d="M68 35 Q71 40 68 45 M80 34 Q83 39 80 44 M92 37 Q94 42 91 47" stroke-width="1.2" opacity=".7" />
+              <path d="M22 33.5 L23.5 38 M40 31.5 L40 38" stroke-width="1" opacity=".55" />
+            </g>
+            <path class="paw" d="M38 61 Q37 69 39 76 Q42.5 80 46 76 Q47.5 69 46.5 61" fill="var(--bg)" stroke-width="1.45" />
+            <path d="M40.5 74 v2.5 M43.5 75 v2.5" stroke-width="1" />
+            <g class="face" stroke-width="1.6">
+              <path class="sleep" d="M22 50 Q25 53 28 50 M34 49.5 Q37 52.5 40 49.5" />
+              <g class="awake">
+                <circle cx="25" cy="49.5" r="3.4" fill="var(--bg)" stroke-width="1.4" />
+                <circle cx="37" cy="49" r="3.4" fill="var(--bg)" stroke-width="1.4" />
+                <circle class="pupil" cx="25" cy="49.5" r="1.6" fill="#2f2f2f" stroke="none" />
+                <circle class="pupil" cx="37" cy="49" r="1.6" fill="#2f2f2f" stroke="none" />
+              </g>
+              <path d="M29.5 54.5 l1.6 1.6 l1.6 -1.6" stroke-width="1.4" />
+              <path d="M18 55 L8 53.5 M18 57.5 L9 59 M44 54 L53 52 M44 56.5 L52.5 58" stroke-width=".9" opacity=".7" />
+            </g>
+</g>
+          <g class="scared">
+            <!-- spooked: up on stiff legs, back arched, fur and tail bristling, hissing -->
+            <path d="M33.8 42.4 L31.3 38.0 L36.7 36.3 L36.0 33.6 L39.5 31.0 L38.7 28.2 L41.7 27.4 L40.7 23.8 L44.1 23.9 L42.3 20.0 L46.7 20.4 L46.8 17.8 L49.5 17.4 L48.3 13.2 L51.8 15.3 L53.0 11.6 L54.4 13.4 L54.8 9.5 L58.0 11.6 L58.7 8.8 L60.5 10.8 L62.1 7.3 L63.4 10.5 L64.1 8.5 L66.7 10.8 L67.6 8.0 L69.5 11.5 L71.8 9.1 L72.2 12.8 L74.1 11.1 L75.0 14.5 L77.5 13.9 L76.9 15.9 L81.3 15.4 L80.8 19.5 L84.5 18.0 L82.9 21.8 L86.2 22.8 L86.1 25.9 L89.4 27.4 L89.0 30.1 L93.2 30.2 L91.8 34.4 L94.8 36.3 L94.8 39.7" stroke-width="1.3" /><path d="M33.8 42.4 L31.3 38.0 L36.7 36.3 L36.0 33.6 L39.5 31.0 L38.7 28.2 L41.7 27.4 L40.7 23.8 L44.1 23.9 L42.3 20.0 L46.7 20.4 L46.8 17.8 L49.5 17.4 L48.3 13.2 L51.8 15.3 L53.0 11.6 L54.4 13.4 L54.8 9.5 L58.0 11.6 L58.7 8.8 L60.5 10.8 L62.1 7.3 L63.4 10.5 L64.1 8.5 L66.7 10.8 L67.6 8.0 L69.5 11.5 L71.8 9.1 L72.2 12.8 L74.1 11.1 L75.0 14.5 L77.5 13.9 L76.9 15.9 L81.3 15.4 L80.8 19.5 L84.5 18.0 L82.9 21.8 L86.2 22.8 L86.1 25.9 L89.4 27.4 L89.0 30.1 L93.2 30.2 L91.8 34.4 L94.8 36.3 L94.8 39.7" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+            <path d="M38 47 Q62 26 87 44" stroke-width="1.45" /><path d="M38 47 Q62 26 87 44" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+            <path d="M94.9 38.0 L97.5 34.7 L101.0 36.0 L101.8 33.5 L104.5 34.3 L105.8 29.9 L108.3 31.9 L107.6 28.1 L111.0 29.3 L109.6 25.6 L113.3 26.0 L111.6 23.4 L114.7 22.1 L112.4 19.9 L115.0 17.8 L112.8 16.8 L114.7 14.3 L112.3 11.8 L113.3 9.2 L109.0 7.9 L110.9 3.7" stroke-width="1.3" /><path d="M94.9 38.0 L97.5 34.7 L101.0 36.0 L101.8 33.5 L104.5 34.3 L105.8 29.9 L108.3 31.9 L107.6 28.1 L111.0 29.3 L109.6 25.6 L113.3 26.0 L111.6 23.4 L114.7 22.1 L112.4 19.9 L115.0 17.8 L112.8 16.8 L114.7 14.3 L112.3 11.8 L113.3 9.2 L109.0 7.9 L110.9 3.7" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+            <path d="M92 30 Q112 28 105 5" stroke-width="1.45" /><path d="M92 30 Q112 28 105 5" stroke-width="1" opacity=".45" transform="translate(.7 .5)" />
+            <path d="M111 4 Q107 0 105 5" stroke-width="1.45" />
+            <path d="M30 46 L29 62 M37 46 L37.5 62 M87 42 L88 62 M95 40 L97 62" stroke-width="1.6" />
+            <path d="M27 62 h4 M36 62 h4 M86 62 h4 M95.5 62 h4" stroke-width="1.6" />
+            <path d="M11 36 Q10 23 21 21 Q33 20 34 32 Q35 43 23 44 Q12 45 11 36 Z" fill="var(--bg)" stroke-width="1.45" />
+            <path d="M13 27 L4 20 L16 22 M27 21 L36 15 L33 26" stroke-width="1.45" />
+            <path d="M14 25.5 l-.8 -1.6 M16 24.6 l-.4 -1.8 M30 24.5 l1 -1.6" stroke-width="1" />
+            <circle cx="17" cy="29.5" r="3.2" fill="var(--bg)" stroke-width="1.3" /><circle cx="17.4" cy="29.5" r=".9" fill="#2f2f2f" stroke="none" />
+            <circle cx="27" cy="28.5" r="3.2" fill="var(--bg)" stroke-width="1.3" /><circle cx="26.6" cy="28.5" r=".9" fill="#2f2f2f" stroke="none" />
+            <path d="M17.5 35.5 Q22 33.8 26.5 35 Q26 40.5 22 41 Q18 41 17.5 35.5 Z" fill="var(--bg)" stroke-width="1.3" />
+            <path d="M19 36 l.5 2.2 M25 35.6 l-.5 2.2" stroke-width="1.1" />
+            <path d="M11 34 L1 31 M11 37 L2 39 M34 33 L44 30 M34 36 L43 38" stroke-width=".9" opacity=".7" />
+          </g>
+          <g class="alert" stroke-width="2"><path d="M41 1 l-.8 8" /><path d="M39.9 13 l.2 .2" stroke-width="2.6" /></g>
+          <g class="zz" stroke-width="1.4"><path d="M50 24 h6 l-6 7 h6" /><path d="M60 13 h4.5 l-4.5 5 h4.5" /></g>
+        </g>
+      </svg>
+    </a>
+    <span class="nav-name" lang="tr">Yusuf İbin</span>
+    <a class="pill" href="#contact">Let's chat</a>
   </div>
-  <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#about"><span class="idx">01</span><span data-i18n="nav_about">Hakkımda</span></a>
-  <a href="#research"><span class="idx">02</span><span data-i18n="nav_research">Araştırma</span></a>
-  <a href="#projects"><span class="idx">03</span><span data-i18n="nav_projects">Projeler</span></a>
-  <a href="#stack"><span class="idx">04</span><span data-i18n="nav_stack">Kullandıklarım</span></a>
-  <a href="#contact"><span class="idx">05</span><span data-i18n="nav_contact">İletişim</span></a>
-  <div class="mobile-lang-wrap">
-    <button class="lang-switch mobile" id="mobileLangSwitch" aria-label="Switch Language / Dil Değiştir">
-      <span class="lang-label tr active" id="mobileLangTR">TR</span>
-      <span class="lang-toggle-track"><span class="lang-toggle-thumb"></span></span>
-      <span class="lang-label en" id="mobileLangEN">EN</span>
-    </button>
-  </div>
-</div>
+<main class="frame" id="top">
 
-<header class="hero" id="top">
-  <div class="hero-grid-lines"></div>
-  <div class="hero-inner" data-par="-70">
-    <div class="hero-kicker">
-      <span class="ln"></span>
-      <span class="kicker" data-i18n="hero_kicker">// AI &amp; NLP Researcher · YTÜ</span>
+  <header class="hero pad">
+    <span class="hai">Hey,</span>
+    <h1>I'm yusuf, a computer engineering student who learns by building things, <i>one mistake at a time</i>.</h1>
+    <div class="actions">
+      <a class="pill" href="#work">See my work ↓</a>
+      <a class="ghost" href="https://linkedin.com/in/yusuf-ibin" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
-    <h1>YUSUF<span class="l2"><b>İBİN</b></span></h1>
-    <div class="type-wrap">
-      <span class="arrow">&gt;_</span>
-      <span class="typed" id="typed"></span><span class="cursor"></span>
-    </div>
-    <div class="badges">
-      <span class="badge"><i></i><span data-i18n="badge_ce">YTÜ · <b>Computer Engineering</b></span></span>
-      <span class="badge"><i></i><span data-i18n="badge_airlab">AIRLAB · <b>Team Lead</b></span></span>
-      <span class="badge"><i></i><span data-i18n="badge_cosmos">Cosmos NLP · <b>Member</b></span></span>
-    </div>
-  </div>
-  <div class="scroll-hint"><span data-i18n="scroll_hint">KAYDIR</span><span class="bar"></span></div>
-</header>
+    <figure class="me">
+      <img src="me.png" width="420" height="420" alt="Pencil sketch of Yusuf, chin on hand" />
+      <figcaption>loss: still decreasing</figcaption>
+    </figure>
+  </header>
 
-<section class="sec" id="about">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 data-i18n="about_title">Hakkımda</h2>
-      <div class="meta"><span class="mtag m1" data-i18n="about_meta">.01 / HAKKIMDA</span><span data-i18n="about_location">YTÜ — İSTANBUL</span></div>
+  <div class="row blurb">
+    Computer engineering student at Yildiz Technical University, Istanbul.<br />
+    AI Research Team Lead at SKY LAB, researcher at COSMOS.
+  </div>
+
+  <section class="row pad" id="work">
+    <div class="kicker">Selected work</div>
+    <h2>Things I've built &amp; helped build</h2>
+
+    <div class="work">
+      <a class="card" href="https://cosmos-ytu.github.io/modernbert-tr/" target="_blank" rel="noopener">
+        <div class="art" style="--tint:#fff3c4">
+          <svg viewBox="0 0 100 100" filter="url(#crayon)" aria-hidden="true">
+            <path class="doodle" d="M14 24 Q14 14 24 14 H76 Q86 14 86 24 V58 Q86 68 76 68 H44 L28 84 V68 H24 Q14 68 14 58 Z" />
+            <path class="doodle" d="M30 32 H54 M42 32 V54 M60 54 V38 Q60 32 70 33" />
+          </svg>
+        </div>
+        <div class="body">
+          <h3>ModernBERT-TR</h3>
+          <div class="meta">Academic research · Turkish encoder models · YTU COSMOS</div>
+          <p>An academic study introducing a 149.4M-parameter Turkish encoder with an 8,192-token context, along with open downstream models and new Turkish datasets (Guardrail-TR, ABSA-TR). It also reports benchmarks against existing Turkish encoders and findings on checkpoint merging. I worked on fine-tuning the downstream models.</p>
+          <div class="link"><span>Read the paper page ↗</span></div>
+        </div>
+      </a>
+
+      <a class="card" href="https://www.kaggle.com/models/skylab-airlab/deffboss-model" target="_blank" rel="noopener">
+        <div class="art" style="--tint:#ffe9e3">
+          <svg viewBox="0 0 100 100" filter="url(#crayon)" aria-hidden="true">
+            <circle class="doodle" cx="50" cy="50" r="30" />
+            <circle class="doodle" cx="50" cy="50" r="12" stroke="#e5484d" />
+            <path class="doodle" d="M50 8 V30 M50 70 V92 M8 50 H30 M70 50 H92" />
+          </svg>
+        </div>
+        <div class="body">
+          <h3>DEFFBOSS</h3>
+          <div class="meta">Real-time threat detection · SKY LAB / AIRLAB · YOLOv8n</div>
+          <p>A six-class detector for knives, firearms and physical fights. I worked on data collection, processing and training; phones, remotes and non-violent contact got their own classes to cut false alarms. 88.37% mAP@50 on validation.</p>
+          <div class="link"><span>Kaggle model card ↗</span></div>
+        </div>
+      </a>
+
+      <article class="card">
+        <div class="art" style="--tint:#e6f0ff">
+          <svg viewBox="0 0 100 100" filter="url(#crayon)" aria-hidden="true">
+            <!-- open hand -->
+            <path class="doodle" d="M34 88 Q26 70 28 56 L22 40 Q20 32 27 33 Q31 34 34 44 L36 22 Q37 15 43 16 Q48 17 47 24 L48 16 Q49 9 55 10 Q60 11 59 18 L60 22 Q62 15 67 17 Q72 19 70 27 L68 52 Q76 44 80 47 Q84 51 78 58 Q70 70 66 88" />
+            <circle cx="43" cy="20" r="2.5" fill="#2f6fed" /><circle cx="55" cy="13" r="2.5" fill="#2f6fed" /><circle cx="66" cy="20" r="2.5" fill="#2f6fed" /><circle cx="26" cy="36" r="2.5" fill="#2f6fed" /><circle cx="50" cy="60" r="2.5" fill="#2f6fed" />
+          </svg>
+        </div>
+        <div class="body">
+          <h3>SesOl</h3>
+          <div class="meta">Turkish Sign Language recognition · Project lead · PyTorch</div>
+          <p>Recognises 226 signs from the AUTSL dataset using 48 MediaPipe landmarks from the hands and upper body: a GCN for spatial structure, a Bi-LSTM for motion. I led planning, task split, integration and code review.</p>
+        </div>
+      </article>
+
+      <a class="card" href="https://tabiopos.com/" target="_blank" rel="noopener">
+        <div class="art" style="--tint:#e8f5e9">
+          <svg viewBox="0 0 100 100" filter="url(#crayon)" aria-hidden="true">
+            <path class="doodle" d="M20 40 H70 V66 Q70 84 52 84 H38 Q20 84 20 66 Z" />
+            <path class="doodle" d="M70 46 Q86 46 84 58 Q82 68 70 66" />
+            <path class="doodle" d="M34 30 Q30 22 36 16 M46 30 Q42 22 48 14 M58 30 Q54 22 60 16" stroke="#2e9e5b" />
+          </svg>
+        </div>
+        <div class="body">
+          <h3>Tabio</h3>
+          <div class="meta">AI assistant for cafés &amp; restaurants · FastAPI · TypeScript · PostgreSQL</div>
+          <p>An agent for a multi-tenant POS: natural-language request → validated plan → user approval → safe execution → audit log &amp; undo. The model can only pick from a closed command catalogue, and sales figures are computed by deterministic code.</p>
+          <div class="link"><span>tabiopos.com ↗</span></div>
+        </div>
+      </a>
+
+      <a class="card mini" href="https://github.com/Xedygen/ooProject" target="_blank" rel="noopener">
+        <div class="art" style="--tint:#eef0f3">
+          <svg viewBox="0 0 100 100" filter="url(#crayon)" aria-hidden="true">
+            <path class="doodle" d="M8 50 L92 18 L62 86 L50 62 Z M50 62 L92 18" />
+          </svg>
+        </div>
+        <div class="body">
+          <h3>Airline Management System</h3>
+          <p>A small Java desktop app for flights and bookings, with thread-safe seat reservations.</p>
+        </div>
+        <span class="arrow">↗</span>
+      </a>
     </div>
-    <div class="about">
+  </section>
+
+  <section class="row" id="about">
+    <div class="pad" style="padding-bottom:clamp(28px,4vw,44px)">
+      <div class="kicker">What I'm into</div>
+      <h2>The parts of AI I can't stop poking at</h2>
+    </div>
+    <div class="grid4">
       <div>
-        <p class="about-lead reveal" data-i18n="about_lead">Merhaba! Yapay zekânın neredeyse <em>her alanına</em> meraklı bir Bilgisayar Mühendisliği öğrencisiyim.</p>
-        <p class="about-body reveal d2" style="margin-top:34px" data-i18n="about_body">Basit regresyon ve sınıflandırma modellerinden <strong>derin öğrenme mimarilerine</strong> (RNN, LSTM, CNN, GCN), görüntü işlemeden NLP'ye kadar oldukça geniş bir alanda dolaşmayı seviyorum; son zamanlarda en çok <strong>NLP</strong> beni içine çekti. <strong>Agentic workflow'lar</strong> ve <strong>RAG</strong> gibi güncel konularla da bolca haşır neşirim. Şu sıralar <strong>AIRLAB</strong>'i yönetiyor, <strong>Cosmos NLP</strong> ekibinde Türkçe dil teknolojisi üzerine araştırma yapıyorum. Tüm bunların altında mühendislik temelim (C/Java, biraz da donanım) sağlam bir zemin gibi duruyor.</p>
+        <svg viewBox="0 0 60 60" filter="url(#crayon)" aria-hidden="true"><path class="doodle" d="M4 30 Q30 4 56 30 Q30 56 4 30 Z" /><circle cx="30" cy="30" r="9" fill="#ffc21a" stroke="#141414" stroke-width="3" /></svg>
+        <h3>Computer vision</h3>
+        <p>Object detection with YOLO, skeleton-based gesture recognition with MediaPipe and graph neural networks.</p>
       </div>
-      <div class="terminal reveal d2">
-        <div class="term-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span><span class="tlabel">yusuf@airlab: ~/research</span></div>
-        <div class="term-body" id="termBody"></div>
+      <div>
+        <svg viewBox="0 0 60 60" filter="url(#crayon)" aria-hidden="true"><path class="doodle" d="M10 50 V12 H50 V50 M20 22 H40 M20 32 H40 M20 42 H32" /></svg>
+        <h3>Turkish NLP</h3>
+        <p>Dataset curation and fine-tuning for Turkish language models, adapting recent research to how Turkish actually works.</p>
+      </div>
+      <div>
+        <svg viewBox="0 0 60 60" filter="url(#crayon)" aria-hidden="true"><rect class="doodle" x="12" y="18" width="36" height="30" rx="8" /><path class="doodle" d="M30 18 V8" /><circle cx="30" cy="7" r="3" fill="#141414" /><circle cx="23" cy="32" r="3" fill="#141414" /><circle cx="37" cy="32" r="3" fill="#141414" /></svg>
+        <h3>AI agents</h3>
+        <p>Agents that plan, ask for approval and act safely, with validation and audit trails around every step.</p>
+      </div>
+      <div>
+        <svg viewBox="0 0 60 60" filter="url(#crayon)" aria-hidden="true"><path class="doodle" d="M8 14 H52 V40 H8 Z M22 52 L30 40 L38 52 M18 30 L26 22 L32 28 L42 20" /></svg>
+        <h3>Teaching &amp; community</h3>
+        <p>Running ML and NLP training with scikit-learn and PyTorch, mentoring teams and organising events with GDG.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="sec" id="research">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 data-i18n="res_title">Üzerine Çalıştığım Alanlar</h2>
-      <div class="meta"><span class="mtag m2" data-i18n="res_meta">.02 / RESEARCH</span><span data-i18n="res_count">06 ALAN</span></div>
-    </div>
-    <div class="rgrid">
-      <article class="rcard reveal"><div class="rn">.01</div><h3>Turkish NLP &amp; LLM</h3><p data-i18n="res_1_desc">Dil modellerini ince ayarlıyor, değerlendiriyor ve Türkçe için benchmark'lar tasarlıyorum.</p></article>
-      <article class="rcard reveal d1"><div class="rn">.02</div><h3>Deep Learning</h3><p data-i18n="res_2_desc">RNN, LSTM, CNN, GCN ve attention mekanizmalarıyla mimari kurcalamayı seviyorum.</p></article>
-      <article class="rcard reveal d2"><div class="rn">.03</div><h3>Computer Vision</h3><p data-i18n="res_3_desc">İskelet tabanlı hareket ve işaret tanıma üzerine, graph neural network'lerle çalışıyorum.</p></article>
-      <article class="rcard reveal"><div class="rn">.04</div><h3>Classical ML &amp; Data</h3><p data-i18n="res_4_desc">Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.</p></article>
-      <article class="rcard reveal d1"><div class="rn">.05</div><h3>Agentic AI &amp; RAG</h3><p data-i18n="res_5_desc">Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.</p></article>
-      <article class="rcard reveal d2"><div class="rn">.06</div><h3>Speech &amp; Voice</h3><p data-i18n="res_6_desc">Piper &amp; XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.</p></article>
-    </div>
-  </div>
-</section>
+  <section class="row pad" id="experience">
+    <div class="kicker">Experience</div>
+    <h2>Where I spend my time</h2>
+    <ul class="xp">
+      <li>
+        <time>Jan 2026 — now</time>
+        <div><h3>Research Team Member <span>· COSMOS</span></h3><p>Dataset curation and fine-tuning for Turkish large language models; adapting state-of-the-art architectures to Turkish.</p></div>
+      </li>
+      <li>
+        <time>Jul 2025 — now</time>
+        <div><h3>AI Research Team Lead <span>· SKY LAB</span></h3><p>Technical roadmaps for AI projects, coordinating multi-disciplinary teams, and training on scikit-learn, PyTorch and NLP libraries.</p></div>
+      </li>
+      <li>
+        <time>Jan 2025 — now</time>
+        <div><h3>GDG Core Team Member <span>· SKY LAB</span></h3><p>Organising workshops and training series on Google technologies and giving talks to the community.</p></div>
+      </li>
+      <li>
+        <time>Event</time>
+        <div><h3>ArtLab AI Summit <span>· Coordinator</span></h3><p>A two-day summit with speakers from finance, defence and tech. I managed the speakers, operations and content planning.</p></div>
+      </li>
+      <li>
+        <time>Sep 2024 — now</time>
+        <div><h3>B.Sc. Computer Engineering <span>· Yildiz Technical University</span></h3><p>GPA 3.22 / 4.00</p></div>
+      </li>
+    </ul>
+  </section>
 
-<section class="sec" id="projects">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 data-i18n="proj_title">Projeler</h2>
-      <div class="meta"><span class="mtag m3" data-i18n="proj_meta">.03 / PROJECTS</span>WHAT I BUILD</div>
-    </div>
-
-    <article class="proj reveal">
-      <div class="pmeta" data-par="50">
-        <div class="pnum">ALAN 01</div>
-        <h3 data-i18n="proj_1_title">Veri Analizi & <em>Mühendisliği</em></h3>
-        <p data-i18n="proj_1_desc">Ham veriyi alıp işe yarar bir şeye dönüştürmeyi seviyorum: keşifsel analiz, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara kadar. BERTopic ile kümeleme, LLM-as-judge ile skorlama, SFT için veri üretimi... bu akışları kurmak bana biraz bulmaca çözmek gibi geliyor.</p>
-        <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">BERTopic</span><span class="tag">LLM-as-judge</span><span class="tag">SFT</span></div>
+  <section class="row pad">
+    <div class="cols">
+      <div>
+        <div class="kicker">Toolbox</div>
+        <ul class="plain">
+          <li><b>Languages</b> — Python, Java, C</li>
+          <li><b>ML</b> — PyTorch, scikit-learn, NumPy, Pandas</li>
+          <li><b>Vision</b> — YOLO, MediaPipe, OpenCV</li>
+          <li><b>Other</b> — FastAPI, PostgreSQL, Git, Linux</li>
+        </ul>
       </div>
-      <div class="pviz" data-viz="pipeline" data-par="-60"><span class="vtl">DATA PIPELINE</span><canvas></canvas><span class="vlabel">clean → cluster → judge → train</span></div>
-    </article>
-
-    <article class="proj flip reveal">
-      <div class="pmeta" data-par="50">
-        <div class="pnum">ALAN 02</div>
-        <h3 data-i18n="proj_2_title">Görüntü İşleme & <em>Bilgisayarlı Görü</em></h3>
-        <p data-i18n="proj_2_desc">Bilgisayara "görmeyi" öğretmek ilgimi çekiyor: gerçek zamanlı nesne tespitinden iskelet tabanlı hareket ve işaret tanımaya kadar. MediaPipe ile iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyonu, temporal modelleme ve YOLO ile tespit üzerine çalışıyorum.</p>
-        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">OpenCV</span><span class="tag">MediaPipe</span><span class="tag">Adaptive GCN</span><span class="tag">Bi-LSTM</span></div>
+      <div>
+        <div class="kicker">Certificates</div>
+        <ul class="plain">
+          <li>Machine Learning <b>— Miuul</b></li>
+          <li>Advanced Learning Algorithms <b>— DeepLearning.AI</b></li>
+          <li>Supervised Machine Learning <b>— DeepLearning.AI</b></li>
+        </ul>
       </div>
-      <div class="pviz" data-viz="skeleton" data-par="-60"><span class="vtl">SKELETON · GCN</span><canvas></canvas><span class="vlabel">pose · gesture · detection</span></div>
-    </article>
+    </div>
+  </section>
 
-    <article class="proj reveal">
-      <div class="pmeta" data-par="50">
-        <div class="pnum">ALAN 03</div>
-        <h3 data-i18n="proj_3_title">NLP & <em>Dil Modelleri</em></h3>
-        <p data-i18n="proj_3_desc">İşin en sevdiğim kısmını burası — Türkçe dil teknolojisi tam merkezde: dil modellerini ince ayarlıyor, değerlendiriyor ve benchmark tasarlıyorum; RAG sistemleri ile agentic workflow'lar kuruyor, lokal LLM'ler çalıştırıyorum. Tokenization'dan embedding'lere kadar NLP'nin temelleri bana epey tanıdık geliyor.</p>
-        <div class="tags"><span class="tag">Transformers</span><span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">Ollama</span><span class="tag">Fine-tuning</span></div>
-      </div>
-      <div class="pviz" data-viz="attention" data-par="-60"><span class="vtl">ATTENTION</span><canvas></canvas><span class="vlabel">tokens · self-attention</span></div>
-    </article>
-  </div>
-</section>
+  <section class="contact pad" id="contact">
+    <span class="hai">Let's talk</span>
+    <p>Open to research, internships and good ideas.</p>
+    <a class="mail" href="mailto:ibinyusuf5@gmail.com">ibinyusuf5@gmail.com</a>
+    <div class="socials">
+      <a href="https://github.com/yusuf740" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/yusuf-ibin" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.kaggle.com/yusufibin" target="_blank" rel="noopener">Kaggle</a>
+      <a href="https://x.com/Yusufibin3" target="_blank" rel="noopener">X</a>
+      <a href="https://www.instagram.com/yusufibin/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </section>
 
-<section class="sec" id="stack">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 data-i18n="stack_title">Kullandığım Teknolojiler</h2>
-      <div class="meta"><span class="mtag m4" data-i18n="stack_meta">.04 / STACK</span><span data-i18n="stack_tag">ARAÇ ÇANTAM</span></div>
-    </div>
-    <div class="stack">
-      <div class="scol reveal"><h4>Languages</h4><ul><li>Python</li><li>C</li><li>Java</li></ul></div>
-      <div class="scol reveal d1"><h4>ML / DL</h4><ul><li>PyTorch</li><li>TensorFlow</li><li>HuggingFace</li><li>scikit-learn</li><li>NumPy</li><li>Pandas</li></ul></div>
-      <div class="scol reveal d2"><h4>NLP</h4><ul><li>Transformers</li><li>Tokenization</li><li>Embeddings</li><li>Fine-tuning</li><li>BERTopic</li><li>spaCy</li></ul></div>
-      <div class="scol reveal d3"><h4>Vision &amp; Speech</h4><ul><li>OpenCV</li><li>MediaPipe</li><li>Whisper</li><li>Piper</li><li>XTTS-v2</li></ul></div>
-      <div class="scol reveal d4"><h4>LLM · RAG · Agents</h4><ul><li>Ollama</li><li>ChromaDB</li><li>LangChain</li><li>RAG</li></ul></div>
-      <div class="scol reveal d5"><h4>Tools &amp; Cloud</h4><ul><li>Google Cloud</li><li>Git</li><li>GitHub</li><li>Linux</li></ul></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec contact" id="contact">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2 data-i18n="contact_title">İletişim</h2>
-      <div class="meta"><span class="mtag m5" data-i18n="contact_meta">.05 / CONTACT</span>LET'S TALK</div>
-    </div>
-    <div class="clist">
-      <a class="crow reveal" href="https://github.com/yusuf740" target="_blank" rel="noopener"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.82.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg></span><span class="cname">GitHub</span></span><span class="chandle"><span class="htext">@yusuf740</span><span class="arr">↗</span></span></a>
-      <a class="crow reveal" href="https://www.linkedin.com/in/yusuf-ibin" target="_blank" rel="noopener"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></span><span class="cname">LinkedIn</span></span><span class="chandle"><span class="htext">in/yusuf-ibin</span><span class="arr">↗</span></span></a>
-      <a class="crow reveal" href="https://www.kaggle.com/yusufibin" target="_blank" rel="noopener"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336"/></svg></span><span class="cname">Kaggle</span></span><span class="chandle"><span class="htext">@yusufibin</span><span class="arr">↗</span></span></a>
-      <a class="crow reveal" href="https://www.instagram.com/yusufibin/" target="_blank" rel="noopener"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.12 1.38C1.35 2.67.93 3.34.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.8.72 1.47 1.38 2.13.66.66 1.33 1.08 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.8-.3 1.47-.72 2.13-1.38.66-.66 1.08-1.33 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.8-.72-1.47-1.38-2.13A5.92 5.92 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-10.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></span><span class="cname">Instagram</span></span><span class="chandle"><span class="htext">@yusufibin</span><span class="arr">↗</span></span></a>
-      <a class="crow reveal" href="https://x.com/Yusufibin3" target="_blank" rel="noopener"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span><span class="cname">X</span></span><span class="chandle"><span class="htext">@Yusufibin3</span><span class="arr">↗</span></span></a>
-      <a class="crow reveal" href="mailto:ibinyusuf5@gmail.com"><span class="cleft"><span class="cicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm10 8.13L3.6 6H20.4L12 12.13zM3 7.87V18h18V7.87l-8.4 6.13a1 1 0 0 1-1.2 0L3 7.87z"/></svg></span><span class="cname">Mail</span></span><span class="chandle"><span class="htext">ibinyusuf5@gmail.com</span><span class="arr">↗</span></span></a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <p class="foot-big reveal" data-i18n="foot_big">Hâlâ <em>öğreniyorum</em>.</p>
-    <div class="foot-bottom">
-      <span class="brand2"><span class="dot"></span>YUSUF İBİN</span>
-      <span class="mono" data-i18n="foot_location">© 2026 · İSTANBUL / YTÜ</span>
-      <span class="totop" id="totop" data-i18n="foot_totop">↑ Başa dön</span>
-    </div>
-
-    <!-- Page Views (Son 1 Hafta) -->
-    <div class="views-widget" id="viewsWidget">
-      <span class="views-icon">
-        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-      </span>
-      <span class="views-text" id="viewsText">Son 1 Hafta: <strong id="weeklyCount">...</strong> görüntülenme</span>
-    </div>
-  </div>
-</footer>
+  <footer><span lang="tr">© 2026 Yusuf İbin</span><span>Istanbul</span></footer>
+</main>
 
 <script>
-/* ================= i18n & Translations ================= */
-const i18n = {
-  tr: {
-    meta_title: "Yusuf İbin — Turkish NLP & LLM Researcher",
-    meta_desc: "Yusuf İbin — YTÜ Bilgisayar Mühendisliği öğrencisi, AIRLAB takım lideri, Cosmos NLP araştırmacısı. Türkçe NLP, derin öğrenme, agentic AI & RAG.",
-    nav_about: "Hakkımda",
-    nav_research: "Araştırma",
-    nav_projects: "Projeler",
-    nav_stack: "Kullandıklarım",
-    nav_contact: "İletişim +",
-    hero_kicker: "// AI & NLP Researcher · YTÜ",
-    badge_ce: "YTÜ · <b>Computer Engineering</b>",
-    badge_airlab: "AIRLAB · <b>Team Lead</b>",
-    badge_cosmos: "Cosmos NLP · <b>Member</b>",
-    scroll_hint: "KAYDIR",
-    about_title: "Hakkımda",
-    about_meta: ".01 / HAKKIMDA",
-    about_location: "YTÜ — İSTANBUL",
-    about_lead: "Merhaba! Yapay zekânın neredeyse <em>her alanına</em> meraklı bir Bilgisayar Mühendisliği öğrencisiyim.",
-    about_body: "Basit regresyon ve sınıflandırma modellerinden <strong>derin öğrenme mimarilerine</strong> (RNN, LSTM, CNN, GCN), görüntü işlemeden NLP'ye kadar oldukça geniş bir alanda dolaşmayı seviyorum; son zamanlarda en çok <strong>NLP</strong> beni içine çekti. <strong>Agentic workflow'lar</strong> ve <strong>RAG</strong> gibi güncel konularla da bolca haşır neşirim. Şu sıralar <strong>AIRLAB</strong>'i yönetiyor, <strong>Cosmos NLP</strong> ekibinde Türkçe dil teknolojisi üzerine araştırma yapıyorum. Tüm bunların altında mühendislik temelim (C/Java, biraz da donanım) sağlam bir zemin gibi duruyor.",
-    res_title: "Üzerine Çalıştığım Alanlar",
-    res_meta: ".02 / RESEARCH",
-    res_count: "06 ALAN",
-    res_1_desc: "Dil modellerini ince ayarlıyor, değerlendiriyor ve Türkçe için benchmark'lar tasarlıyorum.",
-    res_2_desc: "RNN, LSTM, CNN, GCN ve attention mekanizmalarıyla mimari kurcalamayı seviyorum.",
-    res_3_desc: "İskelet tabanlı hareket ve işaret tanıma üzerine, graph neural network'lerle çalışıyorum.",
-    res_4_desc: "Regresyon, sınıflandırma, veri analizi ve veriyi işe yarar hâle getirme işleri.",
-    res_5_desc: "Agentic workflow'lar, RAG ve kendi makinemde çalışan lokal LLM'lerle uğraşıyorum.",
-    res_6_desc: "Piper & XTTS-v2 ile ses sentezi, Whisper ile konuşma tanıma; uçtan uca ses sistemleri kuruyorum.",
-    proj_title: "Projeler",
-    proj_meta: ".03 / PROJECTS",
-    proj_1_title: "Veri Analizi & <em>Mühendisliği</em>",
-    proj_1_desc: "Ham veriyi alıp işe yarar bir şeye dönüştürmeyi seviyorum: keşifsel analiz, temizleme ve feature engineering'den ölçeklenebilir pipeline'lara kadar. BERTopic ile kümeleme, LLM-as-judge ile skorlama, SFT için veri üretimi... bu akışları kurmak bana biraz bulmaca çözmek gibi geliyor.",
-    proj_2_title: "Görüntü İşleme & <em>Bilgisayarlı Görü</em>",
-    proj_2_desc: "Bilgisayara \"görmeyi\" öğretmek ilgimi çekiyor: gerçek zamanlı nesne tespitinden iskelet tabanlı hareket ve işaret tanımaya kadar. MediaPipe ile iskelet çıkarımı, öğrenilebilir komşuluklu GCN'ler, RGB+Depth füzyonu, temporal modelleme ve YOLO ile tespit üzerine çalışıyorum.",
-    proj_3_title: "NLP & <em>Dil Modelleri</em>",
-    proj_3_desc: "İşin en sevdiğim kısmını burası — Türkçe dil teknolojisi tam merkezde: dil modellerini ince ayarlıyor, değerlendiriyor ve benchmark tasarlıyorum; RAG sistemleri ile agentic workflow'lar kuruyor, lokal LLM'ler çalıştırıyorum. Tokenization'dan embedding'lere kadar NLP'nin temelleri bana epey tanıdık geliyor.",
-    stack_title: "Kullandığım Teknolojiler",
-    stack_meta: ".04 / STACK",
-    stack_tag: "ARAÇ ÇANTAM",
-    contact_title: "İletişim",
-    contact_meta: ".05 / CONTACT",
-    foot_big: "Hâlâ <em>öğreniyorum</em>.",
-    foot_location: "© 2026 · İSTANBUL / YTÜ",
-    foot_totop: "↑ Başa dön"
-  },
-  en: {
-    meta_title: "Yusuf İbin — Turkish NLP & LLM Researcher",
-    meta_desc: "Yusuf İbin — CS student at YTU, AIRLAB Team Lead, Cosmos NLP researcher. Turkish NLP, deep learning, agentic AI & RAG.",
-    nav_about: "About",
-    nav_research: "Research",
-    nav_projects: "Projects",
-    nav_stack: "Stack",
-    nav_contact: "Contact +",
-    hero_kicker: "// AI & NLP Researcher · YTU",
-    badge_ce: "YTU · <b>Computer Engineering</b>",
-    badge_airlab: "AIRLAB · <b>Team Lead</b>",
-    badge_cosmos: "Cosmos NLP · <b>Researcher</b>",
-    scroll_hint: "SCROLL",
-    about_title: "About",
-    about_meta: ".01 / ABOUT",
-    about_location: "YTU — ISTANBUL",
-    about_lead: "Hello! I am a Computer Engineering student fascinated by almost <em>every domain</em> of artificial intelligence.",
-    about_body: "I enjoy exploring a broad spectrum of AI—ranging from basic regression and classification models to <strong>deep learning architectures</strong> (RNN, LSTM, CNN, GCN), and from computer vision to NLP, with <strong>NLP</strong> captivating me the most recently. I am actively working on cutting-edge topics like <strong>agentic workflows</strong> and <strong>RAG</strong>. Currently, I lead <strong>AIRLAB</strong> and research Turkish language technologies at <strong>Cosmos NLP</strong>. Underneath all this, my solid engineering foundation (C/Java and hardware fundamentals) provides a grounded perspective.",
-    res_title: "Research Areas",
-    res_meta: ".02 / RESEARCH",
-    res_count: "06 AREAS",
-    res_1_desc: "Fine-tuning, evaluating language models, and designing benchmarks for Turkish.",
-    res_2_desc: "Exploring architectures with RNN, LSTM, CNN, GCN, and attention mechanisms.",
-    res_3_desc: "Working on skeleton-based action and gesture recognition using Graph Neural Networks.",
-    res_4_desc: "Regression, classification, data analysis, and turning raw data into actionable insights.",
-    res_5_desc: "Building agentic workflows, RAG systems, and experimenting with local LLMs.",
-    res_6_desc: "Speech synthesis with Piper & XTTS-v2, speech recognition with Whisper; building end-to-end audio systems.",
-    proj_title: "Projects",
-    proj_meta: ".03 / PROJECTS",
-    proj_1_title: "Data Analysis & <em>Engineering</em>",
-    proj_1_desc: "I love turning raw data into actionable value: from exploratory analysis, cleaning, and feature engineering to scalable pipelines. Clustering with BERTopic, scoring with LLM-as-judge, synthetic data generation for SFT... building these workflows feels like solving an intriguing puzzle.",
-    proj_2_title: "Image Processing & <em>Computer Vision</em>",
-    proj_2_desc: "Teaching computers to \"see\" excites me: from real-time object detection to skeleton-based action and gesture recognition. Working with MediaPipe pose extraction, adaptive GCNs, RGB+Depth fusion, temporal modeling, and YOLO detection.",
-    proj_3_title: "NLP & <em>Language Models</em>",
-    proj_3_desc: "My core passion — Turkish language technology at the center: fine-tuning and evaluating language models, building benchmark datasets, constructing RAG systems & agentic workflows, and running local LLMs. Deeply familiar with fundamentals from tokenization to embeddings.",
-    stack_title: "Technologies & Stack",
-    stack_meta: ".04 / STACK",
-    stack_tag: "MY TOOLKIT",
-    contact_title: "Contact",
-    contact_meta: ".05 / CONTACT",
-    foot_big: "Still <em>learning</em>.",
-    foot_location: "© 2026 · ISTANBUL / YTU",
-    foot_totop: "↑ Back to top"
-  }
-};
+// boil: re-seed the wobble ~7 times a second so every doodle looks redrawn by hand
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const t = document.querySelectorAll('.boil');
+  let s = 1;
+  setInterval(() => (s = s % 4 + 1, t.forEach(e => e.setAttribute('seed', s))), 140);
+}
 
-const typedLines = {
-  tr: ["Turkish NLP & LLM Researcher", "AI Generalist: regresyondan RAG'e", "Derin Öğrenme · RNN | LSTM | CNN | GCN", "Agentic Workflows & RAG Sistemleri", "AIRLAB Takım Lideri @ YTÜ"],
-  en: ["Turkish NLP & LLM Researcher", "AI Generalist: from regression to RAG", "Deep Learning · RNN | LSTM | CNN | GCN", "Agentic Workflows & RAG Systems", "AIRLAB Team Lead @ YTU"]
-};
-
-const termLinesLang = {
-  tr: [
-    {t:'$ ',cls:'p'},{t:'whoami',cls:'c',nl:1},
-    {t:'yusuf_ibin — bilgisayar mühendisliği @ ytü',cls:'o',nl:1},
-    {t:'$ ',cls:'p'},{t:'cat focus.txt',cls:'c',nl:1},
-    {t:'turkish_nlp · llm · deep_learning',cls:'k',nl:1},
-    {t:'agentic_workflows · rag · vision · speech',cls:'k',nl:1},
-    {t:'$ ',cls:'p'},{t:'roles --list',cls:'c',nl:1},
-    {t:'> AIRLAB        takım_lideri',cls:'o',nl:1},
-    {t:'> Cosmos NLP    araştırmacı',cls:'o',nl:1},
-    {t:'$ ',cls:'p'},{t:'status',cls:'c',nl:1},
-    {t:'öğreniyorum · araştırıyorum · geliştiriyorum ▮',cls:'p',nl:0,cursor:1}
-  ],
-  en: [
-    {t:'$ ',cls:'p'},{t:'whoami',cls:'c',nl:1},
-    {t:'yusuf_ibin — computer engineering @ ytu',cls:'o',nl:1},
-    {t:'$ ',cls:'p'},{t:'cat focus.txt',cls:'c',nl:1},
-    {t:'turkish_nlp · llm · deep_learning',cls:'k',nl:1},
-    {t:'agentic_workflows · rag · vision · speech',cls:'k',nl:1},
-    {t:'$ ',cls:'p'},{t:'roles --list',cls:'c',nl:1},
-    {t:'> AIRLAB        team_lead',cls:'o',nl:1},
-    {t:'> Cosmos NLP    researcher',cls:'o',nl:1},
-    {t:'$ ',cls:'p'},{t:'status',cls:'c',nl:1},
-    {t:'learning · researching · building ▮',cls:'p',nl:0,cursor:1}
-  ]
-};
-
-let currentLang = localStorage.getItem('preferred_lang') || 'tr';
-
-function setLanguage(lang) {
-  currentLang = lang;
-  localStorage.setItem('preferred_lang', lang);
-  document.documentElement.lang = lang;
-  
-  document.querySelectorAll('.lang-switch').forEach(sw => {
-    sw.classList.toggle('en', lang === 'en');
+// the cat wakes up while the pointer is near and keeps its eyes on it
+(() => {
+  const cat = document.querySelector('.cat'), pupils = cat.querySelectorAll('.pupil');
+  let napUntil = 0, spookTimer;
+  // a poke spooks it; afterwards it ignores the pointer for a bit and dozes off again
+  cat.closest('a').addEventListener('click', () => {
+    cat.classList.remove('spooked', 'up');
+    void cat.getBoundingClientRect();
+    cat.classList.add('spooked');
+    napUntil = Date.now() + 3500;
+    clearTimeout(spookTimer);
+    spookTimer = setTimeout(() => cat.classList.remove('spooked'), 1800);
   });
-  document.querySelectorAll('.lang-label.tr').forEach(el => el.classList.toggle('active', lang === 'tr'));
-  document.querySelectorAll('.lang-label.en').forEach(el => el.classList.toggle('active', lang === 'en'));
-  
-  const dict = i18n[lang];
-  if(!dict) return;
-
-  document.getElementById('metaTitle').textContent = dict.meta_title;
-  document.getElementById('metaDesc').setAttribute('content', dict.meta_desc);
-
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key]) {
-      el.innerHTML = dict[key];
-    }
+  addEventListener('pointermove', e => {
+    if (Date.now() < napUntil) return cat.classList.remove('up');
+    const r = cat.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width * .28), dy = e.clientY - (r.top + r.height * .58);
+    const near = Math.hypot(dx, dy) < 220;
+    cat.classList.toggle('up', near);
+    if (!near) return;
+    const a = Math.atan2(dy, dx), m = Math.min(1.8, Math.hypot(dx, dy) / 30);
+    pupils.forEach(p => p.setAttribute('transform', `translate(${(Math.cos(a) * m).toFixed(2)} ${(Math.sin(a) * m).toFixed(2)})`));
   });
-
-  li = 0; ci = 0; del = false;
-
-  if(typeof restartTerm === 'function') restartTerm();
-  updateViewsDisplay();
-}
-
-/* Toggle Listeners */
-const btnDesktop = document.getElementById('langSwitch');
-const btnMobile = document.getElementById('mobileLangSwitch');
-
-[btnDesktop, btnMobile].forEach(btn => {
-  if(btn) {
-    btn.addEventListener('click', () => {
-      const nextLang = currentLang === 'tr' ? 'en' : 'tr';
-      setLanguage(nextLang);
-    });
-  }
-});
-
-/* ===== NAV scroll state ===== */
-const nav=document.getElementById('nav');
-addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>40)},{passive:true});
-
-/* ===== Mobile menu ===== */
-const burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
-burger.addEventListener('click',()=>{const o=mm.classList.toggle('open');burger.classList.toggle('x',o);document.body.style.overflow=o?'hidden':''});
-mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mm.classList.remove('open');document.body.style.overflow=''}));
-document.getElementById('totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
-
-/* ===== Reveal on scroll ===== */
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-/* ===== Typing tagline ===== */
-const typed=document.getElementById('typed');
-let li=0,ci=0,del=false;
-function tick(){
-  const lines = typedLines[currentLang] || typedLines.tr;
-  const full = lines[li % lines.length];
-  typed.textContent = full.slice(0,ci);
-  if(!del){ci++;if(ci>full.length){del=true;return setTimeout(tick,1500)}}
-  else{ci--;if(ci<0){del=false;li=(li+1)%lines.length;ci=0;return setTimeout(tick,300)}}
-  setTimeout(tick,del?28:62);
-}
-tick();
-
-/* ===== Terminal typing ===== */
-const termBody=document.getElementById('termBody');
-let started=false;
-new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting&&!started){started=true;runTerm()}})},{threshold:.3}).observe(termBody);
-
-function restartTerm(){
-  termBody.innerHTML = '';
-  runTerm();
-}
-
-function runTerm(){
-  const termLines = termLinesLang[currentLang] || termLinesLang.tr;
-  let i=0,cur=document.createElement('span');cur.className='ln';termBody.appendChild(cur);
-  function step(){
-    if(i>=termLines.length){
-      const cc=document.createElement('span');cc.className='tcursor';cur.appendChild(cc);return;
-    }
-    const seg=termLines[i];
-    const s=document.createElement('span');s.className=seg.cls;cur.appendChild(s);
-    let k=0;
-    const id=setInterval(()=>{
-      s.textContent=seg.t.slice(0,k);k++;
-      if(k>seg.t.length){
-        clearInterval(id);
-        if(seg.nl){cur=document.createElement('span');cur.className='ln';termBody.appendChild(document.createElement('br'));termBody.appendChild(cur);}
-        i++;setTimeout(step,seg.cls==='p'?120:30);
-      }
-    },seg.cls==='p'?40:14);
-  }
-  step();
-}
-
-/* ===== 1. Global Ambient Scroll-Morphing Canvas (#neurons) ===== */
-(function(){
-  const cv = document.getElementById('neurons');
-  if(!cv) return;
-  const ctx = cv.getContext('2d');
-  
-  let w, h, dpr = Math.min(devicePixelRatio || 1, 2);
-  let nodes = [];
-  let scrollPct = 0;
-  let scrollVel = 0;
-  let lastY = window.scrollY;
-
-  const symbols = ['✦', '◇', '⊙', '∿', '⊕', '∆', 'λ', 'α', 'β', '∫', '∞', '::', '⟨ ⟩', '01', '10', '0x1F'];
-  let particleTokens = [];
-
-  function resize(){
-    w = window.innerWidth;
-    h = window.innerHeight;
-    cv.width = w * dpr;
-    cv.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    initNodes();
-    initTokens();
-  }
-
-  function initNodes(){
-    const baseCount = Math.max(35, Math.min(75, Math.round(w * h / 22000)));
-    nodes = [];
-    for(let i = 0; i < baseCount; i++){
-      nodes.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        r: Math.random() * 1.8 + 1,
-        phase: Math.random() * Math.PI * 2
-      });
-    }
-  }
-
-  function initTokens(){
-    particleTokens = [];
-    const count = 14;
-    for(let i = 0; i < count; i++){
-      const isLeft = i % 2 === 0;
-      particleTokens.push({
-        text: symbols[i % symbols.length],
-        x: isLeft ? (Math.random() * 55 + 20) : (w - Math.random() * 65 - 25),
-        y: Math.random() * h,
-        baseVy: (Math.random() * 0.35 + 0.15),
-        phase: Math.random() * Math.PI * 2,
-        opacity: Math.random() * 0.25 + 0.35
-      });
-    }
-  }
-
-  function updateScroll(){
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    scrollPct = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
-    
-    const currentY = window.scrollY;
-    const deltaY = currentY - lastY;
-    scrollVel += (deltaY - scrollVel) * 0.15;
-    lastY = currentY;
-  }
-
-  const acc = '128, 222, 196';
-  let time = 0;
-
-  function frame(){
-    time += 0.02;
-    updateScroll();
-    ctx.clearRect(0, 0, w, h);
-
-    const speedMult = 1 + Math.abs(scrollVel) * 0.04;
-    const maxDist = 120 + scrollPct * 60;
-
-    for(let i = 0; i < nodes.length; i++){
-      const n = nodes[i];
-      n.x += n.vx * speedMult;
-      n.y += n.vy * speedMult;
-
-      if(n.x < -10) n.x = w + 10;
-      if(n.x > w + 10) n.x = -10;
-      if(n.y < -10) n.y = h + 10;
-      if(n.y > h + 10) n.y = -10;
-
-      for(let j = i + 1; j < nodes.length; j++){
-        const b = nodes[j];
-        const dx = n.x - b.x;
-        const dy = n.y - b.y;
-        const dist = Math.hypot(dx, dy);
-        
-        if(dist < maxDist){
-          const alpha = (0.12 * (1 - dist / maxDist) * (0.5 + scrollPct * 0.5)).toFixed(3);
-          ctx.strokeStyle = `rgba(${acc}, ${alpha})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(n.x, n.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${acc}, ${(0.35 + 0.3 * Math.sin(n.phase + scrollPct * 4)).toFixed(2)})`;
-      ctx.fill();
-    }
-
-    // Side margin symbols: 13px font, clearly visible & subtle glow (opacity ~ 0.35 - 0.65)
-    ctx.font = '13px "JetBrains Mono", monospace';
-    for(let t of particleTokens){
-      const dy = scrollVel * 0.35 + (scrollVel >= 0 ? t.baseVy : -t.baseVy);
-      t.y += dy;
-
-      if(t.y > h + 30) {
-        t.y = -30;
-        const isLeft = Math.random() > 0.5;
-        t.x = isLeft ? (Math.random() * 55 + 20) : (w - Math.random() * 65 - 25);
-      } else if(t.y < -30) {
-        t.y = h + 30;
-        const isLeft = Math.random() > 0.5;
-        t.x = isLeft ? (Math.random() * 55 + 20) : (w - Math.random() * 65 - 25);
-      }
-
-      const currentOpacity = (t.opacity * (0.75 + 0.25 * Math.sin(time + t.phase))).toFixed(3);
-      ctx.fillStyle = `rgba(${acc}, ${currentOpacity})`;
-      ctx.fillText(t.text, t.x, t.y);
-    }
-
-    requestAnimationFrame(frame);
-  }
-
-  resize();
-  window.addEventListener('resize', resize);
-  window.addEventListener('scroll', updateScroll, { passive: true });
-  frame();
 })();
-
-/* ===== 2. Focal Center Highlight & 3D Scale Observer ===== */
-(function(){
-  // .proj is excluded: its halves are parallax-driven, so an extra scale on the
-  // wrapper fights the parallax and shifts the section's border lines.
-  const cards = document.querySelectorAll('.rcard, .terminal');
-  if(!cards.length) return;
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-
-  let ticking = false;
-
-  function checkFocal(){
-    ticking = false;
-    const vh = window.innerHeight;
-    const center = vh / 2;
-    const maxDist = vh * 0.45;
-
-    cards.forEach(card => {
-      // Before the reveal transition finishes the element still owns its
-      // translateY; writing an inline transform here would cancel it.
-      if(!card.classList.contains('in')) return;
-
-      const rect = card.getBoundingClientRect();
-      const cardCenter = rect.top + rect.height / 2;
-      const distFromCenter = Math.abs(center - cardCenter);
-
-      if(distFromCenter < maxDist){
-        const factor = 1 - (distFromCenter / maxDist);
-        card.style.transform = `scale(${(1 + factor * 0.022).toFixed(3)}) translateZ(0)`;
-      } else {
-        card.style.transform = 'scale(1) translateZ(0)';
-      }
-    });
-  }
-
-  function request(){
-    if(!ticking){ ticking = true; requestAnimationFrame(checkFocal); }
-  }
-
-  window.addEventListener('scroll', request, { passive: true });
-  window.addEventListener('resize', request);
-  request();
-})();
-
-/* ===== Project viz canvases ===== */
-document.querySelectorAll('.pviz').forEach(box=>{
-  const cv=box.querySelector('canvas'),ctx=cv.getContext('2d'),type=box.dataset.viz;
-  let w,h,t=0,dpr=Math.min(devicePixelRatio||1,2),visible=false;
-  const acc='128,222,196';
-  function size(){w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
-  new IntersectionObserver(es=>es.forEach(e=>visible=e.isIntersecting)).observe(box);
-  function draw(){
-    t+=0.016;ctx.clearRect(0,0,w,h);
-    if(type==='skeleton'){
-      const cx=w/2,cy=h/2,s=Math.min(w,h)*0.32;
-      const J=[[0,-1.3],[0,-0.7],[-0.55,-0.5],[0.55,-0.5],[-0.8,0.1],[0.8,0.1],[0,0],[-0.35,0.7],[0.35,0.7],[-0.4,1.3],[0.4,1.3]];
-      const E=[[0,1],[1,2],[1,3],[2,4],[3,5],[1,6],[6,7],[6,8],[7,9],[8,10]];
-      const pts=J.map((p,i)=>({x:cx+p[0]*s+Math.sin(t+i)*3,y:cy+p[1]*s+Math.cos(t*0.8+i)*3}));
-      ctx.lineWidth=1.4;ctx.strokeStyle='rgba('+acc+',.5)';
-      E.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(pts[a].x,pts[a].y);ctx.lineTo(pts[b].x,pts[b].y);ctx.stroke()});
-      pts.forEach((p,i)=>{const pulse=2.6+Math.sin(t*2+i)*1.2;ctx.beginPath();ctx.arc(p.x,p.y,pulse,0,7);ctx.fillStyle='rgba('+acc+',.9)';ctx.fill()});
-    }else if(type==='pipeline'){
-      const ys=h/2,n=4,gap=w/(n+1);
-      for(let i=0;i<n;i++){const x=gap*(i+1);
-        if(i<n-1){const prog=(Math.sin(t*1.4-i)*0.5+0.5);ctx.strokeStyle='rgba('+acc+',.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x+14,ys);ctx.lineTo(x+gap-14,ys);ctx.stroke();
-          const px=x+14+(gap-28)*prog;ctx.beginPath();ctx.arc(px,ys,2.4,0,7);ctx.fillStyle='rgba('+acc+',.95)';ctx.fill();}
-        ctx.strokeStyle='rgba('+acc+',.7)';ctx.lineWidth=1.4;ctx.beginPath();ctx.rect(x-13,ys-13,26,26);ctx.stroke();
-        ctx.fillStyle='rgba('+acc+','+(0.12+0.1*Math.sin(t*2+i))+')';ctx.fillRect(x-13,ys-13,26,26);
-      }
-    }else if(type==='attention'){
-      const n=6,m=clamp(w*0.13,28,70),gap=(w-m*2)/(n-1),ty=h*0.34,by=h*0.66;
-      function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
-      const xs=[];for(let i=0;i<n;i++)xs.push(m+gap*i);
-      for(let i=0;i<n;i++)for(let j=0;j<n;j++){
-        const wgt=0.5+0.5*Math.sin(t*1.3+i*0.9-j*0.7);
-        if(wgt<0.45)continue;
-        ctx.strokeStyle='rgba('+acc+','+(0.06+0.16*wgt)+')';ctx.lineWidth=0.6+wgt*0.8;
-        ctx.beginPath();ctx.moveTo(xs[i],ty+6);
-        ctx.bezierCurveTo(xs[i],(ty+by)/2,xs[j],(ty+by)/2,xs[j],by-6);ctx.stroke();
-      }
-      for(let i=0;i<n;i++){const pl=2.8+Math.sin(t*2+i)*1.1;
-        ctx.beginPath();ctx.arc(xs[i],ty,pl,0,7);ctx.fillStyle='rgba('+acc+',.9)';ctx.fill();
-        ctx.beginPath();ctx.arc(xs[i],by,pl,0,7);ctx.fillStyle='rgba('+acc+',.55)';ctx.fill();
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  size();addEventListener('resize',size);draw();
-});
-
-/* ===== Parallax (scroll movement) ===== */
-(function(){
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const k=reduce?0.45:1;
-  const els=[...document.querySelectorAll('[data-par],[data-px]')].map(el=>({
-    el,
-    ry:parseFloat(el.dataset.par||0),
-    rx:parseFloat(el.dataset.px||0)
-  }));
-  let ticking=false;
-  let cleared=false;
-  function update(){
-    // Below 980px .proj collapses to one column, so opposing offsets would
-    // push its two halves into each other.
-    if(innerWidth<=980){
-      if(!cleared){for(const o of els)o.el.style.transform='';cleared=true}
-      ticking=false;return;
-    }
-    cleared=false;
-    const vh=innerHeight;
-    for(const o of els){
-      const r=o.el.getBoundingClientRect();
-      let p=(vh-r.top)/(vh+r.height);
-      p=p<0?0:p>1?1:p;
-      const f=(p-0.5)*k;
-      const ty=(f*o.ry).toFixed(1);
-      const tx=(f*o.rx).toFixed(1);
-      o.el.style.transform='translate3d('+tx+'px,'+ty+'px,0)';
-    }
-    ticking=false;
-  }
-  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
-  addEventListener('resize',update);
-  update();requestAnimationFrame(update);
-})();
-
-/* ===== Weekly Views Counter Logic ===== */
-let latestWeeklyCount = null;
-
-function updateViewsDisplay() {
-  const viewsText = document.getElementById('viewsText');
-  if (latestWeeklyCount === null) return;
-  const countStr = latestWeeklyCount.toLocaleString(currentLang === 'en' ? 'en-US' : 'tr-TR');
-
-  if (currentLang === 'en') {
-    viewsText.innerHTML = `Past 7 Days: <strong>${countStr}</strong> views`;
-  } else {
-    viewsText.innerHTML = `Son 1 Hafta: <strong>${countStr}</strong> görüntülenme`;
-  }
-}
-
-(async function initWeeklyViews() {
-  const API = 'https://abacus.jasoncameron.dev';
-  const NS = 'yusufibin-com';
-  const MARK_KEY = 'yi_last_counted_day';
-  const DAY_MS = 24 * 60 * 60 * 1000;
-
-  // One bucket per UTC day; the rolling window is the sum of the last 7 buckets.
-  const dayKey = ts => 'v-' + new Date(ts).toISOString().slice(0, 10);
-
-  async function readCount(url) {
-    try {
-      const res = await fetch(url);
-      if (!res.ok) return 0;
-      const json = await res.json();
-      return typeof json.value === 'number' ? json.value : 0;
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  const now = Date.now();
-  const today = dayKey(now);
-
-  let alreadyCounted = false;
-  try {
-    alreadyCounted = localStorage.getItem(MARK_KEY) === today;
-  } catch (e) {}
-
-  const keys = [];
-  for (let i = 0; i < 7; i++) keys.push(dayKey(now - i * DAY_MS));
-
-  const counts = await Promise.all(keys.map((key, i) => {
-    const hitToday = i === 0 && !alreadyCounted;
-    return readCount(`${API}/${hitToday ? 'hit' : 'get'}/${NS}/${key}`);
-  }));
-
-  if (!alreadyCounted) {
-    try { localStorage.setItem(MARK_KEY, today); } catch (e) {}
-  }
-
-  const total = counts.reduce((a, b) => a + b, 0);
-
-  if (total > 0) {
-    latestWeeklyCount = total;
-    updateViewsDisplay();
-  } else {
-    document.getElementById('viewsWidget').style.display = 'none';
-  }
-})();
-
-// Initialize language choice from localStorage if set
-if (currentLang !== 'tr') {
-  setLanguage(currentLang);
-}
 </script>
 </body>
 </html>
